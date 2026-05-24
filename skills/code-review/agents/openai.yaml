@@ -1,0 +1,4 @@
+display_name: Code Review
+short_description: Review diffs with findings first.
+default_prompt: Use code-review to inspect this change and report findings.
+

@@ -1,0 +1,4 @@
+display_name: Token Lean
+short_description: Keep agent output concise without hiding risks.
+default_prompt: Use token-lean to answer this compactly and clearly.
+

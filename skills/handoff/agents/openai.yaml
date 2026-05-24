@@ -1,0 +1,4 @@
+display_name: Handoff
+short_description: Create concise continuation notes.
+default_prompt: Use handoff to summarize this work for the next session.
+

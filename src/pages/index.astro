@@ -1,0 +1,1093 @@
+---
+const skills = [
+  {
+    name: "repo-grounding",
+    title: "Repo Grounding",
+    summary: "Inspect the real repository before answering.",
+    useWhen: "Use when a question depends on files, commands, tests, or current repo state.",
+    helpsWith: ["Avoids guessing", "Finds the right cwd", "Answers with evidence"],
+  },
+  {
+    name: "safe-implementation",
+    title: "Safe Implementation",
+    summary: "Make scoped edits while protecting user work.",
+    useWhen: "Use when changing code, docs, scripts, or config in a shared worktree.",
+    helpsWith: ["Checks git state", "Keeps patches small", "Verifies before done"],
+  },
+  {
+    name: "token-lean",
+    title: "Token Lean",
+    summary: "Keep output concise without hiding important risk.",
+    useWhen: "Use when the context is large or the user wants compact communication.",
+    helpsWith: ["Short bullets", "Less repeated context", "Clear risks"],
+  },
+  {
+    name: "grill-with-evidence",
+    title: "Grill With Evidence",
+    summary: "Clarify risky work using local evidence first.",
+    useWhen: "Use before ambiguous or high-impact implementation work.",
+    helpsWith: ["Fewer questions", "Better defaults", "Small plans"],
+  },
+  {
+    name: "code-review",
+    title: "Code Review",
+    summary: "Review diffs with findings first.",
+    useWhen: "Use for uncommitted changes, branch diffs, PRs, or patches.",
+    helpsWith: ["Bug focus", "File and line findings", "Test gaps"],
+  },
+  {
+    name: "handoff",
+    title: "Handoff",
+    summary: "Create concise continuation notes.",
+    useWhen: "Use when another agent or future session needs to continue the work.",
+    helpsWith: ["Goal capture", "Changed files", "Open items"],
+  },
+  {
+    name: "write-skill",
+    title: "Write Skill",
+    summary: "Create concise, safe agent skills.",
+    useWhen: "Use when creating or improving a skill.",
+    helpsWith: ["Short SKILL.md files", "Clear metadata", "Validation"],
+  },
+  {
+    name: "anti-redundant",
+    title: "Anti Redundant",
+    summary: "Search first, then patch the existing source of truth.",
+    useWhen: "Use when adding docs, skills, abstractions, summaries, or refactors.",
+    helpsWith: ["Prevents duplicate files", "Reuses existing patterns", "Keeps answers delta-focused"],
+  },
+];
+
+const principles = [
+  "Start from local evidence.",
+  "Protect user work.",
+  "Prefer small changes.",
+  "Keep prompts short.",
+  "Make validation explicit.",
+];
+
+const commands = {
+  npx: "npx skills@latest add efektif/skills",
+  npm: "npm run skills:validate\nnpm run skills:install:dry\nnpm run skills:install",
+  pnpm: "pnpm skills:validate\npnpm skills:install:dry\npnpm skills:install",
+  shell: "./scripts/validate-skills.sh\n./scripts/install.sh\n./scripts/install.sh --apply",
+  validate: "pnpm skills:validate",
+  dry: "pnpm skills:install:dry",
+  apply: "pnpm skills:install",
+  hero: "npx skills@latest add efektif/skills\npnpm skills:install:dry\npnpm skills:install",
+  install: "pnpm skills:install:dry\n\nCODEX_SKILLS_DIR=\"$HOME/.codex/skills/efektif\" \\\n  pnpm skills:install",
+};
+
+const installSteps = [
+  {
+    step: "1",
+    title: "Fast path",
+    command: commands.npx,
+    note: "Use this when installing directly from GitHub.",
+  },
+  {
+    step: "2",
+    title: "Local validate",
+    command: commands.validate,
+    note: "Checks metadata, agent UI files, line length, and secret-like text.",
+  },
+  {
+    step: "3",
+    title: "Local preview",
+    command: commands.dry,
+    note: "Dry-run mode shows the source, target, and skills to install.",
+  },
+  {
+    step: "4",
+    title: "Local apply",
+    command: commands.apply,
+    note: "Installs into ~/.codex/skills/efektif by default.",
+  },
+];
+
+const commandOptions = [
+  {
+    title: "npx installer",
+    command: commands.npx,
+    note: "Best for quick install from the GitHub repo.",
+  },
+  {
+    title: "npm scripts",
+    command: commands.npm,
+    note: "Best when you want standard package script commands.",
+  },
+  {
+    title: "pnpm scripts",
+    command: commands.pnpm,
+    note: "Best when editing this repo locally with the locked package manager.",
+  },
+  {
+    title: "raw shell",
+    command: commands.shell,
+    note: "Best for debugging the installer itself.",
+  },
+];
+
+const mindmapGroups = [
+  {
+    title: "Start from evidence",
+    skills: ["repo-grounding", "grill-with-evidence"],
+    outcome: "The agent checks files, tests, docs, and runtime facts before deciding.",
+  },
+  {
+    title: "Change safely",
+    skills: ["safe-implementation", "write-skill"],
+    outcome: "Edits stay small, reversible, and validated.",
+  },
+  {
+    title: "Communicate clearly",
+    skills: ["token-lean", "handoff"],
+    outcome: "Answers stay short, readable, and useful across sessions.",
+  },
+  {
+    title: "Review with signal",
+    skills: ["code-review", "anti-redundant"],
+    outcome: "Findings lead the response, with concrete file and line risk.",
+  },
+];
+
+const promptExamples = [
+  {
+    skill: "repo-grounding",
+    intent: "Ask for current repo truth",
+    prompt: "Use repo-grounding. Tell me how this app starts locally. Check the real scripts and ports first.",
+  },
+  {
+    skill: "safe-implementation",
+    intent: "Make a careful code change",
+    prompt: "Use safe-implementation. Add a dry-run option to this script, keep the patch small, then verify it.",
+  },
+  {
+    skill: "token-lean",
+    intent: "Reduce answer size",
+    prompt: "Use token-lean compact mode. Summarize the failing build in bullets and include only the next command.",
+  },
+  {
+    skill: "grill-with-evidence",
+    intent: "Clarify before risky work",
+    prompt: "Use grill-with-evidence. Inspect the auth flow, then ask only blocking questions before changing it.",
+  },
+  {
+    skill: "code-review",
+    intent: "Review like a senior engineer",
+    prompt: "Use code-review. Review my uncommitted changes and lead with bugs, regressions, and missing tests.",
+  },
+  {
+    skill: "handoff",
+    intent: "Continue later",
+    prompt: "Use handoff. Write a short continuation note with goal, changed files, checks, and open items.",
+  },
+  {
+    skill: "write-skill",
+    intent: "Create a new skill",
+    prompt: "Use write-skill. Create a small skill for debugging Astro pages. Keep SKILL.md under 160 lines.",
+  },
+  {
+    skill: "anti-redundant",
+    intent: "Avoid duplicate work",
+    prompt: "Use anti-redundant. Search existing docs and scripts first, then update the source of truth instead of creating another file.",
+  },
+];
+
+const motionExamples = [
+  "Use frontend-app-builder. Make this docs page feel alive with subtle node reveal animation, hover lift, and reduced-motion support.",
+  "Use frontend-app-builder. Add an animated mindmap that explains the workflow, but keep the UI calm and readable.",
+  "Use frontend-app-builder. Improve the install section with copyable command blocks, step cards, and tasteful motion.",
+];
+
+const promptTabs = [
+  {
+    id: "motion",
+    label: "Motion",
+    examples: motionExamples.map((prompt) => ({
+      intent: "Animation request",
+      skill: "frontend-app-builder",
+      prompt,
+    })),
+  },
+  {
+    id: "grounding",
+    label: "Grounding",
+    examples: promptExamples.filter((example) =>
+      ["repo-grounding", "grill-with-evidence", "anti-redundant"].includes(example.skill),
+    ),
+  },
+  {
+    id: "building",
+    label: "Building",
+    examples: promptExamples.filter((example) =>
+      ["safe-implementation", "write-skill"].includes(example.skill),
+    ),
+  },
+  {
+    id: "communication",
+    label: "Communication",
+    examples: promptExamples.filter((example) =>
+      ["token-lean", "code-review", "handoff"].includes(example.skill),
+    ),
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Efektif Skills is a small Codex-first skill collection for safer, repo-grounded software work."
+    />
+    <title>Efektif Skills</title>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="label">Efektif Skills</p>
+          <h1 id="page-title">Small skills for safer Codex work.</h1>
+          <p class="intro">
+            A token-light skill set for repo-grounded answers, scoped implementation,
+            focused review, and clean handoffs.
+          </p>
+          <div class="actions" aria-label="Primary actions">
+            <a href="#mindmap" class="button primary">View mindmap</a>
+            <a href="#prompts" class="button secondary">Prompt examples</a>
+            <a href="#install" class="button secondary">Install locally</a>
+          </div>
+        </div>
+
+        <aside class="terminal" aria-label="Install preview">
+          <div class="terminal-bar">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <pre><code>{commands.hero}</code></pre>
+        </aside>
+      </section>
+
+      <section class="principles" aria-label="Design principles">
+        {principles.map((principle) => <p>{principle}</p>)}
+      </section>
+
+      <section class="section-block" id="mindmap" aria-labelledby="mindmap-title">
+        <div class="section-heading">
+          <p class="label">Mindmap</p>
+          <h2 id="mindmap-title">How the skills work together</h2>
+        </div>
+
+        <div class="mindmap" aria-label="Efektif Skills mindmap">
+          <div class="map-center">
+            <p>Efektif Skills</p>
+            <span>small, safe, token-light</span>
+          </div>
+
+          {
+            mindmapGroups.map((group) => (
+              <article class="map-node">
+                <p class="map-node-title">{group.title}</p>
+                <div class="map-tags" aria-label={`${group.title} skills`}>
+                  {group.skills.map((skill) => <span>{skill}</span>)}
+                </div>
+                <p>{group.outcome}</p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="section-block commands" aria-labelledby="commands-title">
+        <div class="section-heading">
+          <p class="label">Commands</p>
+          <h2 id="commands-title">Three ways to use it</h2>
+        </div>
+
+        <div class="command-grid">
+          {
+            commandOptions.map((option) => (
+              <article class="command-card">
+                <h3>{option.title}</h3>
+                <pre><code>{option.command}</code></pre>
+                <p>{option.note}</p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="section-block prompt-lab" id="prompts" aria-labelledby="prompts-title">
+        <div class="section-heading">
+          <p class="label">Prompt lab</p>
+          <h2 id="prompts-title">Example queries for calling skills</h2>
+        </div>
+
+        <div class="tabs">
+          {
+            promptTabs.map((tab, index) => (
+              <input
+                checked={index === 0}
+                id={`tab-${tab.id}`}
+                name="prompt-tab"
+                type="radio"
+              />
+            ))
+          }
+
+          <div class="tab-list" aria-label="Prompt example categories">
+            {promptTabs.map((tab) => <label for={`tab-${tab.id}`}>{tab.label}</label>)}
+          </div>
+
+          {
+            promptTabs.map((tab) => (
+              <div class="tab-panel" data-tab={tab.id}>
+                <div class="prompt-grid">
+                  {tab.examples.map((example) => (
+                    <article class="prompt-card">
+                      <div>
+                        <p class="skill-name">{example.skill}</p>
+                        <h3>{example.intent}</h3>
+                      </div>
+                      <pre><code>{example.prompt}</code></pre>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="section-block" id="skills" aria-labelledby="skills-title">
+        <div class="section-heading">
+          <p class="label">Skill set</p>
+          <h2 id="skills-title">What each skill does</h2>
+        </div>
+
+        <div class="skill-grid">
+          {
+            skills.map((skill) => (
+              <article class="skill-card">
+                <div>
+                  <p class="skill-name">{skill.name}</p>
+                  <h3>{skill.title}</h3>
+                  <p class="summary">{skill.summary}</p>
+                  <p class="use-when">{skill.useWhen}</p>
+                </div>
+                <ul aria-label={`${skill.title} helps with`}>
+                  {skill.helpsWith.map((item) => <li>{item}</li>)}
+                </ul>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="section-block install" id="install" aria-labelledby="install-title">
+        <div class="section-heading">
+          <p class="label">Local setup</p>
+          <h2 id="install-title">Install with a dry run first.</h2>
+        </div>
+
+        <div class="install-grid intro-install">
+          <div>
+            <p>
+              The installer validates every skill, shows the target path, and only writes
+              files when `--apply` is passed.
+            </p>
+            <p>
+              Existing installed skills are backed up before replacement. This keeps the
+              install path reversible.
+            </p>
+          </div>
+          <pre><code>{commands.install}</code></pre>
+        </div>
+
+        <div class="install-steps" aria-label="Install steps">
+          {
+            installSteps.map((item) => (
+              <article class="step-card">
+                <p class="step-number">{item.step}</p>
+                <h3>{item.title}</h3>
+                <pre><code>{item.command}</code></pre>
+                <p>{item.note}</p>
+              </article>
+            ))
+          }
+        </div>
+
+        <div class="after-install">
+          <h3>After install</h3>
+          <ul>
+            <li>Restart Codex if the skills do not appear.</li>
+            <li>Name a skill in your prompt, like Use token-lean.</li>
+            <li>Re-run pnpm skills:install after editing skills.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #f7f5ef;
+    --panel: #ffffff;
+    --ink: #1e2520;
+    --muted: #596159;
+    --line: #d8d5ca;
+    --accent: #266b5b;
+    --accent-strong: #123f36;
+    --code: #17221f;
+    --code-soft: #25332e;
+    --warm: #c4774c;
+    --sky: #315f7d;
+    font-family:
+      Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.64), rgba(255, 255, 255, 0) 320px),
+      var(--bg);
+    color: var(--ink);
+  }
+
+  .shell {
+    width: min(1120px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 48px 0 72px;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+    gap: 40px;
+    align-items: center;
+    min-height: 72vh;
+    padding-bottom: 40px;
+  }
+
+  .label,
+  .skill-name {
+    margin: 0 0 12px;
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  h1,
+  h2,
+  h3,
+  p {
+    margin-top: 0;
+  }
+
+  h1 {
+    max-width: 740px;
+    margin-bottom: 20px;
+    font-size: clamp(3rem, 7vw, 5.9rem);
+    line-height: 0.94;
+    letter-spacing: 0;
+  }
+
+  h2 {
+    margin-bottom: 0;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  h3 {
+    margin-bottom: 10px;
+    font-size: 1.25rem;
+    line-height: 1.15;
+    letter-spacing: 0;
+  }
+
+  .intro {
+    max-width: 660px;
+    color: var(--muted);
+    font-size: 1.18rem;
+    line-height: 1.65;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .button {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--accent-strong);
+    border-radius: 8px;
+    padding: 0 18px;
+    color: var(--accent-strong);
+    font-weight: 800;
+    text-decoration: none;
+    transition:
+      background 180ms ease,
+      color 180ms ease,
+      transform 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .button.primary {
+    background: var(--accent-strong);
+    color: #fff;
+  }
+
+  .button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(18, 63, 54, 0.14);
+  }
+
+  .terminal,
+  .install pre,
+  .command-card pre {
+    overflow: hidden;
+    border: 1px solid #31423b;
+    border-radius: 8px;
+    background: var(--code);
+    color: #d9eee8;
+    box-shadow: 0 24px 70px rgba(18, 63, 54, 0.2);
+  }
+
+  .terminal-bar {
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid var(--code-soft);
+    padding: 14px 16px;
+  }
+
+  .terminal-bar span {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--warm);
+  }
+
+  pre {
+    margin: 0;
+    padding: 22px;
+    white-space: pre-wrap;
+  }
+
+  code {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--line);
+  }
+
+  .principles p {
+    min-height: 96px;
+    margin: 0;
+    padding: 18px;
+    background: var(--panel);
+    font-weight: 800;
+    line-height: 1.25;
+  }
+
+  .section-block {
+    padding-top: 80px;
+  }
+
+  .section-heading {
+    max-width: 720px;
+    margin-bottom: 28px;
+  }
+
+  .mindmap {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    align-items: stretch;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background:
+      linear-gradient(90deg, transparent calc(50% - 1px), var(--line) calc(50% - 1px), var(--line) calc(50% + 1px), transparent calc(50% + 1px)),
+      linear-gradient(180deg, transparent calc(50% - 1px), var(--line) calc(50% - 1px), var(--line) calc(50% + 1px), transparent calc(50% + 1px)),
+      rgba(255, 255, 255, 0.42);
+    padding: 20px;
+  }
+
+  .mindmap::before,
+  .mindmap::after {
+    position: absolute;
+    inset: 24px;
+    border: 1px dashed rgba(18, 63, 54, 0.18);
+    border-radius: 8px;
+    content: "";
+    pointer-events: none;
+  }
+
+  .mindmap::after {
+    inset: 44px;
+    border-color: rgba(196, 119, 76, 0.22);
+  }
+
+  .map-center,
+  .map-node,
+  .command-card {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel);
+    padding: 20px;
+  }
+
+  .map-center {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    min-height: 220px;
+    align-content: center;
+    justify-items: center;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    background: var(--accent-strong);
+    color: #fff;
+    text-align: center;
+  }
+
+  .map-center p {
+    margin-bottom: 10px;
+    font-size: 1.75rem;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .map-center span {
+    color: #cfe5de;
+    font-weight: 750;
+  }
+
+  .map-node {
+    position: relative;
+    z-index: 1;
+    min-height: 220px;
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms ease;
+  }
+
+  .map-node:hover,
+  .skill-card:hover,
+  .prompt-card:hover,
+  .command-card:hover,
+  .step-card:hover {
+    border-color: rgba(18, 63, 54, 0.38);
+    box-shadow: 0 16px 38px rgba(18, 63, 54, 0.1);
+    transform: translateY(-3px);
+  }
+
+  .map-node-title {
+    margin-bottom: 14px;
+    color: var(--accent-strong);
+    font-size: 1.12rem;
+    font-weight: 900;
+  }
+
+  .map-node > p:last-child,
+  .command-card p {
+    margin-bottom: 0;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .map-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .map-tags span {
+    border: 1px solid #b9c9c3;
+    border-radius: 999px;
+    padding: 7px 10px;
+    background: #eef5f2;
+    color: var(--accent-strong);
+    font-size: 0.82rem;
+    font-weight: 850;
+  }
+
+  .command-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .command-card {
+    display: flex;
+    min-height: 300px;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .command-card pre {
+    margin: 14px 0;
+    box-shadow: none;
+  }
+
+  .tabs > input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .tab-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .tab-list label {
+    display: inline-flex;
+    min-height: 42px;
+    cursor: pointer;
+    align-items: center;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--panel);
+    padding: 0 16px;
+    color: var(--muted);
+    font-weight: 850;
+    transition:
+      background 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .tab-list label:hover {
+    transform: translateY(-1px);
+  }
+
+  .tab-panel {
+    display: none;
+  }
+
+  #tab-motion:checked ~ .tab-list label[for="tab-motion"],
+  #tab-grounding:checked ~ .tab-list label[for="tab-grounding"],
+  #tab-building:checked ~ .tab-list label[for="tab-building"],
+  #tab-communication:checked ~ .tab-list label[for="tab-communication"] {
+    border-color: var(--accent-strong);
+    background: var(--accent-strong);
+    color: #fff;
+  }
+
+  #tab-motion:checked ~ .tab-panel[data-tab="motion"],
+  #tab-grounding:checked ~ .tab-panel[data-tab="grounding"],
+  #tab-building:checked ~ .tab-panel[data-tab="building"],
+  #tab-communication:checked ~ .tab-panel[data-tab="communication"] {
+    display: block;
+  }
+
+  .prompt-card {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel);
+    padding: 20px;
+  }
+
+  .prompt-card pre {
+    border: 1px solid #d4ded9;
+    border-radius: 8px;
+    background: #eef5f2;
+    color: var(--accent-strong);
+    box-shadow: none;
+  }
+
+  .prompt-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .prompt-card {
+    display: flex;
+    min-height: 260px;
+    flex-direction: column;
+    justify-content: space-between;
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms ease;
+  }
+
+  .prompt-card pre {
+    margin-top: 16px;
+    padding: 16px;
+  }
+
+  .prompt-card code,
+  .tab-panel code {
+    overflow-wrap: anywhere;
+  }
+
+  .skill-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .skill-card {
+    display: flex;
+    min-height: 340px;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel);
+    padding: 22px;
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms ease;
+  }
+
+  .summary,
+  .use-when,
+  .install p {
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .use-when {
+    margin-bottom: 0;
+  }
+
+  ul {
+    display: grid;
+    gap: 8px;
+    margin: 24px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    position: relative;
+    padding-left: 18px;
+    color: var(--accent-strong);
+    font-weight: 750;
+    line-height: 1.35;
+  }
+
+  li::before {
+    position: absolute;
+    top: 0.58em;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--warm);
+    content: "";
+  }
+
+  .install-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(320px, 1.2fr);
+    gap: 24px;
+    align-items: start;
+    border-top: 1px solid var(--line);
+    padding-top: 28px;
+  }
+
+  .intro-install {
+    margin-bottom: 24px;
+  }
+
+  .install-steps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .step-card,
+  .after-install {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel);
+    padding: 18px;
+  }
+
+  .step-card {
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms ease;
+  }
+
+  .step-card pre {
+    margin: 16px 0;
+    border-radius: 8px;
+    background: #f0eee6;
+    color: var(--code);
+  }
+
+  .step-card code {
+    overflow-wrap: anywhere;
+  }
+
+  .step-card p:last-child,
+  .after-install li {
+    color: var(--muted);
+  }
+
+  .step-number {
+    display: inline-flex;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--accent-strong);
+    color: #fff;
+    font-weight: 900;
+  }
+
+  .after-install {
+    margin-top: 16px;
+  }
+
+  @media (max-width: 860px) {
+    .shell {
+      width: min(100% - 24px, 680px);
+      padding-top: 28px;
+    }
+
+    .hero,
+    .install-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero {
+      min-height: auto;
+      gap: 28px;
+    }
+
+    .principles,
+    .mindmap,
+    .command-grid,
+    .prompt-grid,
+    .skill-grid,
+    .install-steps {
+      grid-template-columns: 1fr;
+    }
+
+    .mindmap {
+      background: rgba(255, 255, 255, 0.42);
+    }
+
+    .map-center {
+      grid-column: auto;
+      grid-row: auto;
+      min-height: 180px;
+    }
+
+    .principles p {
+      min-height: auto;
+    }
+
+    .skill-card {
+      min-height: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .terminal,
+    .map-center {
+      animation: float-in 520ms ease both;
+    }
+
+    .principles p,
+    .map-node,
+    .command-card,
+    .prompt-card,
+    .skill-card,
+    .step-card {
+      animation: rise-in 520ms ease both;
+    }
+
+    .principles p:nth-child(2),
+    .map-node:nth-of-type(2),
+    .command-card:nth-child(2),
+    .prompt-card:nth-child(2),
+    .skill-card:nth-child(2),
+    .step-card:nth-child(2) {
+      animation-delay: 70ms;
+    }
+
+    .principles p:nth-child(3),
+    .map-node:nth-of-type(3),
+    .command-card:nth-child(3),
+    .prompt-card:nth-child(3),
+    .skill-card:nth-child(3),
+    .step-card:nth-child(3) {
+      animation-delay: 120ms;
+    }
+
+    .principles p:nth-child(4),
+    .map-node:nth-of-type(4),
+    .command-card:nth-child(4),
+    .prompt-card:nth-child(4),
+    .skill-card:nth-child(4),
+    .step-card:nth-child(4) {
+      animation-delay: 170ms;
+    }
+  }
+
+  @keyframes rise-in {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes float-in {
+    from {
+      opacity: 0;
+      transform: translateY(18px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+</style>
