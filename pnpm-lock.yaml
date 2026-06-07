@@ -11,6 +11,9 @@ importers:
       '@astrojs/check':
         specifier: 0.9.9
         version: 0.9.9(prettier@3.8.3)(typescript@5.9.3)
+      '@efektif/tokens':
+        specifier: ^2.0.0
+        version: 2.0.0
       astro:
         specifier: ^6.3.3
         version: 6.3.3(rollup@4.60.4)(yaml@2.9.0)
@@ -89,6 +92,9 @@ packages:
   '@clack/prompts@1.4.0':
     resolution: {integrity: sha512-S0My7XPGIgpRWMDG8uRqalbgT+a6FmCUdOW+HaIOVVpUPHOb7RrpvjTjiODadKp06fsrVDJZlIzc6yCTp4AnxA==}
     engines: {node: '>= 20.12.0'}
+
+  '@efektif/tokens@2.0.0':
+    resolution: {integrity: sha512-eY4x/ZO+hMwR/SBPL+R6m0zDJte0iln8AwjXZ7PMPc4sWbzhpfkNS4rLJg1GtWAitNPgYHIIj2UmgA7qf5mGMw==}
 
   '@emmetio/abbreviation@2.3.3':
     resolution: {integrity: sha512-mgv58UrU3rh4YgbE/TzgLQwJ3pFsHHhCLqY20aJq+9comytTXUDNGG/SMtSeMJdkpxgXSXunBGLD8Boka3JyVA==}
@@ -1855,6 +1861,8 @@ snapshots:
       fast-string-width: 3.0.2
       fast-wrap-ansi: 0.2.0
       sisteransi: 1.0.5
+
+  '@efektif/tokens@2.0.0': {}
 
   '@emmetio/abbreviation@2.3.3':
     dependencies:
