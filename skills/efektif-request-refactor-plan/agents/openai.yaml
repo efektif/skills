@@ -1,0 +1,3 @@
+display_name: Efektif Request Refactor Plan
+short_description: Produce a scoped refactor plan before editing risky code.
+default_prompt: Use efektif-request-refactor-plan. Produce a scoped refactor plan before editing risky code.

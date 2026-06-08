@@ -1,0 +1,3 @@
+display_name: Efektif Setup Skills
+short_description: Bootstrap repo-specific agent context, validation commands, and handoff rules.
+default_prompt: Use efektif-setup-skills. Bootstrap repo-specific agent context, validation commands, and handoff rules.

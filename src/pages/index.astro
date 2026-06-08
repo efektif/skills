@@ -1,237 +1,153 @@
 ---
-const skills = [
+import "@efektif/tokens/theme.css";
+
+const skillGroups = [
   {
-    name: "repo-grounding",
-    title: "Repo Grounding",
-    summary: "Inspect the real repository before answering.",
-    useWhen: "Use when a question depends on files, commands, tests, or current repo state.",
-    helpsWith: ["Avoids guessing", "Finds the right cwd", "Answers with evidence"],
+    eyebrow: "Foundation",
+    title: "Core Operating Loop",
+    summary: "The skills that should shape almost every agent-led repo session.",
+    accent: "mint",
+    skills: [
+      "efektif-setup-skills",
+      "efektif-repo-grounding",
+      "efektif-memory-grounding",
+      "efektif-safe-implementation",
+      "efektif-verification-before-done",
+    ],
   },
   {
-    name: "safe-implementation",
-    title: "Safe Implementation",
-    summary: "Make scoped edits while protecting user work.",
-    useWhen: "Use when changing code, docs, scripts, or config in a shared worktree.",
-    helpsWith: ["Checks git state", "Keeps patches small", "Verifies before done"],
+    eyebrow: "Engineering",
+    title: "Build And Debug",
+    summary: "Practical engineering workflows tuned for small, verified changes.",
+    accent: "blue",
+    skills: [
+      "efektif-diagnose",
+      "efektif-tdd",
+      "efektif-qa",
+      "efektif-code-review",
+      "efektif-request-refactor-plan",
+      "efektif-improve-codebase-architecture",
+    ],
   },
   {
-    name: "token-lean",
-    title: "Token Lean",
-    summary: "Keep output concise without hiding important risk.",
-    useWhen: "Use when the context is large or the user wants compact communication.",
-    helpsWith: ["Short bullets", "Less repeated context", "Clear risks"],
+    eyebrow: "Planning",
+    title: "Shape The Work",
+    summary: "Turn rough intent into PRDs, issues, and execution slices.",
+    accent: "amber",
+    skills: [
+      "efektif-grill-with-evidence",
+      "efektif-to-prd",
+      "efektif-to-issues",
+      "efektif-prd-to-plan",
+      "efektif-triage",
+      "efektif-zoom-out",
+    ],
   },
   {
-    name: "grill-with-evidence",
-    title: "Grill With Evidence",
-    summary: "Clarify risky work using local evidence first.",
-    useWhen: "Use before ambiguous or high-impact implementation work.",
-    helpsWith: ["Fewer questions", "Better defaults", "Small plans"],
+    eyebrow: "Local Ops",
+    title: "Agent Ops",
+    summary: "Skills for local machines, deploy checks, commits, and continuation across agents.",
+    accent: "coral",
+    skills: [
+      "efektif-deployment-readiness",
+      "efektif-machine-cleanup",
+      "efektif-commit-often",
+      "efektif-branch-summary",
+      "efektif-agent-docs-init",
+      "efektif-handoff",
+      "efektif-install-skill-package",
+      "efektif-write-skill",
+    ],
+  },
+];
+
+const buildOrder = [
+  {
+    step: "01",
+    name: "efektif-setup-skills",
+    reason: "Gives every repo a local contract for docs, issue flow, and validation.",
+    why: "All later skills need to know where repo guidance, domain context, validation commands, and issue tracking live.",
+    changes: "Adds a repeatable setup contract so agents do not rediscover the same repo rules every session.",
+    buildWhen: "Build first, before any other skill depends on repo-specific conventions.",
   },
   {
-    name: "code-review",
-    title: "Code Review",
-    summary: "Review diffs with findings first.",
-    useWhen: "Use for uncommitted changes, branch diffs, PRs, or patches.",
-    helpsWith: ["Bug focus", "File and line findings", "Test gaps"],
+    step: "02",
+    name: "efektif-repo-grounding",
+    reason: "Stops generic answers by forcing file, script, and git-state inspection.",
+    why: "Most user requests depend on the live checkout, not a generic framework answer.",
+    changes: "Makes agents inspect files, scripts, branch state, and local commands before answering or editing.",
+    buildWhen: "Build immediately after setup because it improves every repo question and implementation task.",
   },
   {
-    name: "handoff",
-    title: "Handoff",
-    summary: "Create concise continuation notes.",
-    useWhen: "Use when another agent or future session needs to continue the work.",
-    helpsWith: ["Goal capture", "Changed files", "Open items"],
+    step: "03",
+    name: "efektif-memory-grounding",
+    reason: "Uses prior agent context without pretending stale memory is current truth.",
+    why: "This workflow spans Efektif, Pasco, VAP, and machine-local work where past decisions matter.",
+    changes: "Separates memory-derived context from current verification, so stale facts do not become false certainty.",
+    buildWhen: "Build once repo grounding exists, so memory can point the agent toward the right files without replacing inspection.",
   },
   {
-    name: "write-skill",
-    title: "Write Skill",
-    summary: "Create concise, safe agent skills.",
-    useWhen: "Use when creating or improving a skill.",
-    helpsWith: ["Short SKILL.md files", "Clear metadata", "Validation"],
+    step: "04",
+    name: "efektif-safe-implementation",
+    reason: "Keeps patches scoped and protects uncommitted user work.",
+    why: "The user often works in dirty worktrees and expects small, reversible edits.",
+    changes: "Defines git checks, edit boundaries, verification expectations, and user-change protection.",
+    buildWhen: "Build before any broad engineering skill that might modify code or docs.",
   },
   {
-    name: "anti-redundant",
-    title: "Anti Redundant",
-    summary: "Search first, then patch the existing source of truth.",
-    useWhen: "Use when adding docs, skills, abstractions, summaries, or refactors.",
-    helpsWith: ["Prevents duplicate files", "Reuses existing patterns", "Keeps answers delta-focused"],
+    step: "05",
+    name: "efektif-verification-before-done",
+    reason: "Makes done, blocked, and unverified status explicit before handoff.",
+    why: "Build success, deploy success, and actual readiness are different states.",
+    changes: "Forces final answers to name what was verified, what is inferred, and what remains blocked.",
+    buildWhen: "Build before diagnose, deploy, QA, and review skills so every workflow has a clear finish line.",
+  },
+  {
+    step: "06",
+    name: "efektif-diagnose",
+    reason: "Adds the systematic debug loop for hard failures and regressions.",
+    why: "Recurring work includes runtime failures, deploy blockers, local tool issues, and integration bugs.",
+    changes: "Adds a reproduce, minimize, hypothesize, instrument, fix, and regression-test loop.",
+    buildWhen: "Build after the safety and verification skills so debugging stays disciplined and evidence-backed.",
   },
 ];
 
 const principles = [
-  "Start from local evidence.",
-  "Protect user work.",
-  "Prefer small changes.",
-  "Keep prompts short.",
-  "Make validation explicit.",
+  "Inspect before answering.",
+  "Prefer dry-run before apply.",
+  "Commit small verified slices.",
+  "Keep output readable and short.",
 ];
 
-const commands = {
-  npx: "npx skills@latest add efektif/skills",
-  npm: "npm run skills:validate\nnpm run skills:install:dry\nnpm run skills:install",
-  pnpm: "pnpm skills:validate\npnpm skills:install:dry\npnpm skills:install",
-  shell: "./scripts/validate-skills.sh\n./scripts/install.sh\n./scripts/install.sh --apply",
-  validate: "pnpm skills:validate",
-  dry: "pnpm skills:install:dry",
-  apply: "pnpm skills:install",
-  hero: "npx skills@latest add efektif/skills\npnpm skills:install:dry\npnpm skills:install",
-  install: "pnpm skills:install:dry\n\nCODEX_SKILLS_DIR=\"$HOME/.codex/skills/efektif\" \\\n  pnpm skills:install",
-};
-
-const installSteps = [
+const commands = [
   {
-    step: "1",
-    title: "Fast path",
-    command: commands.npx,
-    note: "Use this when installing directly from GitHub.",
+    label: "Validate Package",
+    command: "pnpm skills:validate\nnpm run skills:validate",
+    note: "Checks skill metadata before publishing or installing.",
   },
   {
-    step: "2",
-    title: "Local validate",
-    command: commands.validate,
-    note: "Checks metadata, agent UI files, line length, and secret-like text.",
+    label: "Preview Install",
+    command: "pnpm skills:install:dry\nnpm run skills:install:dry\n./scripts/install.sh",
+    note: "Shows the install target before any files are written.",
   },
   {
-    step: "3",
-    title: "Local preview",
-    command: commands.dry,
-    note: "Dry-run mode shows the source, target, and skills to install.",
+    label: "Build Docs",
+    command: "pnpm build\nnpm run build",
+    note: "Runs Astro diagnostics and produces the static documentation site.",
   },
   {
-    step: "4",
-    title: "Local apply",
-    command: commands.apply,
-    note: "Installs into ~/.codex/skills/efektif by default.",
+    label: "Install From GitHub",
+    command: "npx skills@latest add efektif/skills",
+    note: "Fast path for users who want to install from the published repo.",
   },
 ];
 
-const commandOptions = [
-  {
-    title: "npx installer",
-    command: commands.npx,
-    note: "Best for quick install from the GitHub repo.",
-  },
-  {
-    title: "npm scripts",
-    command: commands.npm,
-    note: "Best when you want standard package script commands.",
-  },
-  {
-    title: "pnpm scripts",
-    command: commands.pnpm,
-    note: "Best when editing this repo locally with the locked package manager.",
-  },
-  {
-    title: "raw shell",
-    command: commands.shell,
-    note: "Best for debugging the installer itself.",
-  },
-];
+const heroCommandText = "npx skills@latest add efektif/skills\npnpm skills:install:dry";
+const heroCommandDisplay = `npx skills@latest add efektif/skills
+# install from GitHub
 
-const mindmapGroups = [
-  {
-    title: "Start from evidence",
-    skills: ["repo-grounding", "grill-with-evidence"],
-    outcome: "The agent checks files, tests, docs, and runtime facts before deciding.",
-  },
-  {
-    title: "Change safely",
-    skills: ["safe-implementation", "write-skill"],
-    outcome: "Edits stay small, reversible, and validated.",
-  },
-  {
-    title: "Communicate clearly",
-    skills: ["token-lean", "handoff"],
-    outcome: "Answers stay short, readable, and useful across sessions.",
-  },
-  {
-    title: "Review with signal",
-    skills: ["code-review", "anti-redundant"],
-    outcome: "Findings lead the response, with concrete file and line risk.",
-  },
-];
-
-const promptExamples = [
-  {
-    skill: "repo-grounding",
-    intent: "Ask for current repo truth",
-    prompt: "Use repo-grounding. Tell me how this app starts locally. Check the real scripts and ports first.",
-  },
-  {
-    skill: "safe-implementation",
-    intent: "Make a careful code change",
-    prompt: "Use safe-implementation. Add a dry-run option to this script, keep the patch small, then verify it.",
-  },
-  {
-    skill: "token-lean",
-    intent: "Reduce answer size",
-    prompt: "Use token-lean compact mode. Summarize the failing build in bullets and include only the next command.",
-  },
-  {
-    skill: "grill-with-evidence",
-    intent: "Clarify before risky work",
-    prompt: "Use grill-with-evidence. Inspect the auth flow, then ask only blocking questions before changing it.",
-  },
-  {
-    skill: "code-review",
-    intent: "Review like a senior engineer",
-    prompt: "Use code-review. Review my uncommitted changes and lead with bugs, regressions, and missing tests.",
-  },
-  {
-    skill: "handoff",
-    intent: "Continue later",
-    prompt: "Use handoff. Write a short continuation note with goal, changed files, checks, and open items.",
-  },
-  {
-    skill: "write-skill",
-    intent: "Create a new skill",
-    prompt: "Use write-skill. Create a small skill for debugging Astro pages. Keep SKILL.md under 160 lines.",
-  },
-  {
-    skill: "anti-redundant",
-    intent: "Avoid duplicate work",
-    prompt: "Use anti-redundant. Search existing docs and scripts first, then update the source of truth instead of creating another file.",
-  },
-];
-
-const motionExamples = [
-  "Use frontend-app-builder. Make this docs page feel alive with subtle node reveal animation, hover lift, and reduced-motion support.",
-  "Use frontend-app-builder. Add an animated mindmap that explains the workflow, but keep the UI calm and readable.",
-  "Use frontend-app-builder. Improve the install section with copyable command blocks, step cards, and tasteful motion.",
-];
-
-const promptTabs = [
-  {
-    id: "motion",
-    label: "Motion",
-    examples: motionExamples.map((prompt) => ({
-      intent: "Animation request",
-      skill: "frontend-app-builder",
-      prompt,
-    })),
-  },
-  {
-    id: "grounding",
-    label: "Grounding",
-    examples: promptExamples.filter((example) =>
-      ["repo-grounding", "grill-with-evidence", "anti-redundant"].includes(example.skill),
-    ),
-  },
-  {
-    id: "building",
-    label: "Building",
-    examples: promptExamples.filter((example) =>
-      ["safe-implementation", "write-skill"].includes(example.skill),
-    ),
-  },
-  {
-    id: "communication",
-    label: "Communication",
-    examples: promptExamples.filter((example) =>
-      ["token-lean", "code-review", "handoff"].includes(example.skill),
-    ),
-  },
-];
+pnpm skills:install:dry
+# local dry run`;
 ---
 
 <!doctype html>
@@ -241,853 +157,840 @@ const promptTabs = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Efektif Skills is a small Codex-first skill collection for safer, repo-grounded software work."
+      content="Efektif Skills redesign roadmap for agent-led engineering workflows."
     />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>Efektif Skills</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: var(--ef-bg-canvas);
+        --paper: var(--ef-bg-base);
+        --ink: var(--ef-fg-primary);
+        --muted: var(--ef-fg-muted);
+        --line: var(--ef-border-default);
+        --line-strong: var(--ef-border-strong);
+        --soft: var(--ef-bg-subtle);
+        --selected: var(--ef-bg-muted);
+        --terminal-bg: var(--ef-bg-inverse);
+        --terminal-fg: var(--ef-fg-on-inverse);
+        --terminal-line: color-mix(in oklab, var(--terminal-fg) 14%, transparent);
+        --terminal-soft: color-mix(in oklab, var(--terminal-fg) 8%, transparent);
+        --terminal-hover: color-mix(in oklab, var(--terminal-fg) 14%, transparent);
+        font-family: var(--ef-font-sans);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      main {
+        width: min(1160px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 28px 0 72px;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        display: flex;
+        min-height: 56px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        border-bottom: 1px solid var(--line);
+        background: color-mix(in oklab, var(--bg) 96%, transparent);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 900;
+      }
+
+      .brand-mark {
+        display: inline-flex;
+        width: 28px;
+        height: 28px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: var(--ink);
+        color: var(--paper);
+        font-size: 0.76rem;
+        letter-spacing: 0;
+        line-height: 1;
+      }
+
+      .brand-e {
+        font-family: "Cascadia Code", "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+        font-weight: 900;
+      }
+
+      .brand-s {
+        font-family:
+          "Plus Jakarta Sans", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        font-weight: 950;
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      nav a {
+        border-radius: 8px;
+        padding: 8px 10px;
+        color: var(--muted);
+        font-size: 0.9rem;
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      nav a:hover {
+        background: var(--soft);
+        color: var(--ink);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+        gap: 42px;
+        align-items: center;
+        padding: 72px 0 54px;
+      }
+
+      .eyebrow {
+        margin: 0 0 14px;
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 780px;
+        margin-bottom: 22px;
+        font-size: clamp(2.6rem, 5vw, 4.4rem);
+        letter-spacing: 0;
+        line-height: 1;
+      }
+
+      .lede {
+        max-width: 700px;
+        margin-bottom: 28px;
+        color: var(--muted);
+        font-size: 1.15rem;
+        line-height: 1.65;
+      }
+
+      .actions,
+      .status-row,
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .button,
+      .pill {
+        display: inline-flex;
+        min-height: 42px;
+        align-items: center;
+        border-radius: 8px;
+        padding: 0 14px;
+        font-weight: 900;
+        text-decoration: none;
+      }
+
+      .button.primary {
+        background: var(--ink);
+        color: var(--paper);
+      }
+
+      .button.secondary,
+      .pill {
+        border: 1px solid var(--line);
+        background: var(--paper);
+      }
+
+      .pill {
+        min-height: 36px;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      .dashboard {
+        display: grid;
+        gap: 14px;
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--paper);
+        box-shadow: none;
+      }
+
+      .summary-panel {
+        padding: 18px;
+      }
+
+      .meter {
+        display: grid;
+        gap: 8px;
+        margin-top: 18px;
+      }
+
+      .meter-row {
+        display: grid;
+        grid-template-columns: 112px 1fr auto;
+        gap: 10px;
+        align-items: center;
+        color: var(--muted);
+        font-size: 0.88rem;
+        font-weight: 800;
+      }
+
+      .track {
+        height: 8px;
+        overflow: hidden;
+        border-radius: 8px;
+        background: var(--selected);
+      }
+
+      .fill {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+      }
+
+      .fill.mint {
+        width: 100%;
+        background: var(--ink);
+      }
+
+      .fill.amber {
+        width: 62%;
+        background: var(--muted);
+      }
+
+      .fill.coral {
+        width: 0%;
+        background: var(--muted);
+      }
+
+      .terminal {
+        overflow: hidden;
+        background: var(--terminal-bg);
+        color: var(--terminal-fg);
+      }
+
+      .terminal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 7px;
+        border-bottom: 1px solid var(--terminal-line);
+        padding: 12px 14px;
+      }
+
+      .window-dots {
+        display: flex;
+        gap: 7px;
+      }
+
+      .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 8px;
+        background: var(--ef-fg-subtle);
+      }
+
+      .dot:nth-child(2) {
+        background: var(--ef-fg-muted);
+      }
+
+      .dot:nth-child(3) {
+        background: var(--ef-fg-secondary);
+      }
+
+      .copy-button {
+        min-height: 30px;
+        cursor: pointer;
+        border: 1px solid var(--terminal-line);
+        border-radius: 8px;
+        padding: 0 10px;
+        background: var(--terminal-soft);
+        color: var(--terminal-fg);
+        font: inherit;
+        font-size: 0.78rem;
+        font-weight: 900;
+      }
+
+      .copy-button:hover {
+        background: var(--terminal-hover);
+      }
+
+      .copy-button[data-copied="true"] {
+        border-color: color-mix(in oklab, var(--terminal-fg) 38%, transparent);
+        background: color-mix(in oklab, var(--terminal-fg) 20%, transparent);
+      }
+
+      pre {
+        margin: 0;
+        overflow: auto;
+        padding: 18px;
+        white-space: pre-wrap;
+      }
+
+      code {
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        font-size: 0.88rem;
+        line-height: 1.65;
+      }
+
+      .section {
+        padding-top: 56px;
+      }
+
+      .section-head {
+        display: grid;
+        grid-template-columns: minmax(0, 0.75fr) minmax(280px, 0.45fr);
+        gap: 28px;
+        align-items: end;
+        margin-bottom: 22px;
+      }
+
+      h2 {
+        margin-bottom: 0;
+        font-size: clamp(2rem, 4.8vw, 4rem);
+        line-height: 1;
+      }
+
+      .section-head p,
+      .card p,
+      .step p,
+      .command-card p {
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .principles {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--line);
+      }
+
+      .principles p {
+        min-height: 110px;
+        margin: 0;
+        padding: 18px;
+        background: var(--paper);
+        font-weight: 900;
+        line-height: 1.25;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .card {
+        display: grid;
+        gap: 18px;
+        min-height: 310px;
+        padding: 20px;
+        transition:
+          border-color 180ms ease;
+      }
+
+      .card:hover,
+      .step:hover,
+      .command-card:hover {
+        border-color: var(--ink);
+      }
+
+      .card[data-accent="mint"] {
+        background: var(--soft);
+      }
+
+      .card[data-accent="blue"] {
+        background: var(--soft);
+      }
+
+      .card[data-accent="amber"] {
+        background: var(--soft);
+      }
+
+      .card[data-accent="coral"] {
+        background: var(--soft);
+      }
+
+      .card h3 {
+        margin-bottom: 8px;
+        font-size: 1.55rem;
+        line-height: 1.05;
+      }
+
+      .card .eyebrow {
+        margin-bottom: 10px;
+        color: var(--muted);
+      }
+
+      .chips {
+        align-content: start;
+      }
+
+      .chip {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 7px 10px;
+        background: var(--paper);
+        font-size: 0.84rem;
+        font-weight: 850;
+      }
+
+      .timeline {
+        display: grid;
+        gap: 12px;
+      }
+
+      .step {
+        overflow: hidden;
+        transition:
+          border-color 180ms ease;
+      }
+
+      .step summary {
+        display: grid;
+        grid-template-columns: 68px minmax(0, 1fr) auto;
+        gap: 16px;
+        align-items: start;
+        cursor: pointer;
+        list-style: none;
+        padding: 18px;
+      }
+
+      .step summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .step-number {
+        display: grid;
+        width: 48px;
+        height: 48px;
+        place-items: center;
+        border-radius: 8px;
+        background: var(--ink);
+        color: var(--paper);
+        font-weight: 950;
+      }
+
+      .step h3 {
+        margin-bottom: 6px;
+      }
+
+      .step-toggle {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--paper);
+        color: var(--muted);
+        font-size: 1.2rem;
+        font-weight: 900;
+        line-height: 1;
+      }
+
+      .step[open] .step-toggle {
+        background: var(--ink);
+        color: var(--paper);
+      }
+
+      .step[open] .step-toggle::before {
+        content: "-";
+      }
+
+      .step:not([open]) .step-toggle::before {
+        content: "+";
+      }
+
+      .step-details {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        border-top: 1px solid var(--line);
+        padding: 16px 18px 18px 86px;
+      }
+
+      .step-detail {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 14px;
+        background: var(--soft);
+      }
+
+      .step-detail strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 0.84rem;
+        text-transform: uppercase;
+      }
+
+      .commands {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .command-card {
+        padding: 18px;
+        transition:
+          border-color 180ms ease;
+      }
+
+      .command-card pre {
+        margin: 14px 0;
+        border-radius: 8px;
+        background: var(--terminal-bg);
+        color: var(--terminal-fg);
+      }
+
+      .command-card .terminal {
+        margin: 14px 0;
+      }
+
+      .command-card .terminal pre {
+        margin: 0;
+        border-radius: 0;
+      }
+
+      @media (max-width: 880px) {
+        main {
+          width: min(100% - 24px, 1160px);
+          padding-bottom: 48px;
+        }
+
+        .topbar {
+          position: static;
+          align-items: flex-start;
+          padding-bottom: 12px;
+        }
+
+        nav {
+          justify-content: flex-end;
+        }
+
+        .hero,
+        .section-head,
+        .cards,
+        .commands,
+        .step-details {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          min-height: auto;
+          padding: 36px 0 40px;
+        }
+
+        .principles {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 560px) {
+        .topbar {
+          display: grid;
+        }
+
+        nav {
+          justify-content: flex-start;
+        }
+
+        h1 {
+          font-size: 3rem;
+        }
+
+        .step summary {
+          grid-template-columns: 1fr;
+        }
+
+        .step-details {
+          padding-left: 18px;
+        }
+
+        .principles {
+          grid-template-columns: 1fr;
+        }
+      }
+
+    </style>
   </head>
   <body>
-    <main class="shell">
+    <main>
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Efektif Skills home">
+          <span class="brand-mark" aria-hidden="true">
+            <span class="brand-e">E</span><span class="brand-s">S</span>
+          </span>
+          <span>Efektif Skills</span>
+        </a>
+        <nav aria-label="Page sections">
+          <a href="#system">System</a>
+          <a href="#build-order">Build order</a>
+          <a href="#commands">Install</a>
+        </nav>
+      </header>
+
       <section class="hero" aria-labelledby="page-title">
-        <div class="hero-copy">
-          <p class="label">Efektif Skills</p>
-          <h1 id="page-title">Small skills for safer Codex work.</h1>
-          <p class="intro">
-            A token-light skill set for repo-grounded answers, scoped implementation,
-            focused review, and clean handoffs.
+        <div>
+          <p class="eyebrow">Redesign roadmap</p>
+          <h1 id="page-title">Better skills for real agent work.</h1>
+          <p class="lede">
+            Efektif Skills maps an agent-first workflow for local repo work:
+            grounded inspection, memory-aware continuity, safe implementation,
+            verified commits, and deployment readiness.
           </p>
-          <div class="actions" aria-label="Primary actions">
-            <a href="#mindmap" class="button primary">View mindmap</a>
-            <a href="#prompts" class="button secondary">Prompt examples</a>
-            <a href="#install" class="button secondary">Install locally</a>
+          <div class="actions">
+            <a class="button primary" href="#build-order">Start with build order</a>
+            <a class="button secondary" href="#system">Explore skill buckets</a>
           </div>
         </div>
 
-        <aside class="terminal" aria-label="Install preview">
-          <div class="terminal-bar">
-            <span></span>
-            <span></span>
-            <span></span>
+        <aside class="dashboard" aria-label="Package preview status">
+          <div class="panel summary-panel">
+            <p class="eyebrow">Active package</p>
+            <div class="status-row">
+              <span class="pill">Active skills: 28</span>
+              <span class="pill">Docs: ready</span>
+              <span class="pill">Install: dry-run first</span>
+            </div>
+            <div class="meter" aria-label="Readiness meters">
+              <div class="meter-row">
+                <span>Docs</span>
+                <span class="track"><span class="fill mint"></span></span>
+                <span>ready</span>
+              </div>
+              <div class="meter-row">
+                <span>Skill map</span>
+                <span class="track"><span class="fill mint"></span></span>
+                <span>ready</span>
+              </div>
+              <div class="meter-row">
+                <span>Skills</span>
+                <span class="track"><span class="fill mint"></span></span>
+                <span>ready</span>
+              </div>
+            </div>
           </div>
-          <pre><code>{commands.hero}</code></pre>
+
+          <div class="panel terminal">
+            <div class="terminal-header">
+              <div class="window-dots" aria-hidden="true">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+              </div>
+              <button class="copy-button" type="button" data-copy-text={heroCommandText}>
+                Copy
+              </button>
+            </div>
+            <pre><code>{heroCommandDisplay}</code></pre>
+          </div>
         </aside>
       </section>
 
-      <section class="principles" aria-label="Design principles">
-        {principles.map((principle) => <p>{principle}</p>)}
-      </section>
-
-      <section class="section-block" id="mindmap" aria-labelledby="mindmap-title">
-        <div class="section-heading">
-          <p class="label">Mindmap</p>
-          <h2 id="mindmap-title">How the skills work together</h2>
-        </div>
-
-        <div class="mindmap" aria-label="Efektif Skills mindmap">
-          <div class="map-center">
-            <p>Efektif Skills</p>
-            <span>small, safe, token-light</span>
-          </div>
-
-          {
-            mindmapGroups.map((group) => (
-              <article class="map-node">
-                <p class="map-node-title">{group.title}</p>
-                <div class="map-tags" aria-label={`${group.title} skills`}>
-                  {group.skills.map((skill) => <span>{skill}</span>)}
-                </div>
-                <p>{group.outcome}</p>
-              </article>
-            ))
-          }
-        </div>
-      </section>
-
-      <section class="section-block commands" aria-labelledby="commands-title">
-        <div class="section-heading">
-          <p class="label">Commands</p>
-          <h2 id="commands-title">Three ways to use it</h2>
-        </div>
-
-        <div class="command-grid">
-          {
-            commandOptions.map((option) => (
-              <article class="command-card">
-                <h3>{option.title}</h3>
-                <pre><code>{option.command}</code></pre>
-                <p>{option.note}</p>
-              </article>
-            ))
-          }
-        </div>
-      </section>
-
-      <section class="section-block prompt-lab" id="prompts" aria-labelledby="prompts-title">
-        <div class="section-heading">
-          <p class="label">Prompt lab</p>
-          <h2 id="prompts-title">Example queries for calling skills</h2>
-        </div>
-
-        <div class="tabs">
-          {
-            promptTabs.map((tab, index) => (
-              <input
-                checked={index === 0}
-                id={`tab-${tab.id}`}
-                name="prompt-tab"
-                type="radio"
-              />
-            ))
-          }
-
-          <div class="tab-list" aria-label="Prompt example categories">
-            {promptTabs.map((tab) => <label for={`tab-${tab.id}`}>{tab.label}</label>)}
-          </div>
-
-          {
-            promptTabs.map((tab) => (
-              <div class="tab-panel" data-tab={tab.id}>
-                <div class="prompt-grid">
-                  {tab.examples.map((example) => (
-                    <article class="prompt-card">
-                      <div>
-                        <p class="skill-name">{example.skill}</p>
-                        <h3>{example.intent}</h3>
-                      </div>
-                      <pre><code>{example.prompt}</code></pre>
-                    </article>
-                  ))}
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </section>
-
-      <section class="section-block" id="skills" aria-labelledby="skills-title">
-        <div class="section-heading">
-          <p class="label">Skill set</p>
-          <h2 id="skills-title">What each skill does</h2>
-        </div>
-
-        <div class="skill-grid">
-          {
-            skills.map((skill) => (
-              <article class="skill-card">
-                <div>
-                  <p class="skill-name">{skill.name}</p>
-                  <h3>{skill.title}</h3>
-                  <p class="summary">{skill.summary}</p>
-                  <p class="use-when">{skill.useWhen}</p>
-                </div>
-                <ul aria-label={`${skill.title} helps with`}>
-                  {skill.helpsWith.map((item) => <li>{item}</li>)}
-                </ul>
-              </article>
-            ))
-          }
-        </div>
-      </section>
-
-      <section class="section-block install" id="install" aria-labelledby="install-title">
-        <div class="section-heading">
-          <p class="label">Local setup</p>
-          <h2 id="install-title">Install with a dry run first.</h2>
-        </div>
-
-        <div class="install-grid intro-install">
+      <section class="section" aria-labelledby="principles-title">
+        <div class="section-head">
           <div>
-            <p>
-              The installer validates every skill, shows the target path, and only writes
-              files when `--apply` is passed.
-            </p>
-            <p>
-              Existing installed skills are backed up before replacement. This keeps the
-              install path reversible.
-            </p>
+            <p class="eyebrow">Principles</p>
+            <h2 id="principles-title">The behavior to encode.</h2>
           </div>
-          <pre><code>{commands.install}</code></pre>
+          <p>
+            These are the habits the next skills should make automatic, without
+            bloating every prompt.
+          </p>
+        </div>
+        <div class="principles">
+          {principles.map((principle) => <p>{principle}</p>)}
+        </div>
+      </section>
+
+      <section class="section" id="system" aria-labelledby="system-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Skill system</p>
+            <h2 id="system-title">Four buckets, one workflow.</h2>
+          </div>
+          <p>
+            The proposed set covers planning, implementation, review, and local
+            operations. Each bucket has a clear job.
+          </p>
         </div>
 
-        <div class="install-steps" aria-label="Install steps">
+        <div class="cards">
           {
-            installSteps.map((item) => (
-              <article class="step-card">
-                <p class="step-number">{item.step}</p>
-                <h3>{item.title}</h3>
-                <pre><code>{item.command}</code></pre>
+            skillGroups.map((group) => (
+              <article class="panel card" data-accent={group.accent}>
+                <div>
+                  <p class="eyebrow">{group.eyebrow}</p>
+                  <h3>{group.title}</h3>
+                  <p>{group.summary}</p>
+                </div>
+                <div class="chips" aria-label={`${group.title} skills`}>
+                  {group.skills.map((skill) => <span class="chip">{skill}</span>)}
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="section" id="build-order" aria-labelledby="build-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Build order</p>
+            <h2 id="build-title">Start where it changes behavior fastest.</h2>
+          </div>
+          <p>
+            The first six skills should improve almost every session before the
+            larger planning and architecture set gets built.
+          </p>
+        </div>
+
+        <div class="timeline">
+          {
+            buildOrder.map((item) => (
+              <details class="panel step" open={item.step === "01"}>
+                <summary>
+                  <span class="step-number">{item.step}</span>
+                  <div>
+                    <h3>{item.name}</h3>
+                    <p>{item.reason}</p>
+                  </div>
+                  <span class="step-toggle" aria-hidden="true"></span>
+                </summary>
+                <div class="step-details">
+                  <div class="step-detail">
+                    <strong>Why it matters</strong>
+                    <p>{item.why}</p>
+                  </div>
+                  <div class="step-detail">
+                    <strong>What it changes</strong>
+                    <p>{item.changes}</p>
+                  </div>
+                  <div class="step-detail">
+                    <strong>When to build</strong>
+                    <p>{item.buildWhen}</p>
+                  </div>
+                </div>
+              </details>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="section" id="commands" aria-labelledby="commands-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Install</p>
+            <h2 id="commands-title">Install with guardrails.</h2>
+          </div>
+          <p>
+            Use the path that matches your workflow. Public installs can use
+            `npx`, while local contributors can use `pnpm`, `npm`, or the raw
+            shell scripts.
+          </p>
+        </div>
+
+        <div class="commands">
+          {
+            commands.map((item) => (
+              <article class="panel command-card">
+                <h3>{item.label}</h3>
+                <div class="terminal">
+                  <div class="terminal-header">
+                    <div class="window-dots" aria-hidden="true">
+                      <span class="dot"></span>
+                      <span class="dot"></span>
+                      <span class="dot"></span>
+                    </div>
+                    <button class="copy-button" type="button" data-copy-text={item.command}>
+                      Copy
+                    </button>
+                  </div>
+                  <pre><code>{item.command}</code></pre>
+                </div>
                 <p>{item.note}</p>
               </article>
             ))
           }
         </div>
-
-        <div class="after-install">
-          <h3>After install</h3>
-          <ul>
-            <li>Restart Codex if the skills do not appear.</li>
-            <li>Name a skill in your prompt, like Use token-lean.</li>
-            <li>Re-run pnpm skills:install after editing skills.</li>
-          </ul>
-        </div>
       </section>
     </main>
+    <script>
+      const copyButtons = document.querySelectorAll("[data-copy-text]");
+
+      const copyText = async (text: string) => {
+        if (!navigator.clipboard?.writeText) {
+          throw new Error("Clipboard API is not available.");
+        }
+
+        await navigator.clipboard.writeText(text);
+      };
+
+      copyButtons.forEach((button) => {
+        button.addEventListener("click", async () => {
+          const text = button.getAttribute("data-copy-text") ?? "";
+          try {
+            await copyText(text);
+            button.textContent = "Copied";
+            button.setAttribute("data-copied", "true");
+          } catch {
+            button.textContent = "Select";
+            button.setAttribute("data-copied", "true");
+          }
+
+          window.setTimeout(() => {
+            button.textContent = "Copy";
+            button.removeAttribute("data-copied");
+          }, 1600);
+        });
+      });
+    </script>
   </body>
 </html>
-
-<style>
-  :root {
-    color-scheme: light;
-    --bg: #f7f5ef;
-    --panel: #ffffff;
-    --ink: #1e2520;
-    --muted: #596159;
-    --line: #d8d5ca;
-    --accent: #266b5b;
-    --accent-strong: #123f36;
-    --code: #17221f;
-    --code-soft: #25332e;
-    --warm: #c4774c;
-    --sky: #315f7d;
-    font-family:
-      Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-      sans-serif;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  body {
-    margin: 0;
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.64), rgba(255, 255, 255, 0) 320px),
-      var(--bg);
-    color: var(--ink);
-  }
-
-  .shell {
-    width: min(1120px, calc(100% - 32px));
-    margin: 0 auto;
-    padding: 48px 0 72px;
-  }
-
-  .hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
-    gap: 40px;
-    align-items: center;
-    min-height: 72vh;
-    padding-bottom: 40px;
-  }
-
-  .label,
-  .skill-name {
-    margin: 0 0 12px;
-    color: var(--accent);
-    font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 0;
-    text-transform: uppercase;
-  }
-
-  h1,
-  h2,
-  h3,
-  p {
-    margin-top: 0;
-  }
-
-  h1 {
-    max-width: 740px;
-    margin-bottom: 20px;
-    font-size: clamp(3rem, 7vw, 5.9rem);
-    line-height: 0.94;
-    letter-spacing: 0;
-  }
-
-  h2 {
-    margin-bottom: 0;
-    font-size: clamp(2rem, 4vw, 3.25rem);
-    line-height: 1;
-    letter-spacing: 0;
-  }
-
-  h3 {
-    margin-bottom: 10px;
-    font-size: 1.25rem;
-    line-height: 1.15;
-    letter-spacing: 0;
-  }
-
-  .intro {
-    max-width: 660px;
-    color: var(--muted);
-    font-size: 1.18rem;
-    line-height: 1.65;
-  }
-
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 28px;
-  }
-
-  .button {
-    display: inline-flex;
-    min-height: 44px;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--accent-strong);
-    border-radius: 8px;
-    padding: 0 18px;
-    color: var(--accent-strong);
-    font-weight: 800;
-    text-decoration: none;
-    transition:
-      background 180ms ease,
-      color 180ms ease,
-      transform 180ms ease,
-      box-shadow 180ms ease;
-  }
-
-  .button.primary {
-    background: var(--accent-strong);
-    color: #fff;
-  }
-
-  .button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(18, 63, 54, 0.14);
-  }
-
-  .terminal,
-  .install pre,
-  .command-card pre {
-    overflow: hidden;
-    border: 1px solid #31423b;
-    border-radius: 8px;
-    background: var(--code);
-    color: #d9eee8;
-    box-shadow: 0 24px 70px rgba(18, 63, 54, 0.2);
-  }
-
-  .terminal-bar {
-    display: flex;
-    gap: 8px;
-    border-bottom: 1px solid var(--code-soft);
-    padding: 14px 16px;
-  }
-
-  .terminal-bar span {
-    width: 10px;
-    height: 10px;
-    border-radius: 999px;
-    background: var(--warm);
-  }
-
-  pre {
-    margin: 0;
-    padding: 22px;
-    white-space: pre-wrap;
-  }
-
-  code {
-    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-    font-size: 0.92rem;
-    line-height: 1.7;
-  }
-
-  .principles {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 1px;
-    overflow: hidden;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    background: var(--line);
-  }
-
-  .principles p {
-    min-height: 96px;
-    margin: 0;
-    padding: 18px;
-    background: var(--panel);
-    font-weight: 800;
-    line-height: 1.25;
-  }
-
-  .section-block {
-    padding-top: 80px;
-  }
-
-  .section-heading {
-    max-width: 720px;
-    margin-bottom: 28px;
-  }
-
-  .mindmap {
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
-    align-items: stretch;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    background:
-      linear-gradient(90deg, transparent calc(50% - 1px), var(--line) calc(50% - 1px), var(--line) calc(50% + 1px), transparent calc(50% + 1px)),
-      linear-gradient(180deg, transparent calc(50% - 1px), var(--line) calc(50% - 1px), var(--line) calc(50% + 1px), transparent calc(50% + 1px)),
-      rgba(255, 255, 255, 0.42);
-    padding: 20px;
-  }
-
-  .mindmap::before,
-  .mindmap::after {
-    position: absolute;
-    inset: 24px;
-    border: 1px dashed rgba(18, 63, 54, 0.18);
-    border-radius: 8px;
-    content: "";
-    pointer-events: none;
-  }
-
-  .mindmap::after {
-    inset: 44px;
-    border-color: rgba(196, 119, 76, 0.22);
-  }
-
-  .map-center,
-  .map-node,
-  .command-card {
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    background: var(--panel);
-    padding: 20px;
-  }
-
-  .map-center {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    min-height: 220px;
-    align-content: center;
-    justify-items: center;
-    grid-column: 2;
-    grid-row: 1 / span 2;
-    background: var(--accent-strong);
-    color: #fff;
-    text-align: center;
-  }
-
-  .map-center p {
-    margin-bottom: 10px;
-    font-size: 1.75rem;
-    font-weight: 900;
-    line-height: 1;
-  }
-
-  .map-center span {
-    color: #cfe5de;
-    font-weight: 750;
-  }
-
-  .map-node {
-    position: relative;
-    z-index: 1;
-    min-height: 220px;
-    transition:
-      border-color 180ms ease,
-      box-shadow 180ms ease,
-      transform 180ms ease;
-  }
-
-  .map-node:hover,
-  .skill-card:hover,
-  .prompt-card:hover,
-  .command-card:hover,
-  .step-card:hover {
-    border-color: rgba(18, 63, 54, 0.38);
-    box-shadow: 0 16px 38px rgba(18, 63, 54, 0.1);
-    transform: translateY(-3px);
-  }
-
-  .map-node-title {
-    margin-bottom: 14px;
-    color: var(--accent-strong);
-    font-size: 1.12rem;
-    font-weight: 900;
-  }
-
-  .map-node > p:last-child,
-  .command-card p {
-    margin-bottom: 0;
-    color: var(--muted);
-    line-height: 1.55;
-  }
-
-  .map-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 18px;
-  }
-
-  .map-tags span {
-    border: 1px solid #b9c9c3;
-    border-radius: 999px;
-    padding: 7px 10px;
-    background: #eef5f2;
-    color: var(--accent-strong);
-    font-size: 0.82rem;
-    font-weight: 850;
-  }
-
-  .command-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
-  }
-
-  .command-card {
-    display: flex;
-    min-height: 300px;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .command-card pre {
-    margin: 14px 0;
-    box-shadow: none;
-  }
-
-  .tabs > input {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .tab-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 16px;
-  }
-
-  .tab-list label {
-    display: inline-flex;
-    min-height: 42px;
-    cursor: pointer;
-    align-items: center;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    background: var(--panel);
-    padding: 0 16px;
-    color: var(--muted);
-    font-weight: 850;
-    transition:
-      background 180ms ease,
-      border-color 180ms ease,
-      color 180ms ease,
-      transform 180ms ease;
-  }
-
-  .tab-list label:hover {
-    transform: translateY(-1px);
-  }
-
-  .tab-panel {
-    display: none;
-  }
-
-  #tab-motion:checked ~ .tab-list label[for="tab-motion"],
-  #tab-grounding:checked ~ .tab-list label[for="tab-grounding"],
-  #tab-building:checked ~ .tab-list label[for="tab-building"],
-  #tab-communication:checked ~ .tab-list label[for="tab-communication"] {
-    border-color: var(--accent-strong);
-    background: var(--accent-strong);
-    color: #fff;
-  }
-
-  #tab-motion:checked ~ .tab-panel[data-tab="motion"],
-  #tab-grounding:checked ~ .tab-panel[data-tab="grounding"],
-  #tab-building:checked ~ .tab-panel[data-tab="building"],
-  #tab-communication:checked ~ .tab-panel[data-tab="communication"] {
-    display: block;
-  }
-
-  .prompt-card {
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    background: var(--panel);
-    padding: 20px;
-  }
-
-  .prompt-card pre {
-    border: 1px solid #d4ded9;
-    border-radius: 8px;
-    background: #eef5f2;
-    color: var(--accent-strong);
-    box-shadow: none;
-  }
-
-  .prompt-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
-  }
-
-  .prompt-card {
-    display: flex;
-    min-height: 260px;
-    flex-direction: column;
-    justify-content: space-between;
-    transition:
-      border-color 180ms ease,
-      box-shadow 180ms ease,
-      transform 180ms ease;
-  }
-
-  .prompt-card pre {
-    margin-top: 16px;
-    padding: 16px;
-  }
-
-  .prompt-card code,
-  .tab-panel code {
-    overflow-wrap: anywhere;
-  }
-
-  .skill-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
-  }
-
-  .skill-card {
-    display: flex;
-    min-height: 340px;
-    flex-direction: column;
-    justify-content: space-between;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    background: var(--panel);
-    padding: 22px;
-    transition:
-      border-color 180ms ease,
-      box-shadow 180ms ease,
-      transform 180ms ease;
-  }
-
-  .summary,
-  .use-when,
-  .install p {
-    color: var(--muted);
-    line-height: 1.6;
-  }
-
-  .use-when {
-    margin-bottom: 0;
-  }
-
-  ul {
-    display: grid;
-    gap: 8px;
-    margin: 24px 0 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  li {
-    position: relative;
-    padding-left: 18px;
-    color: var(--accent-strong);
-    font-weight: 750;
-    line-height: 1.35;
-  }
-
-  li::before {
-    position: absolute;
-    top: 0.58em;
-    left: 0;
-    width: 7px;
-    height: 7px;
-    border-radius: 999px;
-    background: var(--warm);
-    content: "";
-  }
-
-  .install-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 0.8fr) minmax(320px, 1.2fr);
-    gap: 24px;
-    align-items: start;
-    border-top: 1px solid var(--line);
-    padding-top: 28px;
-  }
-
-  .intro-install {
-    margin-bottom: 24px;
-  }
-
-  .install-steps {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 16px;
-  }
-
-  .step-card,
-  .after-install {
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    background: var(--panel);
-    padding: 18px;
-  }
-
-  .step-card {
-    transition:
-      border-color 180ms ease,
-      box-shadow 180ms ease,
-      transform 180ms ease;
-  }
-
-  .step-card pre {
-    margin: 16px 0;
-    border-radius: 8px;
-    background: #f0eee6;
-    color: var(--code);
-  }
-
-  .step-card code {
-    overflow-wrap: anywhere;
-  }
-
-  .step-card p:last-child,
-  .after-install li {
-    color: var(--muted);
-  }
-
-  .step-number {
-    display: inline-flex;
-    width: 34px;
-    height: 34px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 999px;
-    background: var(--accent-strong);
-    color: #fff;
-    font-weight: 900;
-  }
-
-  .after-install {
-    margin-top: 16px;
-  }
-
-  @media (max-width: 860px) {
-    .shell {
-      width: min(100% - 24px, 680px);
-      padding-top: 28px;
-    }
-
-    .hero,
-    .install-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .hero {
-      min-height: auto;
-      gap: 28px;
-    }
-
-    .principles,
-    .mindmap,
-    .command-grid,
-    .prompt-grid,
-    .skill-grid,
-    .install-steps {
-      grid-template-columns: 1fr;
-    }
-
-    .mindmap {
-      background: rgba(255, 255, 255, 0.42);
-    }
-
-    .map-center {
-      grid-column: auto;
-      grid-row: auto;
-      min-height: 180px;
-    }
-
-    .principles p {
-      min-height: auto;
-    }
-
-    .skill-card {
-      min-height: auto;
-    }
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .terminal,
-    .map-center {
-      animation: float-in 520ms ease both;
-    }
-
-    .principles p,
-    .map-node,
-    .command-card,
-    .prompt-card,
-    .skill-card,
-    .step-card {
-      animation: rise-in 520ms ease both;
-    }
-
-    .principles p:nth-child(2),
-    .map-node:nth-of-type(2),
-    .command-card:nth-child(2),
-    .prompt-card:nth-child(2),
-    .skill-card:nth-child(2),
-    .step-card:nth-child(2) {
-      animation-delay: 70ms;
-    }
-
-    .principles p:nth-child(3),
-    .map-node:nth-of-type(3),
-    .command-card:nth-child(3),
-    .prompt-card:nth-child(3),
-    .skill-card:nth-child(3),
-    .step-card:nth-child(3) {
-      animation-delay: 120ms;
-    }
-
-    .principles p:nth-child(4),
-    .map-node:nth-of-type(4),
-    .command-card:nth-child(4),
-    .prompt-card:nth-child(4),
-    .skill-card:nth-child(4),
-    .step-card:nth-child(4) {
-      animation-delay: 170ms;
-    }
-  }
-
-  @keyframes rise-in {
-    from {
-      opacity: 0;
-      transform: translateY(14px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes float-in {
-    from {
-      opacity: 0;
-      transform: translateY(18px) scale(0.98);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  }
-</style>

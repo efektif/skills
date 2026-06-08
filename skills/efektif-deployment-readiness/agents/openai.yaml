@@ -1,0 +1,3 @@
+display_name: Efektif Deployment Readiness
+short_description: Check whether build, config, docs, and service health are deploy-ready.
+default_prompt: Use efektif-deployment-readiness. Check whether build, config, docs, and service health are deploy-ready.

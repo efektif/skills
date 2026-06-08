@@ -1,0 +1,3 @@
+display_name: Efektif Commit Often
+short_description: Create small verified commits at useful checkpoints.
+default_prompt: Use efektif-commit-often. Create small verified commits at useful checkpoints.

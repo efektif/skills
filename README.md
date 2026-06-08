@@ -2,127 +2,80 @@
 
 Small, safe agent skills for real code work.
 
-This repo is inspired by `mattpocock/skills`, but it is tuned for:
+This repo contains **prefixed Efektif skills** for agent-led engineering workflows:
 
-- **Codex-first workflows**
 - **Repo-grounded answers**
-- **Shorter prompts**
-- **Safer shell and git behavior**
+- **Memory-aware continuity**
+- **Small verified commits**
+- **Deployment and ops checks**
 - **Dyslexia-friendly output**
+- **Safe machine-local cleanup**
+
+## Current State
+
+- **Active skills:** 28
+- **Prefix:** `efektif-`
+- **Validation:** `pnpm skills:validate`
+- **Install target:** `~/.codex/skills/efektif`
 
 ## Skills
 
-- **`repo-grounding`**: inspect the real repo before answering.
-- **`safe-implementation`**: make scoped changes without overwriting user work.
-- **`token-lean`**: keep communication compact without losing accuracy.
-- **`grill-with-evidence`**: clarify risky work using files, tests, and runtime evidence.
-- **`code-review`**: review diffs with findings first.
-- **`handoff`**: create concise continuation notes.
-- **`write-skill`**: create new skills with progressive disclosure.
-- **`anti-redundant`**: search first and update the source of truth.
+- **efektif-setup-skills**
+- **efektif-repo-grounding**
+- **efektif-memory-grounding**
+- **efektif-grill-with-evidence**
+- **efektif-safe-implementation**
+- **efektif-verification-before-done**
+- **efektif-code-review**
+- **efektif-handoff**
+- **efektif-diagnose**
+- **efektif-tdd**
+- **efektif-qa**
+- **efektif-triage**
+- **efektif-to-prd**
+- **efektif-to-issues**
+- **efektif-prd-to-plan**
+- **efektif-zoom-out**
+- **efektif-improve-codebase-architecture**
+- **efektif-request-refactor-plan**
+- **efektif-deployment-readiness**
+- **efektif-machine-cleanup**
+- **efektif-commit-often**
+- **efektif-branch-summary**
+- **efektif-agent-docs-init**
+- **efektif-install-skill-package**
+- **efektif-design-interface**
+- **efektif-prototype**
+- **efektif-write-skill**
+- **efektif-edit-article**
 
-## Install
-
-Fast install with `npx skills`:
-
-```sh
-npx skills@latest add efektif/skills
-```
-
-Local package scripts:
-
-```sh
-npm run skills:validate
-npm run skills:install:dry
-npm run skills:install
-```
-
-Clone or open this repo:
-
-```sh
-cd /Users/morizkay/Developer/efektif/efektif-skills
-```
-
-Dry run first:
-
-```sh
-pnpm skills:install:dry
-```
-
-By default, skills are installed into:
-
-```text
-~/.codex/skills/efektif
-```
-
-Set a custom target:
-
-```sh
-CODEX_SKILLS_DIR="$HOME/.codex/skills/team" pnpm skills:install
-```
-
-After install:
-
-- Restart Codex if the new skills do not appear.
-- Use a skill by naming it in your prompt, for example `Use token-lean`.
-- Re-run `pnpm skills:install` after editing skills.
-
-## Validate
+## Local Commands
 
 ```sh
 pnpm skills:validate
+pnpm skills:install:dry
+pnpm skills:install
 ```
 
-## Example Prompts
-
-Call a skill by naming it directly:
-
-```text
-Use repo-grounding. Tell me how this app starts locally. Check the real scripts and ports first.
-```
-
-```text
-Use safe-implementation. Add a dry-run option to this script, keep the patch small, then verify it.
-```
-
-```text
-Use token-lean compact mode. Summarize the failing build in bullets and include only the next command.
-```
-
-```text
-Use anti-redundant. Search existing docs and scripts first, then update the source of truth instead of creating another file.
-```
-
-For UI work and animation:
-
-```text
-Use frontend-app-builder. Make this docs page feel alive with subtle node reveal animation, hover lift, and reduced-motion support.
-```
-
-```text
-Use frontend-app-builder. Add an animated mindmap that explains the workflow, but keep the UI calm and readable.
-```
-
-## Astro Page
-
-Run the local docs page:
+Raw scripts:
 
 ```sh
-pnpm install
-pnpm dev
+./scripts/validate-skills.sh
+./scripts/install.sh
+./scripts/install.sh --apply
 ```
 
-Build it:
+Regenerate skills from the local source of truth:
 
 ```sh
-pnpm build
+node scripts/sync-skills.mjs
 ```
 
 ## Design Rules
 
-- **Keep `SKILL.md` short**.
-- **Move detailed examples into `references/` only when needed**.
-- **Prefer scripts for repeatable checks**.
-- **Default to dry-run for installers**.
-- **Never include secrets**.
-- **Never require destructive commands**.
+- Keep `SKILL.md` files **small and token-light**.
+- Move detailed examples into `references/` only when needed.
+- Prefer scripts for repeatable checks.
+- Default installers to **dry-run**.
+- Never include secrets.
+- Never require destructive commands.

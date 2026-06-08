@@ -1,0 +1,3 @@
+display_name: Efektif Improve Codebase Architecture
+short_description: Find architecture improvements from current code evidence.
+default_prompt: Use efektif-improve-codebase-architecture. Find architecture improvements from current code evidence.

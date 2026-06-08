@@ -1,0 +1,3 @@
+display_name: Efektif To PRD
+short_description: Convert rough product intent into a lean implementation-aware PRD.
+default_prompt: Use efektif-to-prd. Convert rough product intent into a lean implementation-aware PRD.

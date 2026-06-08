@@ -1,0 +1,3 @@
+display_name: Efektif Triage
+short_description: Turn issues, failures, and TODOs into clear states.
+default_prompt: Use efektif-triage. Turn issues, failures, and TODOs into clear states.

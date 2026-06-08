@@ -1,0 +1,3 @@
+display_name: Efektif PRD To Plan
+short_description: Convert a PRD into a practical execution plan.
+default_prompt: Use efektif-prd-to-plan. Convert a PRD into a practical execution plan.

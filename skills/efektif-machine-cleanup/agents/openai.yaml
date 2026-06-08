@@ -1,0 +1,3 @@
+display_name: Efektif Machine Cleanup
+short_description: Inventory local tools, skills, apps, and config before cleanup.
+default_prompt: Use efektif-machine-cleanup. Inventory local tools, skills, apps, and config before cleanup.

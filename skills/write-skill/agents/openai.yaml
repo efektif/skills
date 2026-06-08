@@ -1,4 +1,0 @@
-display_name: Write Skill
-short_description: Create concise, safe agent skills.
-default_prompt: Use write-skill to create or refine this skill.
-

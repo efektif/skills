@@ -1,4 +1,0 @@
-display_name: Grill With Evidence
-short_description: Clarify risky work using repo evidence first.
-default_prompt: Use grill-with-evidence to clarify this request before implementation.
-

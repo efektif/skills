@@ -1,0 +1,3 @@
+display_name: Efektif TDD
+short_description: Use pragmatic red-green-refactor when a test seam exists.
+default_prompt: Use efektif-tdd. Use pragmatic red-green-refactor when a test seam exists.

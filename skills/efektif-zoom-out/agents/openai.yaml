@@ -1,0 +1,3 @@
+display_name: Efektif Zoom Out
+short_description: Check whether the current fix targets the right problem.
+default_prompt: Use efektif-zoom-out. Check whether the current fix targets the right problem.

@@ -1,0 +1,3 @@
+display_name: Efektif Write Skill
+short_description: Write small token-light skills with validation-ready structure.
+default_prompt: Use efektif-write-skill. Write small token-light skills with validation-ready structure.

@@ -1,0 +1,3 @@
+display_name: Efektif Verification Before Done
+short_description: Verify work before claiming it is complete.
+default_prompt: Use efektif-verification-before-done. Verify work before claiming it is complete.

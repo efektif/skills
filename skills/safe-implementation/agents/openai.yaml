@@ -1,4 +1,0 @@
-display_name: Safe Implementation
-short_description: Make scoped edits while protecting user work.
-default_prompt: Use safe-implementation to make and verify this change.
-

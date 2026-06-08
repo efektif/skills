@@ -1,0 +1,3 @@
+display_name: Efektif Branch Summary
+short_description: Explain a branch from git state, recent commits, and diffs.
+default_prompt: Use efektif-branch-summary. Explain a branch from git state, recent commits, and diffs.

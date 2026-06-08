@@ -1,0 +1,3 @@
+display_name: Efektif Install Skill Package
+short_description: Validate, dry-run, install, and verify skill packages safely.
+default_prompt: Use efektif-install-skill-package. Validate, dry-run, install, and verify skill packages safely.

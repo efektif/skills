@@ -1,3 +1,0 @@
-display_name: Anti Redundant
-short_description: Search first and update the source of truth.
-default_prompt: Use anti-redundant to avoid duplicate files, copy, and abstractions.

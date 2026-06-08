@@ -1,0 +1,3 @@
+display_name: Efektif Diagnose
+short_description: Debug failures with a systematic evidence loop.
+default_prompt: Use efektif-diagnose. Debug failures with a systematic evidence loop.

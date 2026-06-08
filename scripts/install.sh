@@ -20,13 +20,14 @@ echo "Target: $target_dir"
 
 if [[ "$apply" != "true" ]]; then
   echo "Dry run only. Re-run with --apply to install."
-  find "$source_dir" -mindepth 1 -maxdepth 1 -type d -print | sort
+  find "$source_dir" -mindepth 2 -maxdepth 2 -name SKILL.md -print | sort
   exit 0
 fi
 
 mkdir -p "$target_dir"
 
-while IFS= read -r skill_dir; do
+while IFS= read -r skill_file; do
+  skill_dir="$(dirname "$skill_file")"
   name="$(basename "$skill_dir")"
   dest="$target_dir/$name"
   tmp_parent="$(mktemp -d "$target_dir/.install.XXXXXX")"
@@ -41,6 +42,6 @@ while IFS= read -r skill_dir; do
   mv "$tmp" "$dest"
   rmdir "$tmp_parent"
   echo "Installed $name"
-done < <(find "$source_dir" -mindepth 1 -maxdepth 1 -type d | sort)
+done < <(find "$source_dir" -mindepth 2 -maxdepth 2 -name SKILL.md | sort)
 
 echo "Done"

@@ -1,4 +1,0 @@
-display_name: Repo Grounding
-short_description: Inspect the real repository before answering.
-default_prompt: Use repo-grounding to answer this from local files and commands.
-

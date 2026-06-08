@@ -1,0 +1,3 @@
+display_name: Efektif Handoff
+short_description: Create concise continuation notes for another agent or later session.
+default_prompt: Use efektif-handoff. Create concise continuation notes for another agent or later session.

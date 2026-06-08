@@ -1,0 +1,3 @@
+display_name: Efektif Memory Grounding
+short_description: Use saved memory carefully when prior context affects current work.
+default_prompt: Use efektif-memory-grounding. Use saved memory carefully when prior context affects current work.
