@@ -15,7 +15,7 @@ This repo contains **prefixed Efektif skills** for agent-led engineering workflo
 
 - **Active skills:** 28
 - **Prefix:** `efektif-`
-- **Validation:** `pnpm skills:validate`
+- **Validation:** `bun run skills:validate`
 - **Install target:** `~/.codex/skills/efektif`
 
 ## Skills
@@ -52,9 +52,9 @@ This repo contains **prefixed Efektif skills** for agent-led engineering workflo
 ## Local Commands
 
 ```sh
-pnpm skills:validate
-pnpm skills:install:dry
-pnpm skills:install
+bun run skills:validate
+bun run skills:install:dry
+bun run skills:install
 ```
 
 Raw scripts:
