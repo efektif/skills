@@ -8,6 +8,7 @@
     "dev": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
+    "deploy": "bun run build && bunx wrangler pages deploy dist --project-name ${CLOUDFLARE_PAGES_PROJECT:-efektif-skills}",
     "skills:validate": "./scripts/validate-skills.sh",
     "skills:install:dry": "./scripts/install.sh",
     "skills:install": "./scripts/install.sh --apply"
