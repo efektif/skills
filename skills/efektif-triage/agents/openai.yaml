@@ -1,3 +1,3 @@
-display_name: Efektif Triage
-short_description: Turn issues, failures, and TODOs into clear states.
-default_prompt: Use efektif-triage. Turn issues, failures, and TODOs into clear states.
+display_name: "Triage"
+short_description: "Use when issues, TODOs, failures, or feedback need sorting into states, causes, owners, and next actions."
+default_prompt: "Use efektif-triage. Use when issues, TODOs, failures, or feedback need sorting into states, causes, owners, and next actions. Follow the Steps in SKILL.md, keep one evidence-backed output, and report verification or blockers."

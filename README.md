@@ -6,48 +6,48 @@ This repo contains **prefixed Efektif skills** for agent-led engineering workflo
 
 - **Repo-grounded answers**
 - **Memory-aware continuity**
-- **Small verified commits**
+- **Evidence-backed clarification**
+- **Small verified commits when requested**
 - **Deployment and ops checks**
-- **Dyslexia-friendly output**
+- **User workflow QA and app audits**
 - **Safe machine-local cleanup**
 
 ## Current State
 
-- **Active skills:** 28
+- **Active skills:** 27
 - **Prefix:** `efektif-`
 - **Validation:** `bun run skills:validate`
 - **Install target:** `~/.codex/skills/efektif`
 
 ## Skills
 
-- **efektif-setup-skills**
-- **efektif-repo-grounding**
-- **efektif-memory-grounding**
-- **efektif-grill-with-evidence**
-- **efektif-safe-implementation**
-- **efektif-verification-before-done**
-- **efektif-code-review**
-- **efektif-handoff**
-- **efektif-diagnose**
-- **efektif-tdd**
-- **efektif-qa**
-- **efektif-triage**
-- **efektif-to-prd**
-- **efektif-to-issues**
-- **efektif-prd-to-plan**
-- **efektif-zoom-out**
-- **efektif-improve-codebase-architecture**
-- **efektif-request-refactor-plan**
-- **efektif-deployment-readiness**
-- **efektif-machine-cleanup**
-- **efektif-commit-often**
-- **efektif-branch-summary**
-- **efektif-agent-docs-init**
-- **efektif-install-skill-package**
-- **efektif-design-interface**
-- **efektif-prototype**
-- **efektif-write-skill**
-- **efektif-edit-article**
+- **efektif-repo-agent-setup** — Repo Agent Setup
+- **efektif-repo-grounding** — Repo Grounding
+- **efektif-memory-grounding** — Memory Grounding
+- **efektif-clarify-with-evidence** — Clarify With Evidence
+- **efektif-safe-implementation** — Safe Implementation
+- **efektif-verification-before-done** — Verification Before Done
+- **efektif-code-review** — Code Review
+- **efektif-handoff** — Handoff
+- **efektif-diagnose** — Diagnose
+- **efektif-tdd** — Pragmatic TDD
+- **efektif-user-workflow-qa** — User Workflow QA
+- **efektif-crazy-story** — Crazy Story
+- **efektif-triage** — Triage
+- **efektif-intent-to-prd** — Intent To PRD
+- **efektif-plan-to-issues** — Plan To Issues
+- **efektif-prd-to-plan** — PRD To Plan
+- **efektif-zoom-out** — Zoom Out
+- **efektif-architecture-review** — Architecture Review
+- **efektif-refactor-plan** — Refactor Plan
+- **efektif-deployment-readiness** — Deployment Readiness
+- **efektif-machine-cleanup** — Machine Cleanup
+- **efektif-checkpoint-commits** — Checkpoint Commits
+- **efektif-branch-summary** — Branch Summary
+- **efektif-install-skill-package** — Install Skill Package
+- **efektif-design-interface** — Design Interface
+- **efektif-prototype** — Prototype
+- **efektif-write-skill** — Write Skill
 
 ## Local Commands
 

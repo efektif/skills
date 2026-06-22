@@ -1,0 +1,3 @@
+display_name: "Crazy Story"
+short_description: "Use when explicitly asked for a Crazy Story app audit: inventory features, write user stories, track test/error/fix/retest status in one canonical Markdown table, and fix only approved UX or logistics issues."
+default_prompt: "Use efektif-crazy-story. Use when explicitly asked for a Crazy Story app audit: inventory features, write user stories, track test/error/fix/retest status in one canonical Markdown table, and fix only approved UX or logistics issues. Follow the Steps in SKILL.md, keep one evidence-backed output, and report verification or blockers."

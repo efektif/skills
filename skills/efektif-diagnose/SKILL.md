@@ -1,21 +1,23 @@
 ---
 name: efektif-diagnose
-description: Debug failures with a systematic evidence loop.
+description: "Use when debugging failures; reproduce, minimize, hypothesize, instrument, fix, and add a regression check."
 ---
 
-# Efektif Diagnose
+# Diagnose
 
-Use this skill when you need to debug failures with a systematic evidence loop.
+## Use When
+
+Use when debugging failures; reproduce, minimize, hypothesize, instrument, fix, and add a regression check.
 
 ## Steps
 
-- Reproduce the issue before changing code.
-- Minimize the failure surface.
-- Form and test one hypothesis at a time.
-- Add a regression check after the fix.
+- Reproduce the failure before changing code.
+- Minimize the failing surface and identify the boundary.
+- Test one hypothesis at a time with evidence.
+- After the fix, run a regression check that would have caught it.
 
 ## Output
 
-- Keep responses short and evidence-backed.
-- Name verification performed or explain why it was not run.
-- Prefer concrete next actions over broad advice.
+- Keep responses short, structured, and evidence-backed.
+- Name exact files, commands, screenshots, or logs used as evidence.
+- Separate verified facts from assumptions, blockers, and next actions.

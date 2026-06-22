@@ -1,0 +1,3 @@
+display_name: "Plan To Issues"
+short_description: "Use when a plan or PRD should become small, verifiable issues with acceptance checks and dependencies."
+default_prompt: "Use efektif-plan-to-issues. Use when a plan or PRD should become small, verifiable issues with acceptance checks and dependencies. Follow the Steps in SKILL.md, keep one evidence-backed output, and report verification or blockers."

@@ -1,20 +1,23 @@
 ---
 name: efektif-deployment-readiness
-description: Check whether build, config, docs, and service health are deploy-ready.
+description: "Use before deploys or release claims; check build, config, migrations, docs, service health, and known blockers."
 ---
 
-# Efektif Deployment Readiness
+# Deployment Readiness
 
-Use this skill when you need to check whether build, config, docs, and service health are deploy-ready.
+## Use When
+
+Use before deploys or release claims; check build, config, migrations, docs, service health, and known blockers.
 
 ## Steps
 
 - Read deployment docs and environment templates first.
-- Separate local build success from live deploy success.
-- Check service health, logs, and known blockers when available.
+- Separate local build success from live deploy readiness.
+- Check migrations, config, secrets requirements, logs, and health endpoints when available.
+- Report go/no-go status with evidence.
 
 ## Output
 
-- Keep responses short and evidence-backed.
-- Name verification performed or explain why it was not run.
-- Prefer concrete next actions over broad advice.
+- Keep responses short, structured, and evidence-backed.
+- Name exact files, commands, screenshots, or logs used as evidence.
+- Separate verified facts from assumptions, blockers, and next actions.

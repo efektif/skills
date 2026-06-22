@@ -1,20 +1,23 @@
 ---
 name: efektif-prototype
-description: Build small interactive prototypes when interaction beats prose.
+description: "Use when a small interactive artifact will clarify behavior faster than prose or static screenshots."
 ---
 
-# Efektif Prototype
+# Prototype
 
-Use this skill when you need to build small interactive prototypes when interaction beats prose.
+## Use When
+
+Use when a small interactive artifact will clarify behavior faster than prose or static screenshots.
 
 ## Steps
 
-- Define the target workflow and interaction level.
+- Define the target workflow and interaction fidelity.
 - Reuse project conventions and avoid unnecessary dependencies.
-- Run browser verification when applicable.
+- Keep the prototype disposable unless asked to productionize it.
+- Run browser or runtime verification when applicable.
 
 ## Output
 
-- Keep responses short and evidence-backed.
-- Name verification performed or explain why it was not run.
-- Prefer concrete next actions over broad advice.
+- Keep responses short, structured, and evidence-backed.
+- Name exact files, commands, screenshots, or logs used as evidence.
+- Separate verified facts from assumptions, blockers, and next actions.

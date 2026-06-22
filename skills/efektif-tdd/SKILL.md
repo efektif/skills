@@ -1,21 +1,23 @@
 ---
 name: efektif-tdd
-description: Use pragmatic red-green-refactor when a test seam exists.
+description: "Use when a practical test seam exists; write the smallest failing test, pass it, then refactor safely."
 ---
 
-# Efektif TDD
+# Pragmatic TDD
 
-Use this skill when you need to use pragmatic red-green-refactor when a test seam exists.
+## Use When
+
+Use when a practical test seam exists; write the smallest failing test, pass it, then refactor safely.
 
 ## Steps
 
-- Find the smallest meaningful failing test.
+- Find the smallest behavior worth protecting.
+- Make the test fail for the right reason first.
 - Implement only enough to pass.
-- Refactor after behavior is protected.
-- Do not force TDD where the repo lacks a reasonable test seam.
+- Refactor after behavior is protected; skip forced TDD when no reasonable seam exists.
 
 ## Output
 
-- Keep responses short and evidence-backed.
-- Name verification performed or explain why it was not run.
-- Prefer concrete next actions over broad advice.
+- Keep responses short, structured, and evidence-backed.
+- Name exact files, commands, screenshots, or logs used as evidence.
+- Separate verified facts from assumptions, blockers, and next actions.

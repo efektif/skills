@@ -1,20 +1,23 @@
 ---
 name: efektif-branch-summary
-description: Explain a branch from git state, recent commits, and diffs.
+description: "Use when explaining a branch from git state, recent commits, changed files, diffs, risks, and verification."
 ---
 
-# Efektif Branch Summary
+# Branch Summary
 
-Use this skill when you need to explain a branch from git state, recent commits, and diffs.
+## Use When
+
+Use when explaining a branch from git state, recent commits, changed files, diffs, risks, and verification.
 
 ## Steps
 
 - Check branch, upstream, status, and recent commits.
 - Inspect diff stats and key changed files.
 - Summarize purpose, risk, and verification status.
+- Call out uncommitted work separately.
 
 ## Output
 
-- Keep responses short and evidence-backed.
-- Name verification performed or explain why it was not run.
-- Prefer concrete next actions over broad advice.
+- Keep responses short, structured, and evidence-backed.
+- Name exact files, commands, screenshots, or logs used as evidence.
+- Separate verified facts from assumptions, blockers, and next actions.

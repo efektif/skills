@@ -1,3 +1,3 @@
-display_name: Efektif Repo Grounding
-short_description: Inspect the current checkout before answering repo-dependent questions.
-default_prompt: Use efektif-repo-grounding. Inspect the current checkout before answering repo-dependent questions.
+display_name: "Repo Grounding"
+short_description: "Use when a request depends on the current checkout; inspect files, scripts, branch state, and docs before answering."
+default_prompt: "Use efektif-repo-grounding. Use when a request depends on the current checkout; inspect files, scripts, branch state, and docs before answering. Follow the Steps in SKILL.md, keep one evidence-backed output, and report verification or blockers."

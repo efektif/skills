@@ -1,20 +1,23 @@
 ---
 name: efektif-handoff
-description: Create concise continuation notes for another agent or later session.
+description: "Use when another agent or future session must continue; create concise state, evidence, blockers, and next actions."
 ---
 
-# Efektif Handoff
+# Handoff
 
-Use this skill when you need to create concise continuation notes for another agent or later session.
+## Use When
+
+Use when another agent or future session must continue; create concise state, evidence, blockers, and next actions.
 
 ## Steps
 
-- Capture the goal, current status, changed files, and commands run.
-- Name blockers and the next concrete action.
-- Keep the handoff short enough to paste into a new thread.
+- Capture goal, current status, changed files, and commands run.
+- Name blockers, risks, and the next concrete action.
+- Keep it short enough to paste into a new thread.
+- Do not include stale speculation as fact.
 
 ## Output
 
-- Keep responses short and evidence-backed.
-- Name verification performed or explain why it was not run.
-- Prefer concrete next actions over broad advice.
+- Keep responses short, structured, and evidence-backed.
+- Name exact files, commands, screenshots, or logs used as evidence.
+- Separate verified facts from assumptions, blockers, and next actions.

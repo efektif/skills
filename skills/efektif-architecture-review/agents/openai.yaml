@@ -1,0 +1,3 @@
+display_name: "Architecture Review"
+short_description: "Use when improving architecture from code evidence; find boundaries, dependencies, duplication, and small high-payoff refactors."
+default_prompt: "Use efektif-architecture-review. Use when improving architecture from code evidence; find boundaries, dependencies, duplication, and small high-payoff refactors. Follow the Steps in SKILL.md, keep one evidence-backed output, and report verification or blockers."

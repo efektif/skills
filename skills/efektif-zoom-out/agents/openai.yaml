@@ -1,3 +1,3 @@
-display_name: Efektif Zoom Out
-short_description: Check whether the current fix targets the right problem.
-default_prompt: Use efektif-zoom-out. Check whether the current fix targets the right problem.
+display_name: "Zoom Out"
+short_description: "Use when a fix or plan may be solving the wrong problem; reassess goal, path, tradeoffs, and simpler options."
+default_prompt: "Use efektif-zoom-out. Use when a fix or plan may be solving the wrong problem; reassess goal, path, tradeoffs, and simpler options. Follow the Steps in SKILL.md, keep one evidence-backed output, and report verification or blockers."

@@ -1,20 +1,23 @@
 ---
 name: efektif-triage
-description: Turn issues, failures, and TODOs into clear states.
+description: "Use when issues, TODOs, failures, or feedback need sorting into states, causes, owners, and next actions."
 ---
 
-# Efektif Triage
+# Triage
 
-Use this skill when you need to turn issues, failures, and todos into clear states.
+## Use When
+
+Use when issues, TODOs, failures, or feedback need sorting into states, causes, owners, and next actions.
 
 ## Steps
 
 - Group items into done, active, blocked, and not started.
 - Separate symptoms from likely causes.
-- Name the next action and owner when possible.
+- Identify owner, priority, dependency, and next action where possible.
+- Keep the output scannable and decision-ready.
 
 ## Output
 
-- Keep responses short and evidence-backed.
-- Name verification performed or explain why it was not run.
-- Prefer concrete next actions over broad advice.
+- Keep responses short, structured, and evidence-backed.
+- Name exact files, commands, screenshots, or logs used as evidence.
+- Separate verified facts from assumptions, blockers, and next actions.

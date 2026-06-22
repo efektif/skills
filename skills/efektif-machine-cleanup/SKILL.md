@@ -1,20 +1,23 @@
 ---
 name: efektif-machine-cleanup
-description: Inventory local tools, skills, apps, and config before cleanup.
+description: "Use for local cleanup of tools, skills, apps, caches, and config after the user scopes the cleanup; inventory first and default to dry-run."
 ---
 
-# Efektif Machine Cleanup
+# Machine Cleanup
 
-Use this skill when you need to inventory local tools, skills, apps, and config before cleanup.
+## Use When
+
+Use for local cleanup of tools, skills, apps, caches, and config after the user scopes the cleanup; inventory first and default to dry-run.
 
 ## Steps
 
 - List current state before deleting or changing anything.
-- Default to dry-run and reversible operations.
+- Prefer dry-run and reversible operations.
 - Avoid vendor, marketplace, and plugin cache paths unless explicitly scoped.
+- Ask before destructive cleanup when scope is unclear.
 
 ## Output
 
-- Keep responses short and evidence-backed.
-- Name verification performed or explain why it was not run.
-- Prefer concrete next actions over broad advice.
+- Keep responses short, structured, and evidence-backed.
+- Name exact files, commands, screenshots, or logs used as evidence.
+- Separate verified facts from assumptions, blockers, and next actions.

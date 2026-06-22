@@ -1,20 +1,23 @@
 ---
 name: efektif-write-skill
-description: Write small token-light skills with validation-ready structure.
+description: "Use when authoring small token-light skills with clear triggers, safe steps, validation, and install-ready structure."
 ---
 
-# Efektif Write Skill
+# Write Skill
 
-Use this skill when you need to write small token-light skills with validation-ready structure.
+## Use When
+
+Use when authoring small token-light skills with clear triggers, safe steps, validation, and install-ready structure.
 
 ## Steps
 
 - Keep SKILL.md focused and short.
-- Move examples into references only when needed.
-- Include safe defaults and validation commands.
+- Use a strong trigger description and concrete steps.
+- Move detailed examples into references only when needed.
+- Run package validation before finishing.
 
 ## Output
 
-- Keep responses short and evidence-backed.
-- Name verification performed or explain why it was not run.
-- Prefer concrete next actions over broad advice.
+- Keep responses short, structured, and evidence-backed.
+- Name exact files, commands, screenshots, or logs used as evidence.
+- Separate verified facts from assumptions, blockers, and next actions.

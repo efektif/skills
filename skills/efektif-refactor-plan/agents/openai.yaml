@@ -1,0 +1,3 @@
+display_name: "Refactor Plan"
+short_description: "Use before risky refactors; produce a scoped, staged plan with rollback points and validation after each stage."
+default_prompt: "Use efektif-refactor-plan. Use before risky refactors; produce a scoped, staged plan with rollback points and validation after each stage. Follow the Steps in SKILL.md, keep one evidence-backed output, and report verification or blockers."

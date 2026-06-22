@@ -1,21 +1,23 @@
 ---
 name: efektif-install-skill-package
-description: Validate, dry-run, install, and verify skill packages safely.
+description: "Use when installing a skill package safely: validate, dry-run, apply only when intended, then verify target files."
 ---
 
-# Efektif Install Skill Package
+# Install Skill Package
 
-Use this skill when you need to validate, dry-run, install, and verify skill packages safely.
+## Use When
+
+Use when installing a skill package safely: validate, dry-run, apply only when intended, then verify target files.
 
 ## Steps
 
 - Run package validation first.
 - Run dry-run install before apply.
-- Verify installed files in the target skills directory.
-- Report exact target path and installed count.
+- Confirm the exact install target.
+- Verify installed files and report count and path.
 
 ## Output
 
-- Keep responses short and evidence-backed.
-- Name verification performed or explain why it was not run.
-- Prefer concrete next actions over broad advice.
+- Keep responses short, structured, and evidence-backed.
+- Name exact files, commands, screenshots, or logs used as evidence.
+- Separate verified facts from assumptions, blockers, and next actions.

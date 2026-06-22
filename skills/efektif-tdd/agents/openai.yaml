@@ -1,3 +1,3 @@
-display_name: Efektif TDD
-short_description: Use pragmatic red-green-refactor when a test seam exists.
-default_prompt: Use efektif-tdd. Use pragmatic red-green-refactor when a test seam exists.
+display_name: "Pragmatic TDD"
+short_description: "Use when a practical test seam exists; write the smallest failing test, pass it, then refactor safely."
+default_prompt: "Use efektif-tdd. Use when a practical test seam exists; write the smallest failing test, pass it, then refactor safely. Follow the Steps in SKILL.md, keep one evidence-backed output, and report verification or blockers."

@@ -1,0 +1,3 @@
+display_name: "Clarify With Evidence"
+short_description: "Use when scope is risky or ambiguous; gather local evidence first, then ask only the blocking questions."
+default_prompt: "Use efektif-clarify-with-evidence. Use when scope is risky or ambiguous; gather local evidence first, then ask only the blocking questions. Follow the Steps in SKILL.md, keep one evidence-backed output, and report verification or blockers."

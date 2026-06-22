@@ -1,0 +1,3 @@
+display_name: "Checkpoint Commits"
+short_description: "Use only when the user asked for commits during multi-step work; create small, verified checkpoints without mixing unrelated user changes."
+default_prompt: "Use efektif-checkpoint-commits. Use only when the user asked for commits during multi-step work; create small, verified checkpoints without mixing unrelated user changes. Follow the Steps in SKILL.md, keep one evidence-backed output, and report verification or blockers."

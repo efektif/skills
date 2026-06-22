@@ -1,3 +1,0 @@
-display_name: Efektif QA
-short_description: Check user-facing behavior after implementation.
-default_prompt: Use efektif-qa. Check user-facing behavior after implementation.

@@ -1,21 +1,23 @@
 ---
 name: efektif-memory-grounding
-description: Use saved memory carefully when prior context affects current work.
+description: "Use when prior sessions or saved memory may affect the work, while treating memory as a lead rather than proof."
 ---
 
-# Efektif Memory Grounding
+# Memory Grounding
 
-Use this skill when you need to use saved memory carefully when prior context affects current work.
+## Use When
+
+Use when prior sessions or saved memory may affect the work, while treating memory as a lead rather than proof.
 
 ## Steps
 
-- Search memory only when history can change the answer.
-- Treat memory as a pointer, not proof.
-- Verify stale or risky facts against the current checkout.
-- Say when an answer relies on memory-derived context.
+- Search memory or past notes only when history can change the answer.
+- Use memory to find likely files, decisions, or constraints.
+- Verify stale or risky facts against the live repo.
+- Say plainly when context came from memory and what was re-verified.
 
 ## Output
 
-- Keep responses short and evidence-backed.
-- Name verification performed or explain why it was not run.
-- Prefer concrete next actions over broad advice.
+- Keep responses short, structured, and evidence-backed.
+- Name exact files, commands, screenshots, or logs used as evidence.
+- Separate verified facts from assumptions, blockers, and next actions.

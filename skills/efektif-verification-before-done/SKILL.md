@@ -1,20 +1,23 @@
 ---
 name: efektif-verification-before-done
-description: Verify work before claiming it is complete.
+description: "Use before claiming work is complete; prove the result with tests, builds, lint, smoke checks, or documented blockers."
 ---
 
-# Efektif Verification Before Done
+# Verification Before Done
 
-Use this skill when you need to verify work before claiming it is complete.
+## Use When
+
+Use before claiming work is complete; prove the result with tests, builds, lint, smoke checks, or documented blockers.
 
 ## Steps
 
-- Run the relevant test, build, lint, smoke, or docs command.
+- Pick the verification that matches the actual change.
+- Run it and capture the exact command and result.
 - Separate done, blocked, and unverified items.
-- Report the exact commands and outcomes.
+- Never replace failed verification with a confident summary.
 
 ## Output
 
-- Keep responses short and evidence-backed.
-- Name verification performed or explain why it was not run.
-- Prefer concrete next actions over broad advice.
+- Keep responses short, structured, and evidence-backed.
+- Name exact files, commands, screenshots, or logs used as evidence.
+- Separate verified facts from assumptions, blockers, and next actions.

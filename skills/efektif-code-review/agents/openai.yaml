@@ -1,3 +1,3 @@
-display_name: Efektif Code Review
-short_description: Review changes with findings first and evidence-backed risk.
-default_prompt: Use efektif-code-review. Review changes with findings first and evidence-backed risk.
+display_name: "Code Review"
+short_description: "Use when reviewing changes; lead with actionable findings, evidence, risk, and missing verification."
+default_prompt: "Use efektif-code-review. Use when reviewing changes; lead with actionable findings, evidence, risk, and missing verification. Follow the Steps in SKILL.md, keep one evidence-backed output, and report verification or blockers."

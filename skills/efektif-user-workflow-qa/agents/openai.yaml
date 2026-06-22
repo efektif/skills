@@ -1,0 +1,3 @@
+display_name: "User Workflow QA"
+short_description: "Use after implementation to check real user workflows, viewports, states, logs, and residual risk."
+default_prompt: "Use efektif-user-workflow-qa. Use after implementation to check real user workflows, viewports, states, logs, and residual risk. Follow the Steps in SKILL.md, keep one evidence-backed output, and report verification or blockers."

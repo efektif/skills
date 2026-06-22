@@ -8,9 +8,10 @@ const skillGroups = [
     summary: "The skills that should shape almost every agent-led repo session.",
     accent: "mint",
     skills: [
-      "efektif-setup-skills",
+      "efektif-repo-agent-setup",
       "efektif-repo-grounding",
       "efektif-memory-grounding",
+      "efektif-clarify-with-evidence",
       "efektif-safe-implementation",
       "efektif-verification-before-done",
     ],
@@ -23,10 +24,11 @@ const skillGroups = [
     skills: [
       "efektif-diagnose",
       "efektif-tdd",
-      "efektif-qa",
+      "efektif-user-workflow-qa",
+      "efektif-crazy-story",
       "efektif-code-review",
-      "efektif-request-refactor-plan",
-      "efektif-improve-codebase-architecture",
+      "efektif-refactor-plan",
+      "efektif-architecture-review",
     ],
   },
   {
@@ -35,9 +37,8 @@ const skillGroups = [
     summary: "Turn rough intent into PRDs, issues, and execution slices.",
     accent: "amber",
     skills: [
-      "efektif-grill-with-evidence",
-      "efektif-to-prd",
-      "efektif-to-issues",
+      "efektif-intent-to-prd",
+      "efektif-plan-to-issues",
       "efektif-prd-to-plan",
       "efektif-triage",
       "efektif-zoom-out",
@@ -51,20 +52,26 @@ const skillGroups = [
     skills: [
       "efektif-deployment-readiness",
       "efektif-machine-cleanup",
-      "efektif-commit-often",
+      "efektif-checkpoint-commits",
       "efektif-branch-summary",
-      "efektif-agent-docs-init",
       "efektif-handoff",
       "efektif-install-skill-package",
       "efektif-write-skill",
     ],
+  },
+  {
+    eyebrow: "Product",
+    title: "Design And Prototype",
+    summary: "Skills for UI decisions and small interactive artifacts.",
+    accent: "blue",
+    skills: ["efektif-design-interface", "efektif-prototype"],
   },
 ];
 
 const buildOrder = [
   {
     step: "01",
-    name: "efektif-setup-skills",
+    name: "efektif-repo-agent-setup",
     reason: "Gives every repo a local contract for docs, issue flow, and validation.",
     why: "All later skills need to know where repo guidance, domain context, validation commands, and issue tracking live.",
     changes: "Adds a repeatable setup contract so agents do not rediscover the same repo rules every session.",
@@ -115,24 +122,24 @@ const buildOrder = [
 const principles = [
   "Inspect before answering.",
   "Prefer dry-run before apply.",
-  "Commit small verified slices.",
+  "Commit only when requested.",
   "Keep output readable and short.",
 ];
 
 const commands = [
   {
     label: "Validate Package",
-    command: "pnpm skills:validate\nnpm run skills:validate",
+    command: "bun run skills:validate\n./scripts/validate-skills.sh",
     note: "Checks skill metadata before publishing or installing.",
   },
   {
     label: "Preview Install",
-    command: "pnpm skills:install:dry\nnpm run skills:install:dry\n./scripts/install.sh",
+    command: "bun run skills:install:dry\n./scripts/install.sh",
     note: "Shows the install target before any files are written.",
   },
   {
     label: "Build Docs",
-    command: "pnpm build\nnpm run build",
+    command: "bun run build",
     note: "Runs Astro diagnostics and produces the static documentation site.",
   },
   {
@@ -142,11 +149,11 @@ const commands = [
   },
 ];
 
-const heroCommandText = "npx skills@latest add efektif/skills\npnpm skills:install:dry";
+const heroCommandText = "npx skills@latest add efektif/skills\nbun run skills:install:dry";
 const heroCommandDisplay = `npx skills@latest add efektif/skills
 # install from GitHub
 
-pnpm skills:install:dry
+bun run skills:install:dry
 # local dry run`;
 ---
 
@@ -791,7 +798,7 @@ pnpm skills:install:dry
           <div class="panel summary-panel">
             <p class="eyebrow">Active package</p>
             <div class="status-row">
-              <span class="pill">Active skills: 28</span>
+              <span class="pill">Active skills: 27</span>
               <span class="pill">Docs: ready</span>
               <span class="pill">Install: dry-run first</span>
             </div>
@@ -928,7 +935,7 @@ pnpm skills:install:dry
           </div>
           <p>
             Use the path that matches your workflow. Public installs can use
-            `npx`, while local contributors can use `pnpm`, `npm`, or the raw
+            `npx`, while local contributors can use `bun` or the raw
             shell scripts.
           </p>
         </div>

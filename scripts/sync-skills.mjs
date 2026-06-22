@@ -4,322 +4,349 @@ import { join } from "node:path";
 const root = new URL("..", import.meta.url).pathname;
 const skillsRoot = join(root, "skills");
 
+const commonOutput = [
+  "Keep responses short, structured, and evidence-backed.",
+  "Name exact files, commands, screenshots, or logs used as evidence.",
+  "Separate verified facts from assumptions, blockers, and next actions.",
+];
+
 const skills = [
   {
-    slug: "efektif-setup-skills",
-    title: "Efektif Setup Skills",
-    description: "Bootstrap repo-specific agent context, validation commands, and handoff rules.",
+    slug: "efektif-repo-agent-setup",
+    title: "Repo Agent Setup",
+    description: "Use when bootstrapping a repo for repeatable agent work: context files, validation commands, issue flow, and handoff rules.",
     steps: [
-      "Inspect repo docs, package scripts, issue links, and validation commands.",
-      "Identify the repo-specific rules future agents should reuse.",
-      "Write or update the smallest durable guidance file.",
-      "Verify the documented commands still match the checkout.",
+      "Inspect README, package scripts, docs, issue links, and existing agent guidance.",
+      "Record only durable repo rules future agents must reuse.",
+      "Create or refresh AGENTS.md only when the guidance will outlive the current session.",
+      "Verify documented commands against the current checkout or label them unverified.",
     ],
   },
   {
     slug: "efektif-repo-grounding",
-    title: "Efektif Repo Grounding",
-    description: "Inspect the current checkout before answering repo-dependent questions.",
+    title: "Repo Grounding",
+    description: "Use when a request depends on the current checkout; inspect files, scripts, branch state, and docs before answering.",
     steps: [
-      "Check cwd, git status, relevant files, scripts, and docs.",
-      "Prefer exact file paths and commands over subsystem guesses.",
-      "Separate confirmed repo facts from inferred context.",
+      "Confirm cwd, git status, branch, package scripts, and relevant files.",
+      "Use exact paths and commands instead of framework guesses.",
+      "Separate confirmed facts from inferred context.",
+      "Re-check after edits when the answer depends on changed files.",
     ],
   },
   {
     slug: "efektif-memory-grounding",
-    title: "Efektif Memory Grounding",
-    description: "Use saved memory carefully when prior context affects current work.",
+    title: "Memory Grounding",
+    description: "Use when prior sessions or saved memory may affect the work, while treating memory as a lead rather than proof.",
     steps: [
-      "Search memory only when history can change the answer.",
-      "Treat memory as a pointer, not proof.",
-      "Verify stale or risky facts against the current checkout.",
-      "Say when an answer relies on memory-derived context.",
+      "Search memory or past notes only when history can change the answer.",
+      "Use memory to find likely files, decisions, or constraints.",
+      "Verify stale or risky facts against the live repo.",
+      "Say plainly when context came from memory and what was re-verified.",
     ],
   },
   {
-    slug: "efektif-grill-with-evidence",
-    title: "Efektif Grill With Evidence",
-    description: "Clarify risky work with local evidence before asking questions.",
+    slug: "efektif-clarify-with-evidence",
+    title: "Clarify With Evidence",
+    description: "Use when scope is risky or ambiguous; gather local evidence first, then ask only the blocking questions.",
     steps: [
-      "Inspect the relevant files, logs, docs, or runtime state first.",
-      "Ask only blocking questions.",
+      "Inspect files, logs, docs, issues, or runtime state before questioning the user.",
+      "State what the evidence already suggests.",
+      "Ask only questions that change the next action.",
       "Offer a conservative default when evidence supports one.",
     ],
   },
   {
     slug: "efektif-safe-implementation",
-    title: "Efektif Safe Implementation",
-    description: "Make scoped changes while protecting user work in shared checkouts.",
+    title: "Safe Implementation",
+    description: "Use when modifying a shared checkout; make scoped edits, protect user work, and verify the narrowest useful path.",
     steps: [
       "Check git status before editing.",
       "Keep the patch inside the requested ownership boundary.",
-      "Do not revert unrelated user changes.",
-      "Run the narrowest useful verification before finishing.",
+      "Do not revert unrelated changes or cleanup user work by accident.",
+      "Run the smallest meaningful verification before finishing.",
     ],
   },
   {
     slug: "efektif-verification-before-done",
-    title: "Efektif Verification Before Done",
-    description: "Verify work before claiming it is complete.",
+    title: "Verification Before Done",
+    description: "Use before claiming work is complete; prove the result with tests, builds, lint, smoke checks, or documented blockers.",
     steps: [
-      "Run the relevant test, build, lint, smoke, or docs command.",
+      "Pick the verification that matches the actual change.",
+      "Run it and capture the exact command and result.",
       "Separate done, blocked, and unverified items.",
-      "Report the exact commands and outcomes.",
+      "Never replace failed verification with a confident summary.",
     ],
   },
   {
     slug: "efektif-code-review",
-    title: "Efektif Code Review",
-    description: "Review changes with findings first and evidence-backed risk.",
+    title: "Code Review",
+    description: "Use when reviewing changes; lead with actionable findings, evidence, risk, and missing verification.",
     steps: [
-      "Inspect the diff and nearby code paths.",
-      "Lead with bugs, regressions, security issues, and missing tests.",
-      "Use file and line references where possible.",
-      "Keep summaries secondary to actionable findings.",
+      "Inspect the diff and nearby code paths, not only changed lines.",
+      "Prioritize bugs, regressions, security issues, and missing tests.",
+      "Reference files and lines where possible.",
+      "Keep praise and summaries secondary to findings.",
     ],
   },
   {
     slug: "efektif-handoff",
-    title: "Efektif Handoff",
-    description: "Create concise continuation notes for another agent or later session.",
+    title: "Handoff",
+    description: "Use when another agent or future session must continue; create concise state, evidence, blockers, and next actions.",
     steps: [
-      "Capture the goal, current status, changed files, and commands run.",
-      "Name blockers and the next concrete action.",
-      "Keep the handoff short enough to paste into a new thread.",
+      "Capture goal, current status, changed files, and commands run.",
+      "Name blockers, risks, and the next concrete action.",
+      "Keep it short enough to paste into a new thread.",
+      "Do not include stale speculation as fact.",
     ],
   },
   {
     slug: "efektif-diagnose",
-    title: "Efektif Diagnose",
-    description: "Debug failures with a systematic evidence loop.",
+    title: "Diagnose",
+    description: "Use when debugging failures; reproduce, minimize, hypothesize, instrument, fix, and add a regression check.",
     steps: [
-      "Reproduce the issue before changing code.",
-      "Minimize the failure surface.",
-      "Form and test one hypothesis at a time.",
-      "Add a regression check after the fix.",
+      "Reproduce the failure before changing code.",
+      "Minimize the failing surface and identify the boundary.",
+      "Test one hypothesis at a time with evidence.",
+      "After the fix, run a regression check that would have caught it.",
     ],
   },
   {
     slug: "efektif-tdd",
-    title: "Efektif TDD",
-    description: "Use pragmatic red-green-refactor when a test seam exists.",
+    title: "Pragmatic TDD",
+    description: "Use when a practical test seam exists; write the smallest failing test, pass it, then refactor safely.",
     steps: [
-      "Find the smallest meaningful failing test.",
+      "Find the smallest behavior worth protecting.",
+      "Make the test fail for the right reason first.",
       "Implement only enough to pass.",
-      "Refactor after behavior is protected.",
-      "Do not force TDD where the repo lacks a reasonable test seam.",
+      "Refactor after behavior is protected; skip forced TDD when no reasonable seam exists.",
     ],
   },
   {
-    slug: "efektif-qa",
-    title: "Efektif QA",
-    description: "Check user-facing behavior after implementation.",
+    slug: "efektif-user-workflow-qa",
+    title: "User Workflow QA",
+    description: "Use after implementation to check real user workflows, viewports, states, logs, and residual risk.",
     steps: [
       "Identify the workflow a real user would exercise.",
-      "Run focused smoke checks across relevant viewport or runtime states.",
-      "Capture screenshots or logs when they add confidence.",
-      "Report residual risk plainly.",
+      "Run focused smoke checks across relevant states, roles, and viewports.",
+      "Capture screenshots, logs, or reproduction notes when useful.",
+      "Report what passed, what failed, and what remains risky.",
+    ],
+  },
+  {
+    slug: "efektif-crazy-story",
+    title: "Crazy Story",
+    description: "Use when explicitly asked for a Crazy Story app audit: inventory features, write user stories, track test/error/fix/retest status in one canonical Markdown table, and fix only approved UX or logistics issues.",
+    steps: [
+      "Create one canonical tracker, for example docs/crazy-story.md, unless the repo already has a better planning location.",
+      "Inventory every visible and code-backed feature by domain, role, route, command, API, or workflow.",
+      "Write one user story per feature with actor, goal, expected behavior, acceptance checks, and evidence.",
+      "Test each story, document every error, fix approved UX or logistics issues, then retest affected stories.",
+      "Ask before product, data, security, destructive, or unclear fixes.",
+    ],
+    notes: [
+      "Default tracker columns: Feature, Role, Story, Expected behavior, Acceptance checks, Test status, Error, Fix status, Retest result, Evidence.",
+      "Let the project admin decide categories such as domain, persona, role, module, or uncategorized.",
     ],
   },
   {
     slug: "efektif-triage",
-    title: "Efektif Triage",
-    description: "Turn issues, failures, and TODOs into clear states.",
+    title: "Triage",
+    description: "Use when issues, TODOs, failures, or feedback need sorting into states, causes, owners, and next actions.",
     steps: [
       "Group items into done, active, blocked, and not started.",
       "Separate symptoms from likely causes.",
-      "Name the next action and owner when possible.",
+      "Identify owner, priority, dependency, and next action where possible.",
+      "Keep the output scannable and decision-ready.",
     ],
   },
   {
-    slug: "efektif-to-prd",
-    title: "Efektif To PRD",
-    description: "Convert rough product intent into a lean implementation-aware PRD.",
+    slug: "efektif-intent-to-prd",
+    title: "Intent To PRD",
+    description: "Use when rough product intent needs a lean, implementation-aware PRD with scope, non-goals, states, and success criteria.",
     steps: [
-      "State the user problem and success criteria.",
-      "Define scope, non-goals, states, and edge cases.",
-      "Keep the PRD short and directly useful for implementation.",
+      "State the user problem and measurable success criteria.",
+      "Define scope, non-goals, states, permissions, and edge cases.",
+      "Call out dependencies, risks, and open questions.",
+      "Keep it short enough to drive implementation.",
     ],
   },
   {
-    slug: "efektif-to-issues",
-    title: "Efektif To Issues",
-    description: "Break a plan or PRD into small verifiable issues.",
+    slug: "efektif-plan-to-issues",
+    title: "Plan To Issues",
+    description: "Use when a plan or PRD should become small, verifiable issues with acceptance checks and dependencies.",
     steps: [
       "Split work by independently testable outcomes.",
-      "Include acceptance checks and dependencies.",
+      "Include acceptance criteria, verification commands, and dependencies.",
       "Keep each issue narrow enough for a small commit or PR.",
+      "Mark sequencing and blockers explicitly.",
     ],
   },
   {
     slug: "efektif-prd-to-plan",
-    title: "Efektif PRD To Plan",
-    description: "Convert a PRD into a practical execution plan.",
+    title: "PRD To Plan",
+    description: "Use when a PRD needs a dependency-aware implementation plan with phases, risks, and verification gates.",
     steps: [
-      "Map requirements to implementation areas.",
-      "Sequence the work by dependency and risk.",
+      "Map requirements to code areas, data, UI, and operations.",
+      "Sequence phases by dependency and risk.",
       "Add verification gates for each phase.",
+      "Keep rollback and cutover notes where relevant.",
     ],
   },
   {
     slug: "efektif-zoom-out",
-    title: "Efektif Zoom Out",
-    description: "Check whether the current fix targets the right problem.",
+    title: "Zoom Out",
+    description: "Use when a fix or plan may be solving the wrong problem; reassess goal, path, tradeoffs, and simpler options.",
     steps: [
-      "Restate the goal and current approach.",
+      "Restate the user goal and current approach.",
       "Look for cheaper, safer, or more direct paths.",
       "Name tradeoffs before broad refactors or pivots.",
+      "Return a recommendation with evidence, not a vague brainstorm.",
     ],
   },
   {
-    slug: "efektif-improve-codebase-architecture",
-    title: "Efektif Improve Codebase Architecture",
-    description: "Find architecture improvements from current code evidence.",
+    slug: "efektif-architecture-review",
+    title: "Architecture Review",
+    description: "Use when improving architecture from code evidence; find boundaries, dependencies, duplication, and small high-payoff refactors.",
     steps: [
-      "Inspect actual dependencies and ownership boundaries.",
-      "Prefer small refactors with clear payoff.",
-      "Avoid vague rewrites without a verification path.",
+      "Inspect actual dependencies, data flow, ownership, and change hotspots.",
+      "Prefer small refactors with clear payoff and verification.",
+      "Avoid vague rewrites without migration and rollback paths.",
+      "Tie each recommendation to evidence in the repo.",
     ],
   },
   {
-    slug: "efektif-request-refactor-plan",
-    title: "Efektif Request Refactor Plan",
-    description: "Produce a scoped refactor plan before editing risky code.",
+    slug: "efektif-refactor-plan",
+    title: "Refactor Plan",
+    description: "Use before risky refactors; produce a scoped, staged plan with rollback points and validation after each stage.",
     steps: [
-      "Describe the current shape and pain point.",
-      "Define safe stages and rollback points.",
+      "Describe the current shape and pain point with file evidence.",
+      "Define safe stages, invariants, and rollback points.",
       "List validation after each stage.",
+      "Stop before editing unless the user asked for implementation too.",
     ],
   },
   {
     slug: "efektif-deployment-readiness",
-    title: "Efektif Deployment Readiness",
-    description: "Check whether build, config, docs, and service health are deploy-ready.",
+    title: "Deployment Readiness",
+    description: "Use before deploys or release claims; check build, config, migrations, docs, service health, and known blockers.",
     steps: [
       "Read deployment docs and environment templates first.",
-      "Separate local build success from live deploy success.",
-      "Check service health, logs, and known blockers when available.",
+      "Separate local build success from live deploy readiness.",
+      "Check migrations, config, secrets requirements, logs, and health endpoints when available.",
+      "Report go/no-go status with evidence.",
     ],
   },
   {
     slug: "efektif-machine-cleanup",
-    title: "Efektif Machine Cleanup",
-    description: "Inventory local tools, skills, apps, and config before cleanup.",
+    title: "Machine Cleanup",
+    description: "Use for local cleanup of tools, skills, apps, caches, and config after the user scopes the cleanup; inventory first and default to dry-run.",
     steps: [
       "List current state before deleting or changing anything.",
-      "Default to dry-run and reversible operations.",
+      "Prefer dry-run and reversible operations.",
       "Avoid vendor, marketplace, and plugin cache paths unless explicitly scoped.",
+      "Ask before destructive cleanup when scope is unclear.",
     ],
   },
   {
-    slug: "efektif-commit-often",
-    title: "Efektif Commit Often",
-    description: "Create small verified commits at useful checkpoints.",
+    slug: "efektif-checkpoint-commits",
+    title: "Checkpoint Commits",
+    description: "Use only when the user asked for commits during multi-step work; create small, verified checkpoints without mixing unrelated user changes.",
     steps: [
       "Group related changes only.",
       "Verify before staging.",
-      "Use conventional commit messages.",
-      "Do not include unrelated user work.",
+      "Review staged diff before commit.",
+      "Use concise imperative or conventional commit messages.",
     ],
   },
   {
     slug: "efektif-branch-summary",
-    title: "Efektif Branch Summary",
-    description: "Explain a branch from git state, recent commits, and diffs.",
+    title: "Branch Summary",
+    description: "Use when explaining a branch from git state, recent commits, changed files, diffs, risks, and verification.",
     steps: [
       "Check branch, upstream, status, and recent commits.",
       "Inspect diff stats and key changed files.",
       "Summarize purpose, risk, and verification status.",
-    ],
-  },
-  {
-    slug: "efektif-agent-docs-init",
-    title: "Efektif Agent Docs Init",
-    description: "Create concise repo-specific AGENTS.md guidance.",
-    steps: [
-      "Inspect the live tree before writing.",
-      "Document commands, structure, style, and verification gates.",
-      "Keep the guide short and repo-specific.",
+      "Call out uncommitted work separately.",
     ],
   },
   {
     slug: "efektif-install-skill-package",
-    title: "Efektif Install Skill Package",
-    description: "Validate, dry-run, install, and verify skill packages safely.",
+    title: "Install Skill Package",
+    description: "Use when installing a skill package safely: validate, dry-run, apply only when intended, then verify target files.",
     steps: [
       "Run package validation first.",
       "Run dry-run install before apply.",
-      "Verify installed files in the target skills directory.",
-      "Report exact target path and installed count.",
+      "Confirm the exact install target.",
+      "Verify installed files and report count and path.",
     ],
   },
   {
     slug: "efektif-design-interface",
-    title: "Efektif Design Interface",
-    description: "Design practical interfaces that match the product context.",
+    title: "Design Interface",
+    description: "Use when designing product UI; match existing tokens, components, workflows, accessibility, and responsive behavior.",
     steps: [
-      "Use existing design systems, tokens, and product patterns first.",
-      "Prioritize the real workflow over decorative landing pages.",
+      "Study existing design system, tokens, and product patterns first.",
+      "Prioritize the real workflow over decorative mockups.",
+      "Design states: empty, loading, error, success, disabled, and permission limits.",
       "Verify responsive layout and readable text.",
     ],
   },
   {
     slug: "efektif-prototype",
-    title: "Efektif Prototype",
-    description: "Build small interactive prototypes when interaction beats prose.",
+    title: "Prototype",
+    description: "Use when a small interactive artifact will clarify behavior faster than prose or static screenshots.",
     steps: [
-      "Define the target workflow and interaction level.",
+      "Define the target workflow and interaction fidelity.",
       "Reuse project conventions and avoid unnecessary dependencies.",
-      "Run browser verification when applicable.",
+      "Keep the prototype disposable unless asked to productionize it.",
+      "Run browser or runtime verification when applicable.",
     ],
   },
   {
     slug: "efektif-write-skill",
-    title: "Efektif Write Skill",
-    description: "Write small token-light skills with validation-ready structure.",
+    title: "Write Skill",
+    description: "Use when authoring small token-light skills with clear triggers, safe steps, validation, and install-ready structure.",
     steps: [
       "Keep SKILL.md focused and short.",
-      "Move examples into references only when needed.",
-      "Include safe defaults and validation commands.",
-    ],
-  },
-  {
-    slug: "efektif-edit-article",
-    title: "Efektif Edit Article",
-    description: "Edit writing for clarity, structure, and voice.",
-    steps: [
-      "Preserve the writer's intent.",
-      "Tighten structure before polishing sentences.",
-      "Return concise edits with reasons when useful.",
+      "Use a strong trigger description and concrete steps.",
+      "Move detailed examples into references only when needed.",
+      "Run package validation before finishing.",
     ],
   },
 ];
 
-const skillMarkdown = (skill) => `---
+const sectionMarkdown = (title, items) => `## ${title}\n\n${items.map((item) => `- ${item}`).join("\n")}`;
+
+const skillMarkdown = (skill) => {
+  const sections = [
+    `## Use When\n\n${skill.description}`,
+    sectionMarkdown("Steps", skill.steps),
+  ];
+
+  if (skill.notes?.length) {
+    sections.push(sectionMarkdown("Notes", skill.notes));
+  }
+
+  sections.push(sectionMarkdown("Output", commonOutput));
+
+  return `---
 name: ${skill.slug}
-description: ${skill.description}
+description: ${JSON.stringify(skill.description)}
 ---
 
 # ${skill.title}
 
-Use this skill when you need to ${skill.description.toLowerCase()}
-
-## Steps
-
-${skill.steps.map((step) => `- ${step}`).join("\n")}
-
-## Output
-
-- Keep responses short and evidence-backed.
-- Name verification performed or explain why it was not run.
-- Prefer concrete next actions over broad advice.
+${sections.join("\n\n")}
 `;
+};
 
-const agentYaml = (skill) => `display_name: ${skill.title}
-short_description: ${skill.description}
-default_prompt: Use ${skill.slug}. ${skill.description}
+const agentYaml = (skill) => {
+  const prompt = `Use ${skill.slug}. ${skill.description} Follow the Steps in SKILL.md, keep one evidence-backed output, and report verification or blockers.`;
+  return `display_name: ${JSON.stringify(skill.title)}
+short_description: ${JSON.stringify(skill.description)}
+default_prompt: ${JSON.stringify(prompt)}
 `;
+};
 
 await rm(skillsRoot, { recursive: true, force: true });
 await mkdir(skillsRoot, { recursive: true });

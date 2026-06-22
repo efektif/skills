@@ -1,3 +1,3 @@
-display_name: Efektif Safe Implementation
-short_description: Make scoped changes while protecting user work in shared checkouts.
-default_prompt: Use efektif-safe-implementation. Make scoped changes while protecting user work in shared checkouts.
+display_name: "Safe Implementation"
+short_description: "Use when modifying a shared checkout; make scoped edits, protect user work, and verify the narrowest useful path."
+default_prompt: "Use efektif-safe-implementation. Use when modifying a shared checkout; make scoped edits, protect user work, and verify the narrowest useful path. Follow the Steps in SKILL.md, keep one evidence-backed output, and report verification or blockers."

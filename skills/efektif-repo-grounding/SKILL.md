@@ -1,20 +1,23 @@
 ---
 name: efektif-repo-grounding
-description: Inspect the current checkout before answering repo-dependent questions.
+description: "Use when a request depends on the current checkout; inspect files, scripts, branch state, and docs before answering."
 ---
 
-# Efektif Repo Grounding
+# Repo Grounding
 
-Use this skill when you need to inspect the current checkout before answering repo-dependent questions.
+## Use When
+
+Use when a request depends on the current checkout; inspect files, scripts, branch state, and docs before answering.
 
 ## Steps
 
-- Check cwd, git status, relevant files, scripts, and docs.
-- Prefer exact file paths and commands over subsystem guesses.
-- Separate confirmed repo facts from inferred context.
+- Confirm cwd, git status, branch, package scripts, and relevant files.
+- Use exact paths and commands instead of framework guesses.
+- Separate confirmed facts from inferred context.
+- Re-check after edits when the answer depends on changed files.
 
 ## Output
 
-- Keep responses short and evidence-backed.
-- Name verification performed or explain why it was not run.
-- Prefer concrete next actions over broad advice.
+- Keep responses short, structured, and evidence-backed.
+- Name exact files, commands, screenshots, or logs used as evidence.
+- Separate verified facts from assumptions, blockers, and next actions.

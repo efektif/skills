@@ -1,3 +1,3 @@
-display_name: Efektif PRD To Plan
-short_description: Convert a PRD into a practical execution plan.
-default_prompt: Use efektif-prd-to-plan. Convert a PRD into a practical execution plan.
+display_name: "PRD To Plan"
+short_description: "Use when a PRD needs a dependency-aware implementation plan with phases, risks, and verification gates."
+default_prompt: "Use efektif-prd-to-plan. Use when a PRD needs a dependency-aware implementation plan with phases, risks, and verification gates. Follow the Steps in SKILL.md, keep one evidence-backed output, and report verification or blockers."
