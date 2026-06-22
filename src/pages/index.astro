@@ -3,158 +3,103 @@ import "@efektif/tokens/theme.css";
 
 const skillGroups = [
   {
-    eyebrow: "Foundation",
-    title: "Core Operating Loop",
-    summary: "The skills that should shape almost every agent-led repo session.",
-    accent: "mint",
+    eyebrow: "Start Here",
+    title: "Ground The Agent",
+    summary: "Make the agent inspect the real checkout, use durable context, and ask better questions.",
+    color: "mint",
     skills: [
       "efektif-repo-agent-setup",
       "efektif-repo-grounding",
       "efektif-memory-grounding",
       "efektif-clarify-with-evidence",
+    ],
+  },
+  {
+    eyebrow: "Build Safely",
+    title: "Change With Guardrails",
+    summary: "Keep edits scoped, protect user work, test the result, and leave a clean handoff.",
+    color: "sky",
+    skills: [
       "efektif-safe-implementation",
       "efektif-verification-before-done",
-    ],
-  },
-  {
-    eyebrow: "Engineering",
-    title: "Build And Debug",
-    summary: "Practical engineering workflows tuned for small, verified changes.",
-    accent: "blue",
-    skills: [
       "efektif-diagnose",
-      "efektif-tdd",
-      "efektif-user-workflow-qa",
-      "efektif-crazy-story",
       "efektif-code-review",
-      "efektif-refactor-plan",
-      "efektif-architecture-review",
+      "efektif-handoff",
     ],
   },
   {
-    eyebrow: "Planning",
-    title: "Shape The Work",
-    summary: "Turn rough intent into PRDs, issues, and execution slices.",
-    accent: "amber",
+    eyebrow: "Think Clearly",
+    title: "Shape Product Work",
+    summary: "Turn rough ideas into PRDs, issues, refactor plans, and architecture reviews.",
+    color: "lemon",
     skills: [
       "efektif-intent-to-prd",
       "efektif-plan-to-issues",
       "efektif-prd-to-plan",
-      "efektif-triage",
+      "efektif-refactor-plan",
+      "efektif-architecture-review",
       "efektif-zoom-out",
     ],
   },
   {
-    eyebrow: "Local Ops",
-    title: "Agent Ops",
-    summary: "Skills for local machines, deploy checks, commits, and continuation across agents.",
-    accent: "coral",
+    eyebrow: "Check Reality",
+    title: "Audit And Operate",
+    summary: "Run user workflow QA, Crazy Story audits, deploy checks, cleanup, and checkpoint commits.",
+    color: "pink",
     skills: [
+      "efektif-user-workflow-qa",
+      "efektif-crazy-story",
       "efektif-deployment-readiness",
       "efektif-machine-cleanup",
       "efektif-checkpoint-commits",
       "efektif-branch-summary",
-      "efektif-handoff",
-      "efektif-install-skill-package",
-      "efektif-write-skill",
     ],
   },
   {
-    eyebrow: "Product",
-    title: "Design And Prototype",
-    summary: "Skills for UI decisions and small interactive artifacts.",
-    accent: "blue",
-    skills: ["efektif-design-interface", "efektif-prototype"],
+    eyebrow: "Make It Tangible",
+    title: "Design, Prototype, Teach",
+    summary: "Use product context to design interfaces, prototype flows, and write more skills.",
+    color: "grape",
+    skills: ["efektif-design-interface", "efektif-prototype", "efektif-write-skill", "efektif-install-skill-package"],
   },
 ];
 
-const buildOrder = [
+const lessonCards = [
   {
     step: "01",
-    name: "efektif-repo-agent-setup",
-    reason: "Gives every repo a local contract for docs, issue flow, and validation.",
-    why: "All later skills need to know where repo guidance, domain context, validation commands, and issue tracking live.",
-    changes: "Adds a repeatable setup contract so agents do not rediscover the same repo rules every session.",
-    buildWhen: "Build first, before any other skill depends on repo-specific conventions.",
+    title: "Inspect before guessing",
+    text: "The skills nudge the agent to read files, scripts, docs, and git state before giving advice.",
   },
   {
     step: "02",
-    name: "efektif-repo-grounding",
-    reason: "Stops generic answers by forcing file, script, and git-state inspection.",
-    why: "Most user requests depend on the live checkout, not a generic framework answer.",
-    changes: "Makes agents inspect files, scripts, branch state, and local commands before answering or editing.",
-    buildWhen: "Build immediately after setup because it improves every repo question and implementation task.",
+    title: "Ask only useful questions",
+    text: "Ambiguity becomes a short evidence-backed question instead of a long questionnaire.",
   },
   {
     step: "03",
-    name: "efektif-memory-grounding",
-    reason: "Uses prior agent context without pretending stale memory is current truth.",
-    why: "This workflow spans Efektif, Pasco, VAP, and machine-local work where past decisions matter.",
-    changes: "Separates memory-derived context from current verification, so stale facts do not become false certainty.",
-    buildWhen: "Build once repo grounding exists, so memory can point the agent toward the right files without replacing inspection.",
+    title: "Make smaller changes",
+    text: "Implementation skills bias toward scoped patches, dry-runs, and safe checkpoints.",
   },
   {
     step: "04",
-    name: "efektif-safe-implementation",
-    reason: "Keeps patches scoped and protects uncommitted user work.",
-    why: "The user often works in dirty worktrees and expects small, reversible edits.",
-    changes: "Defines git checks, edit boundaries, verification expectations, and user-change protection.",
-    buildWhen: "Build before any broad engineering skill that might modify code or docs.",
-  },
-  {
-    step: "05",
-    name: "efektif-verification-before-done",
-    reason: "Makes done, blocked, and unverified status explicit before handoff.",
-    why: "Build success, deploy success, and actual readiness are different states.",
-    changes: "Forces final answers to name what was verified, what is inferred, and what remains blocked.",
-    buildWhen: "Build before diagnose, deploy, QA, and review skills so every workflow has a clear finish line.",
-  },
-  {
-    step: "06",
-    name: "efektif-diagnose",
-    reason: "Adds the systematic debug loop for hard failures and regressions.",
-    why: "Recurring work includes runtime failures, deploy blockers, local tool issues, and integration bugs.",
-    changes: "Adds a reproduce, minimize, hypothesize, instrument, fix, and regression-test loop.",
-    buildWhen: "Build after the safety and verification skills so debugging stays disciplined and evidence-backed.",
+    title: "Prove the result",
+    text: "Done means tests, builds, smoke checks, or an honest blocker, not a confident shrug.",
   },
 ];
 
-const principles = [
-  "Inspect before answering.",
-  "Prefer dry-run before apply.",
-  "Commit only when requested.",
-  "Keep output readable and short.",
+const demoRows = [
+  ["User asks", "Audit this app with Crazy Story and keep a tracker."],
+  ["Skill loads", "efektif-crazy-story"],
+  ["Agent creates", "docs/crazy-story.md with feature, story, status, evidence columns"],
+  ["Agent checks", "routes, UI flows, commands, logs, screenshots, and retest status"],
 ];
 
-const commands = [
-  {
-    label: "Validate Package",
-    command: "bun run skills:validate\n./scripts/validate-skills.sh",
-    note: "Checks skill metadata before publishing or installing.",
-  },
-  {
-    label: "Preview Install",
-    command: "bun run skills:install:dry\n./scripts/install.sh",
-    note: "Shows the install target before any files are written.",
-  },
-  {
-    label: "Build Docs",
-    command: "bun run build",
-    note: "Runs Astro diagnostics and produces the static documentation site.",
-  },
-  {
-    label: "Install From GitHub",
-    command: "npx skills@latest add efektif/skills",
-    note: "Fast path for users who want to install from the published repo.",
-  },
-];
+const promptExample = `Use efektif-crazy-story to audit this app.
 
-const heroCommandText = "npx skills@latest add efektif/skills\nbun run skills:install:dry";
-const heroCommandDisplay = `npx skills@latest add efektif/skills
-# install from GitHub
+Create docs/crazy-story.md, inventory every visible and code-backed feature, write one user story per feature, test each story, document errors, fix approved UX or logistics issues, then retest and update the tracker.`;
 
-bun run skills:install:dry
-# local dry run`;
+const installCommand = "npx skills@latest add efektif/skills";
+const localCommand = "bun run skills:validate\nbun run skills:install:dry\nbun run skills:install";
 ---
 
 <!doctype html>
@@ -164,26 +109,31 @@ bun run skills:install:dry
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Efektif Skills redesign roadmap for agent-led engineering workflows."
+      content="Efektif Skills is a playful, practical skill pack that teaches coding agents how to inspect, plan, build, verify, and hand off real repo work."
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>Efektif Skills</title>
     <style>
       :root {
         color-scheme: light;
-        --bg: var(--ef-bg-canvas);
-        --paper: var(--ef-bg-base);
-        --ink: var(--ef-fg-primary);
-        --muted: var(--ef-fg-muted);
-        --line: var(--ef-border-default);
-        --line-strong: var(--ef-border-strong);
-        --soft: var(--ef-bg-subtle);
-        --selected: var(--ef-bg-muted);
-        --terminal-bg: var(--ef-bg-inverse);
-        --terminal-fg: var(--ef-fg-on-inverse);
-        --terminal-line: color-mix(in oklab, var(--terminal-fg) 14%, transparent);
-        --terminal-soft: color-mix(in oklab, var(--terminal-fg) 8%, transparent);
-        --terminal-hover: color-mix(in oklab, var(--terminal-fg) 14%, transparent);
+        --cream: #fff3d7;
+        --cream-2: #ffe7f6;
+        --ink: #24123a;
+        --muted: #715f87;
+        --paper: rgba(255, 255, 255, 0.76);
+        --paper-strong: rgba(255, 255, 255, 0.92);
+        --line: rgba(36, 18, 58, 0.12);
+        --shadow: 16px 20px 0 rgba(36, 18, 58, 0.08), 0 24px 54px rgba(97, 54, 169, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+        --shadow-small: 8px 10px 0 rgba(36, 18, 58, 0.08), 0 16px 34px rgba(97, 54, 169, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.84);
+        --grape: #7c4dff;
+        --pink: #ff63b6;
+        --mint: #54e0bf;
+        --lemon: #ffe45f;
+        --sky: #6ed6ff;
+        --orange: #ff9f43;
+        --radius-xl: 36px;
+        --radius-lg: 28px;
+        --radius-md: 18px;
         font-family: var(--ef-font-sans);
       }
 
@@ -196,9 +146,41 @@ bun run skills:install:dry
       }
 
       body {
+        min-width: 320px;
         margin: 0;
-        background: var(--bg);
+        overflow-x: hidden;
+        background:
+          radial-gradient(circle at 8% 12%, rgba(255, 99, 182, 0.48), transparent 28%),
+          radial-gradient(circle at 88% 10%, rgba(84, 224, 191, 0.45), transparent 26%),
+          radial-gradient(circle at 80% 74%, rgba(110, 214, 255, 0.42), transparent 28%),
+          linear-gradient(135deg, var(--cream), var(--cream-2) 48%, #dff9ff);
         color: var(--ink);
+      }
+
+      body::before,
+      body::after {
+        position: fixed;
+        z-index: -1;
+        border-radius: 999px;
+        content: "";
+        filter: blur(2px);
+        opacity: 0.72;
+      }
+
+      body::before {
+        width: 260px;
+        height: 260px;
+        right: -80px;
+        top: 210px;
+        background: var(--lemon);
+      }
+
+      body::after {
+        width: 210px;
+        height: 210px;
+        left: -70px;
+        bottom: 110px;
+        background: var(--mint);
       }
 
       a {
@@ -206,53 +188,57 @@ bun run skills:install:dry
       }
 
       main {
-        width: min(1160px, calc(100% - 32px));
+        width: min(1180px, calc(100% - 32px));
         margin: 0 auto;
-        padding: 28px 0 72px;
+        padding: 20px 0 52px;
+      }
+
+      .topbar,
+      .clay,
+      .code-card,
+      .footer {
+        border: 1px solid var(--line);
+        background: var(--paper);
+        box-shadow: var(--shadow-small);
+        backdrop-filter: blur(18px);
       }
 
       .topbar {
         position: sticky;
-        top: 0;
-        z-index: 2;
+        top: 14px;
+        z-index: 5;
         display: flex;
-        min-height: 56px;
         align-items: center;
         justify-content: space-between;
-        gap: 16px;
-        border-bottom: 1px solid var(--line);
-        background: color-mix(in oklab, var(--bg) 96%, transparent);
+        gap: 18px;
+        border-radius: 999px;
+        padding: 12px 14px 12px 16px;
       }
 
       .brand {
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        font-weight: 900;
+        font-weight: 950;
+        text-decoration: none;
+      }
+
+      .brand-mark,
+      .step-badge,
+      .tiny-orb {
+        display: inline-grid;
+        place-items: center;
+        border: 1px solid rgba(36, 18, 58, 0.1);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75), 6px 7px 0 rgba(36, 18, 58, 0.08);
       }
 
       .brand-mark {
-        display: inline-flex;
-        width: 28px;
-        height: 28px;
-        align-items: center;
-        justify-content: center;
-        border-radius: var(--ef-radius-md);
-        background: var(--ink);
-        color: var(--paper);
-        font-size: 0.76rem;
-        letter-spacing: 0;
-        line-height: 1;
-      }
-
-      .brand-e {
+        width: 42px;
+        height: 42px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, var(--lemon), var(--pink));
+        color: var(--ink);
         font-family: var(--ef-font-mono);
-        font-weight: 900;
-      }
-
-      .brand-s {
-        font-family: var(--ef-font-sans);
-        font-weight: 950;
       }
 
       nav {
@@ -262,32 +248,56 @@ bun run skills:install:dry
       }
 
       nav a {
-        border-radius: var(--ef-radius-md);
-        padding: 8px 10px;
+        border-radius: 999px;
+        padding: 10px 13px;
         color: var(--muted);
-        font-size: 0.9rem;
-        font-weight: 800;
+        font-size: 0.92rem;
+        font-weight: 850;
         text-decoration: none;
       }
 
       nav a:hover {
-        background: var(--soft);
+        background: rgba(255, 255, 255, 0.72);
         color: var(--ink);
       }
 
       .hero {
         display: grid;
-        grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
-        gap: 42px;
+        grid-template-columns: minmax(0, 1.04fr) minmax(320px, 0.96fr);
+        gap: 28px;
         align-items: center;
-        padding: 72px 0 54px;
+        padding: 72px 0 44px;
       }
 
+      .hero-copy {
+        position: relative;
+      }
+
+      .kicker,
       .eyebrow {
         margin: 0 0 14px;
         color: var(--muted);
         font-size: 0.78rem;
-        font-weight: 900;
+        font-weight: 950;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        border: 1px solid rgba(36, 18, 58, 0.12);
+        border-radius: 999px;
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.56);
+      }
+
+      .tiny-orb {
+        width: 14px;
+        height: 14px;
+        border-radius: 999px;
+        background: var(--mint);
       }
 
       h1,
@@ -298,172 +308,324 @@ bun run skills:install:dry
       }
 
       h1 {
-        max-width: 780px;
+        max-width: 820px;
         margin-bottom: 22px;
-        font-size: clamp(2.6rem, 5vw, 4.4rem);
-        letter-spacing: 0;
-        line-height: 1;
+        font-size: clamp(3rem, 7vw, 6.8rem);
+        letter-spacing: -0.07em;
+        line-height: 0.88;
+      }
+
+      .highlight {
+        display: inline-block;
+        border-radius: 28px;
+        padding: 0 0.08em 0.08em;
+        background: linear-gradient(120deg, rgba(255, 228, 95, 0.92), rgba(255, 99, 182, 0.58));
+        box-shadow: 10px 12px 0 rgba(36, 18, 58, 0.08);
       }
 
       .lede {
         max-width: 700px;
         margin-bottom: 28px;
         color: var(--muted);
-        font-size: 1.15rem;
+        font-size: clamp(1.08rem, 2vw, 1.28rem);
         line-height: 1.65;
       }
 
       .actions,
-      .status-row,
-      .chips {
+      .pill-row,
+      .skill-chips {
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
       }
 
       .button,
-      .pill {
+      .pill,
+      .copy-button {
         display: inline-flex;
-        min-height: 42px;
         align-items: center;
-        border-radius: var(--ef-radius-md);
-        padding: 0 14px;
-        font-weight: 900;
+        justify-content: center;
+        min-height: 46px;
+        border-radius: 999px;
+        padding: 0 17px;
+        font-weight: 950;
         text-decoration: none;
       }
 
       .button.primary {
+        border: 2px solid var(--ink);
         background: var(--ink);
-        color: var(--paper);
+        color: white;
+        box-shadow: 7px 8px 0 rgba(36, 18, 58, 0.18);
       }
 
-      .button.secondary,
-      .pill {
-        border: 1px solid var(--line);
-        background: var(--paper);
+      .button.secondary {
+        border: 2px solid rgba(36, 18, 58, 0.14);
+        background: rgba(255, 255, 255, 0.72);
+        color: var(--ink);
       }
 
-      .pill {
-        min-height: 36px;
-        color: var(--muted);
-        font-size: 0.85rem;
+      .button:hover,
+      .copy-button:hover {
+        transform: translateY(-1px);
       }
 
-      .dashboard {
-        display: grid;
-        gap: 14px;
+      button.button {
+        cursor: pointer;
+        font: inherit;
       }
 
-      .panel {
-        border: 1px solid var(--line);
-        border-radius: var(--ef-radius-md);
-        background: var(--paper);
-        box-shadow: none;
-      }
-
-      .summary-panel {
-        padding: 18px;
-      }
-
-      .meter {
-        display: grid;
-        gap: 8px;
+      .pill-row {
         margin-top: 18px;
       }
 
-      .meter-row {
-        display: grid;
-        grid-template-columns: 112px 1fr auto;
-        gap: 10px;
-        align-items: center;
+      .pill {
+        min-height: 38px;
+        border: 1px solid rgba(36, 18, 58, 0.1);
+        background: rgba(255, 255, 255, 0.62);
         color: var(--muted);
-        font-size: 0.88rem;
-        font-weight: 800;
+        font-size: 0.9rem;
       }
 
-      .track {
-        height: 8px;
-        overflow: hidden;
-        border-radius: var(--ef-radius-md);
-        background: var(--selected);
+      .hero-demo {
+        position: relative;
+        min-height: 610px;
+        border-radius: 44px;
+        padding: 20px;
+        background:
+          radial-gradient(circle at 82% 12%, rgba(255, 228, 95, 0.74), transparent 30%),
+          radial-gradient(circle at 18% 82%, rgba(84, 224, 191, 0.68), transparent 32%),
+          rgba(255, 255, 255, 0.48);
+        box-shadow: var(--shadow);
       }
 
-      .fill {
-        display: block;
+      .demo-window {
+        position: relative;
+        display: grid;
+        gap: 16px;
         height: 100%;
-        border-radius: inherit;
+        border-radius: 34px;
+        padding: 18px;
+        background: rgba(255, 255, 255, 0.76);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
       }
 
-      .fill.mint {
-        width: 100%;
-        background: var(--ink);
-      }
-
-      .fill.amber {
-        width: 62%;
-        background: var(--muted);
-      }
-
-      .fill.coral {
-        width: 0%;
-        background: var(--muted);
-      }
-
-      .terminal {
-        overflow: hidden;
-        background: var(--terminal-bg);
-        color: var(--terminal-fg);
-      }
-
-      .terminal-header {
+      .demo-top {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 7px;
-        border-bottom: 1px solid var(--terminal-line);
-        padding: 12px 14px;
+        gap: 12px;
       }
 
-      .window-dots {
+      .traffic {
         display: flex;
         gap: 7px;
       }
 
-      .dot {
-        width: 9px;
-        height: 9px;
-        border-radius: var(--ef-radius-md);
-        background: var(--ef-fg-subtle);
+      .traffic span {
+        width: 13px;
+        height: 13px;
+        border-radius: 999px;
+        background: var(--pink);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
       }
 
-      .dot:nth-child(2) {
-        background: var(--ef-fg-muted);
+      .traffic span:nth-child(2) {
+        background: var(--lemon);
       }
 
-      .dot:nth-child(3) {
-        background: var(--ef-fg-secondary);
+      .traffic span:nth-child(3) {
+        background: var(--mint);
+      }
+
+      .demo-label {
+        border-radius: 999px;
+        padding: 7px 10px;
+        background: rgba(124, 77, 255, 0.12);
+        color: var(--grape);
+        font-size: 0.78rem;
+        font-weight: 950;
+      }
+
+      .chat-card {
+        display: grid;
+        gap: 8px;
+        border-radius: 26px;
+        padding: 18px;
+        background: #fff8e8;
+        box-shadow: 10px 12px 0 rgba(36, 18, 58, 0.07);
+      }
+
+      .chat-card.agent {
+        margin-left: 48px;
+        background: #effbff;
+      }
+
+      .chat-card strong {
+        font-size: 0.84rem;
+      }
+
+      .chat-card p {
+        margin-bottom: 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .demo-grid {
+        display: grid;
+        gap: 10px;
+      }
+
+      .demo-row {
+        display: grid;
+        grid-template-columns: 110px minmax(0, 1fr);
+        gap: 10px;
+        align-items: center;
+        border-radius: 20px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.72);
+        box-shadow: inset 0 0 0 1px rgba(36, 18, 58, 0.07);
+      }
+
+      .demo-row span:first-child {
+        color: var(--muted);
+        font-size: 0.82rem;
+        font-weight: 950;
+      }
+
+      .demo-row span:last-child {
+        font-weight: 850;
+        line-height: 1.35;
+      }
+
+      .floating-note {
+        position: absolute;
+        right: -18px;
+        bottom: 34px;
+        max-width: 210px;
+        transform: rotate(4deg);
+        border-radius: 24px;
+        padding: 16px;
+        background: var(--lemon);
+        box-shadow: 11px 13px 0 rgba(36, 18, 58, 0.12);
+        font-size: 0.92rem;
+        font-weight: 900;
+        line-height: 1.35;
+      }
+
+      .section {
+        padding: 54px 0 0;
+      }
+
+      .section-head {
+        display: grid;
+        grid-template-columns: minmax(0, 0.78fr) minmax(280px, 0.42fr);
+        gap: 24px;
+        align-items: end;
+        margin-bottom: 22px;
+      }
+
+      h2 {
+        margin-bottom: 0;
+        font-size: clamp(2.25rem, 5vw, 4.9rem);
+        letter-spacing: -0.06em;
+        line-height: 0.92;
+      }
+
+      .section-head p,
+      .lesson-card p,
+      .skill-card p,
+      .cta-panel p,
+      .code-card p {
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .lesson-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .lesson-card,
+      .skill-card,
+      .cta-panel {
+        border-radius: var(--radius-xl);
+        padding: 22px;
+      }
+
+      .lesson-card {
+        min-height: 260px;
+      }
+
+      .lesson-card:nth-child(1) {
+        background: rgba(84, 224, 191, 0.44);
+      }
+
+      .lesson-card:nth-child(2) {
+        background: rgba(110, 214, 255, 0.42);
+      }
+
+      .lesson-card:nth-child(3) {
+        background: rgba(255, 228, 95, 0.52);
+      }
+
+      .lesson-card:nth-child(4) {
+        background: rgba(255, 99, 182, 0.34);
+      }
+
+      .step-badge {
+        width: 54px;
+        height: 54px;
+        margin-bottom: 38px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.7);
+        font-family: var(--ef-font-mono);
+        font-weight: 950;
+      }
+
+      .lesson-card h3,
+      .skill-card h3,
+      .code-card h3,
+      .cta-panel h2 {
+        margin-bottom: 10px;
+        letter-spacing: -0.03em;
+        line-height: 1;
+      }
+
+      .playground {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
+        gap: 18px;
+      }
+
+      .code-card {
+        overflow: hidden;
+        border-radius: var(--radius-xl);
+      }
+
+      .code-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border-bottom: 1px solid rgba(36, 18, 58, 0.1);
+        padding: 16px 18px;
       }
 
       .copy-button {
-        min-height: 30px;
+        min-height: 34px;
         cursor: pointer;
-        border: 1px solid var(--terminal-line);
-        border-radius: var(--ef-radius-md);
-        padding: 0 10px;
-        background: var(--terminal-soft);
-        color: var(--terminal-fg);
+        border: 0;
+        background: var(--ink);
+        color: white;
         font: inherit;
-        font-size: 0.78rem;
-        font-weight: 900;
-      }
-
-      .copy-button:hover {
-        background: var(--terminal-hover);
+        font-size: 0.8rem;
       }
 
       .copy-button[data-copied="true"] {
-        border-color: color-mix(in oklab, var(--terminal-fg) 38%, transparent);
-        background: color-mix(in oklab, var(--terminal-fg) 20%, transparent);
+        background: var(--mint);
+        color: var(--ink);
       }
 
       pre {
@@ -475,518 +637,420 @@ bun run skills:install:dry
 
       code {
         font-family: var(--ef-font-mono);
-        font-size: 0.88rem;
-        line-height: 1.65;
+        font-size: 0.9rem;
+        line-height: 1.7;
       }
 
-      .section {
-        padding-top: 56px;
+      .code-card pre {
+        background: rgba(36, 18, 58, 0.94);
+        color: #fff8e8;
       }
 
-      .section-head {
+      .demo-outcome {
         display: grid;
-        grid-template-columns: minmax(0, 0.75fr) minmax(280px, 0.45fr);
-        gap: 28px;
-        align-items: end;
-        margin-bottom: 22px;
+        gap: 14px;
       }
 
-      h2 {
-        margin-bottom: 0;
-        font-size: clamp(2rem, 4.8vw, 4rem);
-        line-height: 1;
-      }
-
-      .section-head p,
-      .card p,
-      .step p,
-      .command-card p {
-        color: var(--muted);
-        line-height: 1.6;
-      }
-
-      .principles {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 1px;
-        overflow: hidden;
-        border: 1px solid var(--line);
-        border-radius: var(--ef-radius-md);
-        background: var(--line);
-      }
-
-      .principles p {
-        min-height: 110px;
-        margin: 0;
+      .outcome-item {
+        border-radius: 26px;
         padding: 18px;
-        background: var(--paper);
-        font-weight: 900;
-        line-height: 1.25;
+        background: rgba(255, 255, 255, 0.72);
+        box-shadow: var(--shadow-small);
       }
 
-      .cards {
+      .outcome-item strong {
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .outcome-item p {
+        margin-bottom: 0;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .skills-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 16px;
       }
 
-      .card {
-        display: grid;
-        gap: 18px;
-        min-height: 310px;
-        padding: 20px;
-        transition:
-          border-color 180ms ease;
+      .skill-card {
+        position: relative;
+        overflow: hidden;
+        min-height: 320px;
       }
 
-      .card:hover,
-      .step:hover,
-      .command-card:hover {
-        border-color: var(--ink);
+      .skill-card::before {
+        position: absolute;
+        right: -44px;
+        top: -44px;
+        width: 150px;
+        height: 150px;
+        border-radius: 999px;
+        content: "";
+        opacity: 0.68;
       }
 
-      .card[data-accent="mint"] {
-        background: var(--soft);
+      .skill-card[data-color="mint"]::before {
+        background: var(--mint);
       }
 
-      .card[data-accent="blue"] {
-        background: var(--soft);
+      .skill-card[data-color="sky"]::before {
+        background: var(--sky);
       }
 
-      .card[data-accent="amber"] {
-        background: var(--soft);
+      .skill-card[data-color="lemon"]::before {
+        background: var(--lemon);
       }
 
-      .card[data-accent="coral"] {
-        background: var(--soft);
+      .skill-card[data-color="pink"]::before {
+        background: var(--pink);
       }
 
-      .card h3 {
-        margin-bottom: 8px;
-        font-size: 1.55rem;
-        line-height: 1.05;
+      .skill-card[data-color="grape"]::before {
+        background: var(--grape);
       }
 
-      .card .eyebrow {
-        margin-bottom: 10px;
-        color: var(--muted);
-      }
-
-      .chips {
-        align-content: start;
+      .skill-chips {
+        position: relative;
+        margin-top: 22px;
       }
 
       .chip {
-        border: 1px solid var(--line);
-        border-radius: var(--ef-radius-md);
-        padding: 7px 10px;
-        background: var(--paper);
+        border: 1px solid rgba(36, 18, 58, 0.09);
+        border-radius: 999px;
+        padding: 8px 11px;
+        background: rgba(255, 255, 255, 0.72);
+        color: var(--ink);
         font-size: 0.84rem;
         font-weight: 850;
       }
 
-      .timeline {
+      .install-grid {
         display: grid;
-        gap: 12px;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 18px;
       }
 
-      .step {
-        overflow: hidden;
-        transition:
-          border-color 180ms ease;
+      .cta-panel {
+        display: grid;
+        grid-template-columns: minmax(0, 0.82fr) auto;
+        gap: 20px;
+        align-items: center;
+        margin-top: 18px;
+        background:
+          radial-gradient(circle at 85% 18%, rgba(255, 228, 95, 0.86), transparent 26%),
+          radial-gradient(circle at 15% 90%, rgba(84, 224, 191, 0.58), transparent 30%),
+          rgba(255, 255, 255, 0.72);
       }
 
-      .step summary {
-        display: grid;
-        grid-template-columns: 68px minmax(0, 1fr) auto;
+      .cta-panel h2 {
+        font-size: clamp(2rem, 4vw, 4rem);
+      }
+
+      .footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         gap: 16px;
-        align-items: start;
-        cursor: pointer;
-        list-style: none;
-        padding: 18px;
+        margin-top: 54px;
+        border-radius: 999px;
+        padding: 14px 18px;
+        color: var(--muted);
+        font-weight: 850;
       }
 
-      .step summary::-webkit-details-marker {
-        display: none;
-      }
-
-      .step-number {
-        display: grid;
-        width: 48px;
-        height: 48px;
-        place-items: center;
-        border-radius: var(--ef-radius-md);
-        background: var(--ink);
-        color: var(--paper);
+      .footer a {
+        color: var(--ink);
         font-weight: 950;
       }
 
-      .step h3 {
-        margin-bottom: 6px;
-      }
-
-      .step-toggle {
-        display: grid;
-        width: 34px;
-        height: 34px;
-        place-items: center;
-        border: 1px solid var(--line);
-        border-radius: var(--ef-radius-md);
-        background: var(--paper);
-        color: var(--muted);
-        font-size: 1.2rem;
-        font-weight: 900;
-        line-height: 1;
-      }
-
-      .step[open] .step-toggle {
-        background: var(--ink);
-        color: var(--paper);
-      }
-
-      .step[open] .step-toggle::before {
-        content: "-";
-      }
-
-      .step:not([open]) .step-toggle::before {
-        content: "+";
-      }
-
-      .step-details {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 12px;
-        border-top: 1px solid var(--line);
-        padding: 16px 18px 18px 86px;
-      }
-
-      .step-detail {
-        border: 1px solid var(--line);
-        border-radius: var(--ef-radius-md);
-        padding: 14px;
-        background: var(--soft);
-      }
-
-      .step-detail strong {
-        display: block;
-        margin-bottom: 6px;
-        font-size: 0.84rem;
-      }
-
-      .commands {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 16px;
-      }
-
-      .command-card {
-        padding: 18px;
-        transition:
-          border-color 180ms ease;
-      }
-
-      .command-card pre {
-        margin: 14px 0;
-        border-radius: var(--ef-radius-md);
-        background: var(--terminal-bg);
-        color: var(--terminal-fg);
-      }
-
-      .command-card .terminal {
-        margin: 14px 0;
-      }
-
-      .command-card .terminal pre {
-        margin: 0;
-        border-radius: 0;
-      }
-
-      @media (max-width: 880px) {
+      @media (max-width: 960px) {
         main {
-          width: min(100% - 24px, 1160px);
-          padding-bottom: 48px;
+          width: min(100% - 24px, 1180px);
         }
 
         .topbar {
           position: static;
-          align-items: flex-start;
-          padding-bottom: 12px;
-        }
-
-        nav {
-          justify-content: flex-end;
+          border-radius: 28px;
         }
 
         .hero,
         .section-head,
-        .cards,
-        .commands,
-        .step-details {
+        .playground,
+        .install-grid,
+        .cta-panel {
           grid-template-columns: 1fr;
         }
 
         .hero {
-          min-height: auto;
-          padding: 36px 0 40px;
+          padding-top: 48px;
         }
 
-        .principles {
+        .hero-demo {
+          min-height: auto;
+        }
+
+        .lesson-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .floating-note {
+          position: static;
+          max-width: none;
+          transform: none;
         }
       }
 
-      @media (max-width: 560px) {
-        .topbar {
-          display: grid;
+      @media (max-width: 680px) {
+        .topbar,
+        .footer {
+          align-items: flex-start;
+          border-radius: 26px;
+          flex-direction: column;
         }
 
         nav {
-          justify-content: flex-start;
+          width: 100%;
+        }
+
+        nav a {
+          background: rgba(255, 255, 255, 0.52);
         }
 
         h1 {
-          font-size: 3rem;
+          font-size: clamp(3.2rem, 18vw, 4.4rem);
         }
 
-        .step summary {
+        .lesson-grid,
+        .skills-grid {
           grid-template-columns: 1fr;
         }
 
-        .step-details {
-          padding-left: 18px;
+        .demo-row {
+          grid-template-columns: 1fr;
         }
 
-        .principles {
-          grid-template-columns: 1fr;
+        .chat-card.agent {
+          margin-left: 0;
         }
       }
-
     </style>
   </head>
   <body>
     <main>
       <header class="topbar">
         <a class="brand" href="#" aria-label="Efektif Skills home">
-          <span class="brand-mark" aria-hidden="true">
-            <span class="brand-e">E</span><span class="brand-s">S</span>
-          </span>
+          <span class="brand-mark" aria-hidden="true">ES</span>
           <span>Efektif Skills</span>
         </a>
         <nav aria-label="Page sections">
-          <a href="#system">System</a>
-          <a href="#build-order">Build order</a>
-          <a href="#commands">Install</a>
+          <a href="#learn">Learn</a>
+          <a href="#demo">Demo</a>
+          <a href="#skills">Skills</a>
+          <a href="#install">Install</a>
         </nav>
       </header>
 
       <section class="hero" aria-labelledby="page-title">
-        <div>
-          <p class="eyebrow">Redesign roadmap</p>
-          <h1 id="page-title">Better skills for real agent work.</h1>
+        <div class="hero-copy">
+          <p class="kicker"><span class="tiny-orb" aria-hidden="true"></span> Agent skills that teach by doing</p>
+          <h1 id="page-title">Give your coding agent a <span class="highlight">workshop brain.</span></h1>
           <p class="lede">
-            Efektif Skills maps an agent-first workflow for local repo work:
-            grounded inspection, memory-aware continuity, safe implementation,
-            verified commits, and deployment readiness.
+            Efektif Skills is a colorful little curriculum for repo work. It teaches agents to inspect first, ask smarter questions, make smaller changes, verify the result, and hand off cleanly.
           </p>
           <div class="actions">
-            <a class="button primary" href="#build-order">Start with build order</a>
-            <a class="button secondary" href="#system">Explore skill buckets</a>
+            <a class="button primary" href="#install">Install the skills</a>
+            <a class="button secondary" href="#prompt">Try the prompt</a>
+          </div>
+          <div class="pill-row" aria-label="Package facts">
+            <span class="pill">27 tiny skills</span>
+            <span class="pill">Dry-run friendly</span>
+            <span class="pill">Built for real repos</span>
           </div>
         </div>
 
-        <aside class="dashboard" aria-label="Package preview status">
-          <div class="panel summary-panel">
-            <p class="eyebrow">Active package</p>
-            <div class="status-row">
-              <span class="pill">Active skills: 27</span>
-              <span class="pill">Docs: ready</span>
-              <span class="pill">Install: dry-run first</span>
+        <aside class="hero-demo" aria-label="Efektif Skills demo preview">
+          <div class="demo-window">
+            <div class="demo-top">
+              <div class="traffic" aria-hidden="true"><span></span><span></span><span></span></div>
+              <span class="demo-label">Skill classroom</span>
             </div>
-            <div class="meter" aria-label="Readiness meters">
-              <div class="meter-row">
-                <span>Docs</span>
-                <span class="track"><span class="fill mint"></span></span>
-                <span>ready</span>
-              </div>
-              <div class="meter-row">
-                <span>Skill map</span>
-                <span class="track"><span class="fill mint"></span></span>
-                <span>ready</span>
-              </div>
-              <div class="meter-row">
-                <span>Skills</span>
-                <span class="track"><span class="fill mint"></span></span>
-                <span>ready</span>
-              </div>
+            <div class="chat-card">
+              <strong>User</strong>
+              <p>Can you audit this app and tell me what is actually working?</p>
+            </div>
+            <div class="chat-card agent">
+              <strong>Agent using Efektif Skills</strong>
+              <p>I will load the Crazy Story audit, create one tracker, test every story, document evidence, and only fix approved UX or logistics issues.</p>
+            </div>
+            <div class="demo-grid">
+              {demoRows.map(([label, value]) => (
+                <div class="demo-row">
+                  <span>{label}</span>
+                  <span>{value}</span>
+                </div>
+              ))}
             </div>
           </div>
-
-          <div class="panel terminal">
-            <div class="terminal-header">
-              <div class="window-dots" aria-hidden="true">
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-              </div>
-              <button class="copy-button" type="button" data-copy-text={heroCommandText}>
-                Copy
-              </button>
-            </div>
-            <pre><code>{heroCommandDisplay}</code></pre>
-          </div>
+          <div class="floating-note">Educational, but not fluffy. Every card points the agent toward evidence.</div>
         </aside>
       </section>
 
-      <section class="section" aria-labelledby="principles-title">
+      <section class="section" id="learn" aria-labelledby="learn-title">
         <div class="section-head">
           <div>
-            <p class="eyebrow">Principles</p>
-            <h2 id="principles-title">The behavior to encode.</h2>
+            <p class="eyebrow">How It Teaches</p>
+            <h2 id="learn-title">A tiny curriculum for better agent habits.</h2>
           </div>
           <p>
-            These are the habits the next skills should make automatic, without
-            bloating every prompt.
+            Each skill is short on purpose. The page is playful, but the behavior is practical: less guessing, less thrashing, more proof.
           </p>
         </div>
-        <div class="principles">
-          {principles.map((principle) => <p>{principle}</p>)}
+        <div class="lesson-grid">
+          {lessonCards.map((card) => (
+            <article class="clay lesson-card">
+              <span class="step-badge">{card.step}</span>
+              <h3>{card.title}</h3>
+              <p>{card.text}</p>
+            </article>
+          ))}
         </div>
       </section>
 
-      <section class="section" id="system" aria-labelledby="system-title">
+      <section class="section" id="demo" aria-labelledby="demo-title">
         <div class="section-head">
           <div>
-            <p class="eyebrow">Skill system</p>
-            <h2 id="system-title">Four buckets, one workflow.</h2>
+            <p class="eyebrow">Demo</p>
+            <h2 id="demo-title">One prompt becomes a structured workflow.</h2>
           </div>
           <p>
-            The proposed set covers planning, implementation, review, and local
-            operations. Each bucket has a clear job.
+            The skills do not replace judgment. They give the agent a repeatable shape for doing the work and reporting what happened.
           </p>
         </div>
 
-        <div class="cards">
-          {
-            skillGroups.map((group) => (
-              <article class="panel card" data-accent={group.accent}>
-                <div>
-                  <p class="eyebrow">{group.eyebrow}</p>
-                  <h3>{group.title}</h3>
-                  <p>{group.summary}</p>
-                </div>
-                <div class="chips" aria-label={`${group.title} skills`}>
-                  {group.skills.map((skill) => <span class="chip">{skill}</span>)}
-                </div>
-              </article>
-            ))
-          }
+        <div class="playground">
+          <article class="code-card" id="prompt">
+            <div class="code-head">
+              <div>
+                <p class="eyebrow">Prompt Example</p>
+                <h3>Ask for a Crazy Story audit</h3>
+              </div>
+              <button class="copy-button" type="button" data-copy-text={promptExample}>Copy</button>
+            </div>
+            <pre><code>{promptExample}</code></pre>
+          </article>
+
+          <div class="demo-outcome">
+            <article class="outcome-item">
+              <strong>1. The agent inventories features</strong>
+              <p>Routes, screens, commands, APIs, roles, empty states, and visible workflows become stories.</p>
+            </article>
+            <article class="outcome-item">
+              <strong>2. The tracker becomes the source of truth</strong>
+              <p>Each row carries expected behavior, acceptance checks, test status, errors, fix status, retest result, and evidence.</p>
+            </article>
+            <article class="outcome-item">
+              <strong>3. The final answer is audit-ready</strong>
+              <p>You get what passed, what failed, what was fixed, what needs approval, and what remains risky.</p>
+            </article>
+          </div>
         </div>
       </section>
 
-      <section class="section" id="build-order" aria-labelledby="build-title">
+      <section class="section" id="skills" aria-labelledby="skills-title">
         <div class="section-head">
           <div>
-            <p class="eyebrow">Build order</p>
-            <h2 id="build-title">Start where it changes behavior fastest.</h2>
+            <p class="eyebrow">Skill Map</p>
+            <h2 id="skills-title">Clay cards for the whole workflow.</h2>
           </div>
           <p>
-            The first six skills should improve almost every session before the
-            larger planning and architecture set gets built.
+            Pick the bucket that matches the job. The names stay explicit so agents can trigger the right behavior quickly.
           </p>
         </div>
 
-        <div class="timeline">
-          {
-            buildOrder.map((item) => (
-              <details class="panel step" open={item.step === "01"}>
-                <summary>
-                  <span class="step-number">{item.step}</span>
-                  <div>
-                    <h3>{item.name}</h3>
-                    <p>{item.reason}</p>
-                  </div>
-                  <span class="step-toggle" aria-hidden="true"></span>
-                </summary>
-                <div class="step-details">
-                  <div class="step-detail">
-                    <strong>Why it matters</strong>
-                    <p>{item.why}</p>
-                  </div>
-                  <div class="step-detail">
-                    <strong>What it changes</strong>
-                    <p>{item.changes}</p>
-                  </div>
-                  <div class="step-detail">
-                    <strong>When to build</strong>
-                    <p>{item.buildWhen}</p>
-                  </div>
-                </div>
-              </details>
-            ))
-          }
+        <div class="skills-grid">
+          {skillGroups.map((group) => (
+            <article class="clay skill-card" data-color={group.color}>
+              <p class="eyebrow">{group.eyebrow}</p>
+              <h3>{group.title}</h3>
+              <p>{group.summary}</p>
+              <div class="skill-chips" aria-label={`${group.title} skills`}>
+                {group.skills.map((skill) => <span class="chip">{skill}</span>)}
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
-      <section class="section" id="commands" aria-labelledby="commands-title">
+      <section class="section" id="install" aria-labelledby="install-title">
         <div class="section-head">
           <div>
             <p class="eyebrow">Install</p>
-            <h2 id="commands-title">Install with guardrails.</h2>
+            <h2 id="install-title">Add the pack, then play safely.</h2>
           </div>
           <p>
-            Use the path that matches your workflow. Public installs can use
-            `npx`, while local contributors can use `bun` or the raw
-            shell scripts.
+            Public install is one command. Local contributors can validate and dry-run before applying changes to their machine.
           </p>
         </div>
 
-        <div class="commands">
-          {
-            commands.map((item) => (
-              <article class="panel command-card">
-                <h3>{item.label}</h3>
-                <div class="terminal">
-                  <div class="terminal-header">
-                    <div class="window-dots" aria-hidden="true">
-                      <span class="dot"></span>
-                      <span class="dot"></span>
-                      <span class="dot"></span>
-                    </div>
-                    <button class="copy-button" type="button" data-copy-text={item.command}>
-                      Copy
-                    </button>
-                  </div>
-                  <pre><code>{item.command}</code></pre>
-                </div>
-                <p>{item.note}</p>
-              </article>
-            ))
-          }
+        <div class="install-grid">
+          <article class="code-card">
+            <div class="code-head">
+              <div>
+                <p class="eyebrow">Fast Install</p>
+                <h3>From GitHub</h3>
+              </div>
+              <button class="copy-button" type="button" data-copy-text={installCommand}>Copy</button>
+            </div>
+            <pre><code>{installCommand}</code></pre>
+          </article>
+
+          <article class="code-card">
+            <div class="code-head">
+              <div>
+                <p class="eyebrow">Local Install</p>
+                <h3>Validate, dry-run, apply</h3>
+              </div>
+              <button class="copy-button" type="button" data-copy-text={localCommand}>Copy</button>
+            </div>
+            <pre><code>{localCommand}</code></pre>
+          </article>
+        </div>
+
+        <div class="clay cta-panel">
+          <div>
+            <p class="eyebrow">Ready For Better Sessions?</p>
+            <h2>Install the skill pack and let your agent learn the house rules.</h2>
+            <p>Start with repo grounding, then try Crazy Story when you need an exhaustive app audit.</p>
+          </div>
+          <button class="button primary" type="button" data-copy-text={installCommand}>Copy install command</button>
         </div>
       </section>
+
+      <footer class="footer">
+        <span>
+          Made by <a href="https://morizkay.com" target="_blank" rel="noopener noreferrer">@morizkay</a> for <a href="https://efektif.app" target="_blank" rel="noopener noreferrer">Efektif</a>
+        </span>
+        <span>Small skills. Big behavior change.</span>
+      </footer>
     </main>
     <script>
       const copyButtons = document.querySelectorAll("[data-copy-text]");
 
-      const copyText = async (text: string) => {
-        if (!navigator.clipboard?.writeText) {
-          throw new Error("Clipboard API is not available.");
-        }
-
-        await navigator.clipboard.writeText(text);
-      };
-
       copyButtons.forEach((button) => {
         button.addEventListener("click", async () => {
           const text = button.getAttribute("data-copy-text") ?? "";
+
           try {
-            await copyText(text);
+            await navigator.clipboard.writeText(text);
             button.textContent = "Copied";
-            button.setAttribute("data-copied", "true");
           } catch {
             button.textContent = "Select";
-            button.setAttribute("data-copied", "true");
           }
+
+          button.setAttribute("data-copied", "true");
 
           window.setTimeout(() => {
             button.textContent = "Copy";
