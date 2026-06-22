@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: "https://skills.efektif.dev",
+  site: "https://efektif.app",
+  base: "/skills",
 });
 

@@ -57,6 +57,17 @@ bun run skills:install:dry
 bun run skills:install
 ```
 
+## Deployment
+
+The docs site is built as a static Astro subpath at `https://efektif.app/skills/`.
+
+```sh
+bun run build
+sudo rsync -a --delete dist/ /var/www/efektif.app/skills/
+```
+
+Caddy serves it from the same `/var/www/efektif.app` root as the main Efektif landing page.
+
 Raw scripts:
 
 ```sh
