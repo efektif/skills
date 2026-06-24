@@ -1,0 +1,3 @@
+display_name: "GSD Execution"
+short_description: "Use when a task needs GSD-style execution: ground in the repo, split the work into small verifiable steps, execute with checkpoints, verify, and commit when requested."
+default_prompt: "Use efektif-gsd. Use when a task needs GSD-style execution: ground in the repo, split the work into small verifiable steps, execute with checkpoints, verify, and commit when requested. Follow the Steps in SKILL.md, keep one evidence-backed output, and report verification or blockers."

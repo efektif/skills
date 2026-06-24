@@ -1,0 +1,3 @@
+display_name: "UIUX Pro Max"
+short_description: "Use when a UI needs strong product polish: tune hierarchy, spacing, states, accessibility, and motion against the real workflow and design tokens."
+default_prompt: "Use efektif-uiuxpromax. Use when a UI needs strong product polish: tune hierarchy, spacing, states, accessibility, and motion against the real workflow and design tokens. Follow the Steps in SKILL.md, keep one evidence-backed output, and report verification or blockers."

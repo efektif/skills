@@ -14,7 +14,7 @@ This repo contains **prefixed Efektif skills** for agent-led engineering workflo
 
 ## Current State
 
-- **Active skills:** 27
+- **Active skills:** 29
 - **Prefix:** `efektif-`
 - **Validation:** `bun run skills:validate`
 - **Install target:** `~/.codex/skills/efektif`
@@ -45,6 +45,8 @@ This repo contains **prefixed Efektif skills** for agent-led engineering workflo
 - **efektif-checkpoint-commits** — Checkpoint Commits
 - **efektif-branch-summary** — Branch Summary
 - **efektif-install-skill-package** — Install Skill Package
+- **efektif-gsd** — GSD Execution
+- **efektif-uiuxpromax** — UIUX Pro Max
 - **efektif-design-interface** — Design Interface
 - **efektif-prototype** — Prototype
 - **efektif-write-skill** — Write Skill

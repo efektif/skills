@@ -313,6 +313,28 @@ const skills = [
       "Run package validation before finishing.",
     ],
   },
+  {
+    slug: "efektif-gsd",
+    title: "GSD Execution",
+    description: "Use when a task needs GSD-style execution: ground in the repo, split the work into small verifiable steps, execute with checkpoints, verify, and commit when requested.",
+    steps: [
+      "Inspect the real repo state first: files, scripts, branch, and any existing guidance.",
+      "Translate the request into a short sequence of concrete, testable steps.",
+      "Keep edits scoped, verify the narrowest useful path, and checkpoint progress when the task is multi-step.",
+      "Report evidence, blockers, and remaining risk instead of vague progress.",
+    ],
+  },
+  {
+    slug: "efektif-uiuxpromax",
+    title: "UIUX Pro Max",
+    description: "Use when a UI needs strong product polish: tune hierarchy, spacing, states, accessibility, and motion against the real workflow and design tokens.",
+    steps: [
+      "Inspect the actual interface, product context, and existing tokens or component system before changing anything.",
+      "Prioritize the primary workflow, visual hierarchy, and readable density over decorative flourishes.",
+      "Cover empty, loading, error, success, disabled, and responsive states with the same care as the happy path.",
+      "Verify the result in a browser or screenshot and report concrete UI deltas.",
+    ],
+  },
 ];
 
 const sectionMarkdown = (title, items) => `## ${title}\n\n${items.map((item) => `- ${item}`).join("\n")}`;
