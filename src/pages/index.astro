@@ -52,6 +52,7 @@ const skillGroups = [
       "efektif-crazy-story",
       "efektif-deployment-readiness",
       "efektif-machine-cleanup",
+      "efektif-cleaner",
       "efektif-checkpoint-commits",
       "efektif-branch-summary",
     ],
@@ -99,7 +100,7 @@ const promptExample = `Use efektif-crazy-story to audit this app.
 
 Create docs/crazy-story.md, inventory every visible and code-backed feature, write one user story per feature, test each story, document errors, fix approved UX or logistics issues, then retest and update the tracker.`;
 
-const installCommand = "npx skills@latest add efektif/skills";
+const installCommand = "bunx skills@latest add efektif/skills";
 const localCommand = "bun run skills:validate\nbun run skills:install:dry\nbun run skills:install";
 ---
 
@@ -117,24 +118,24 @@ const localCommand = "bun run skills:validate\nbun run skills:install:dry\nbun r
     <style>
       :root {
         color-scheme: light;
-        --cream: #fff3d7;
-        --cream-2: #ffe7f6;
-        --ink: #24123a;
-        --muted: #715f87;
-        --paper: rgba(255, 255, 255, 0.76);
-        --paper-strong: rgba(255, 255, 255, 0.92);
-        --line: rgba(36, 18, 58, 0.12);
-        --shadow: 16px 20px 0 rgba(36, 18, 58, 0.08), 0 24px 54px rgba(97, 54, 169, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.85);
-        --shadow-small: 8px 10px 0 rgba(36, 18, 58, 0.08), 0 16px 34px rgba(97, 54, 169, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.84);
-        --grape: #7c4dff;
-        --pink: #ff63b6;
-        --mint: #54e0bf;
-        --lemon: #ffe45f;
-        --sky: #6ed6ff;
-        --orange: #ff9f43;
-        --radius-xl: 36px;
-        --radius-lg: 28px;
-        --radius-md: 18px;
+        --cream: #f6f7f9;
+        --cream-2: #f0f2f5;
+        --ink: #121418;
+        --muted: #68717d;
+        --paper: rgba(255, 255, 255, 0.88);
+        --paper-strong: #ffffff;
+        --line: rgba(18, 20, 24, 0.14);
+        --shadow: inset 0 1px 0 rgba(255, 255, 255, 0.76), 0 16px 36px -12px rgba(18, 20, 24, 0.24);
+        --shadow-small: inset 0 1px 0 rgba(255, 255, 255, 0.76), 0 1px 2px rgba(18, 20, 24, 0.08);
+        --grape: #0c6bdb;
+        --pink: #ff9d42;
+        --mint: #eef6ff;
+        --lemon: #fff0df;
+        --sky: #dcecff;
+        --orange: #f6821f;
+        --radius-xl: 16px;
+        --radius-lg: 12px;
+        --radius-md: 8px;
         font-family: var(--ef-font-sans);
       }
 
@@ -150,38 +151,16 @@ const localCommand = "bun run skills:validate\nbun run skills:install:dry\nbun r
         min-width: 320px;
         margin: 0;
         overflow-x: hidden;
-        background:
-          radial-gradient(circle at 8% 12%, rgba(255, 99, 182, 0.48), transparent 28%),
-          radial-gradient(circle at 88% 10%, rgba(84, 224, 191, 0.45), transparent 26%),
-          radial-gradient(circle at 80% 74%, rgba(110, 214, 255, 0.42), transparent 28%),
-          linear-gradient(135deg, var(--cream), var(--cream-2) 48%, #dff9ff);
+        background-color: var(--cream);
+        background-image: radial-gradient(rgba(18, 20, 24, 0.055) 0.7px, transparent 0.7px);
+        background-size: 4px 4px;
         color: var(--ink);
       }
 
       body::before,
       body::after {
-        position: fixed;
-        z-index: -1;
-        border-radius: 999px;
-        content: "";
-        filter: blur(2px);
-        opacity: 0.72;
-      }
-
-      body::before {
-        width: 260px;
-        height: 260px;
-        right: -80px;
-        top: 210px;
-        background: var(--lemon);
-      }
-
-      body::after {
-        width: 210px;
-        height: 210px;
-        left: -70px;
-        bottom: 110px;
-        background: var(--mint);
+        display: none;
+        content: none;
       }
 
       a {
@@ -212,8 +191,8 @@ const localCommand = "bun run skills:validate\nbun run skills:install:dry\nbun r
         align-items: center;
         justify-content: space-between;
         gap: 18px;
-        border-radius: 999px;
-        padding: 12px 14px 12px 16px;
+        border-radius: var(--radius-lg);
+        padding: 10px 12px;
       }
 
       .brand {
@@ -249,8 +228,8 @@ const localCommand = "bun run skills:validate\nbun run skills:install:dry\nbun r
       }
 
       nav a {
-        border-radius: 999px;
-        padding: 10px 13px;
+        border-radius: var(--radius-md);
+        padding: 9px 12px;
         color: var(--muted);
         font-size: 0.92rem;
         font-weight: 850;
@@ -866,7 +845,7 @@ const localCommand = "bun run skills:validate\nbun run skills:install:dry\nbun r
             <a class="button secondary" href="#prompt">Try the prompt</a>
           </div>
           <div class="pill-row" aria-label="Package facts">
-            <span class="pill">27 tiny skills</span>
+            <span class="pill">28 tiny skills</span>
             <span class="pill">Dry-run friendly</span>
             <span class="pill">Built for real repos</span>
           </div>

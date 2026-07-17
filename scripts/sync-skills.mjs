@@ -248,6 +248,21 @@ const skills = [
     ],
   },
   {
+    slug: "efektif-cleaner",
+    title: "Efektif Cleaner",
+    description: "Use for CleanMyMac-style safe cleanup: measure disk usage, classify removable files, dry-run first, and apply only approved low-risk actions.",
+    steps: [
+      "Measure disk usage and list the largest safe cleanup candidates before recommending action.",
+      "Classify items as safe, review-needed, or do-not-touch with exact paths and reasons.",
+      "Prefer app-supported cleanup commands, package-manager caches, and trash review before manual deletion.",
+      "Run a dry-run first; apply only after explicit approval and verify freed space afterward.",
+    ],
+    notes: [
+      "Never delete project files, secrets, databases, photos, mail, backups, or app support data without explicit path-level approval.",
+      "Do not promise space savings without measuring before and after.",
+    ],
+  },
+  {
     slug: "efektif-checkpoint-commits",
     title: "Checkpoint Commits",
     description: "Use only when the user asked for commits during multi-step work; create small, verified checkpoints without mixing unrelated user changes.",

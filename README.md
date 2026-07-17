@@ -42,6 +42,7 @@ This repo contains **prefixed Efektif skills** for agent-led engineering workflo
 - **efektif-refactor-plan** — Refactor Plan
 - **efektif-deployment-readiness** — Deployment Readiness
 - **efektif-machine-cleanup** — Machine Cleanup
+- **efektif-cleaner** — Efektif Cleaner
 - **efektif-checkpoint-commits** — Checkpoint Commits
 - **efektif-branch-summary** — Branch Summary
 - **efektif-install-skill-package** — Install Skill Package
