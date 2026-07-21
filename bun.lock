@@ -6,7 +6,7 @@
       "name": "efektif-skills",
       "dependencies": {
         "@astrojs/check": "0.9.9",
-        "@efektif/tokens": "^2.0.0",
+        "@efektif/tokens": "file:../efektif-ui/packages/tokens",
         "astro": "^6.3.3",
         "typescript": "^5.9.3",
       },
@@ -43,7 +43,7 @@
 
     "@clack/prompts": ["@clack/prompts@1.5.1", "", { "dependencies": { "@clack/core": "1.4.1", "fast-string-width": "^3.0.2", "fast-wrap-ansi": "^0.2.0", "sisteransi": "^1.0.5" } }, "sha512-zccHj2z2oCCO4yrDiRSlFOxWerGqRiysP7a5jPK6uoI9URKAquwY42Dd/iUP8JWHxEzdRe4TlbvZCo8z1/mhrw=="],
 
-    "@efektif/tokens": ["@efektif/tokens@2.0.0", "", {}, "sha512-eY4x/ZO+hMwR/SBPL+R6m0zDJte0iln8AwjXZ7PMPc4sWbzhpfkNS4rLJg1GtWAitNPgYHIIj2UmgA7qf5mGMw=="],
+    "@efektif/tokens": ["@efektif/tokens@file:../efektif-ui/packages/tokens", {}],
 
     "@emmetio/abbreviation": ["@emmetio/abbreviation@2.3.3", "", { "dependencies": { "@emmetio/scanner": "^1.0.4" } }, "sha512-mgv58UrU3rh4YgbE/TzgLQwJ3pFsHHhCLqY20aJq+9comytTXUDNGG/SMtSeMJdkpxgXSXunBGLD8Boka3JyVA=="],
 
