@@ -1,0 +1,534 @@
+/* Generated from @efektif/tokens. Do not edit by hand. */
+:root
+{
+  --ef-font-sans: "Inter Variable", Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --ef-font-mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, monospace;
+  --ef-font-weight-regular: 400;
+  --ef-font-weight-medium: 500;
+  --ef-font-weight-semibold: 600;
+  --ef-font-weight-bold: 700;
+  --ef-text-10: 0.625rem;
+  --ef-text-11: 0.6875rem;
+  --ef-text-12: 0.75rem;
+  --ef-text-13: 0.8125rem;
+  --ef-text-14: 0.875rem;
+  --ef-text-15: 0.9375rem;
+  --ef-text-16: 1rem;
+  --ef-text-18: 1.125rem;
+  --ef-text-20: 1.25rem;
+  --ef-text-24: 1.5rem;
+  --ef-text-30: 1.875rem;
+  --ef-text-32: 2rem;
+  --ef-text-36: 2.25rem;
+  --ef-text-48: 3rem;
+  --ef-text-64: 4rem;
+  --ef-leading-tight: 1.15;
+  --ef-leading-snug: 1.3;
+  --ef-leading-normal: 1.5;
+  --ef-leading-relaxed: 1.65;
+  --ef-tracking-tight: -0.02em;
+  --ef-tracking-snug: -0.01em;
+  --ef-tracking-normal: 0;
+  --ef-tracking-wide: 0.04em;
+  --ef-space-0: 0;
+  --ef-space-1: 4px;
+  --ef-space-2: 8px;
+  --ef-space-3: 12px;
+  --ef-space-4: 16px;
+  --ef-space-5: 20px;
+  --ef-space-6: 24px;
+  --ef-space-8: 32px;
+  --ef-space-10: 40px;
+  --ef-space-12: 48px;
+  --ef-space-16: 64px;
+  --ef-space-20: 80px;
+  --ef-space-24: 96px;
+  --ef-space-px: 1px;
+  --ef-radius-none: 0;
+  --radius-none: 0;
+  --ef-radius-xs: 3px;
+  --radius-xs: 3px;
+  --ef-radius-sm: 6px;
+  --radius-sm: 6px;
+  --ef-radius-md: 6px;
+  --radius-md: 6px;
+  --ef-radius-lg: 10px;
+  --radius-lg: 10px;
+  --ef-radius-xl: 12px;
+  --radius-xl: 12px;
+  --ef-radius-2xl: 16px;
+  --radius-2xl: 16px;
+  --ef-radius-full: 9999px;
+  --radius-full: 9999px;
+  --ef-radius-pill: 9999px;
+  --radius-pill: 9999px;
+  --ef-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ef-ease-inOut: cubic-bezier(0.77, 0, 0.175, 1);
+  --ef-ease-spring: cubic-bezier(0.32, 0.72, 0, 1);
+  --ef-ease-in-out: var(--ef-ease-inOut);
+  --ef-duration-instant: 70ms;
+  --duration-instant: 70ms;
+  --ef-duration-fast: 140ms;
+  --duration-fast: 140ms;
+  --ef-duration-base: 180ms;
+  --duration-base: 180ms;
+  --ef-duration-normal: 180ms;
+  --duration-normal: 180ms;
+  --ef-duration-slow: 240ms;
+  --duration-slow: 240ms;
+  --ef-control-h-sm: 28px;
+  --ef-control-h-md: 36px;
+  --ef-control-h-lg: 44px;
+  --ef-row-h: 40px;
+  --ef-sidebar-w: 240px;
+  --ef-topbar-h: 56px;
+  --ef-pad-x-sm: 10px;
+  --ef-pad-x-md: 14px;
+  --ef-pad-x-lg: 18px;
+  --ef-z-base: 0;
+  --ef-z-raised: 10;
+  --ef-z-dropdown: 20;
+  --ef-z-sticky: 30;
+  --ef-z-overlay: 30;
+  --ef-z-modal: 40;
+  --ef-z-toast: 50;
+  --ef-z-tooltip: 60;
+  --ef-border-w: 1px;
+  --ef-border-w-strong: 1.5px;
+  --radius: 6px;
+  --ef-tint: var(--ef-fg-primary);
+}
+
+:root,
+[data-mode="dark"],
+.dark
+{
+  color-scheme: dark;
+    --ef-bg-canvas: #0A0A0A;
+    --ef-bg-base: #111111;
+    --ef-bg-subtle: #181818;
+    --ef-bg-muted: #222222;
+    --ef-bg-inverse: #FFFFFF;
+    --ef-fg-primary: #FFFFFF;
+    --ef-fg-secondary: #A3A3A3;
+    --ef-fg-muted: #A3A3A3;
+    --ef-fg-subtle: #737373;
+    --ef-fg-disabled: #525252;
+    --ef-fg-onInverse: #0A0A0A;
+    --ef-fg-onAccent: #ffffff;
+  --ef-fg-on-inverse: var(--ef-fg-onInverse);
+  --ef-fg-on-accent: var(--ef-fg-onAccent);
+    --ef-border-subtle: #1f1f1f;
+    --ef-border-default: #262626;
+    --ef-border-strong: #3A3A3A;
+  --ef-accent: #2563EB;
+  --ef-accent-hover: #1d4ed8;
+  --ef-accent-active: #1e40af;
+  --ef-accent-fg: #ffffff;
+  --ef-accent-soft: rgba(37, 99, 235, 0.12);
+  --ef-accent-soft-hover: rgba(37, 99, 235, 0.18);
+  --ef-focus-ring: #2563EB;
+  --ef-focus-halo: rgba(37, 99, 235, 0.22);
+    --ef-shadow-xs: 0 1px 1px rgba(0, 0, 0, 0.35);
+    --ef-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.45);
+    --ef-shadow-md: 0 6px 16px -6px rgba(0, 0, 0, 0.55);
+    --ef-shadow-lg: 0 16px 36px -12px rgba(0, 0, 0, 0.65);
+    --ef-shadow-xl: 0 28px 56px -16px rgba(0, 0, 0, 0.75);
+    --ef-texture-canvas: none;
+    --ef-texture-surface: none;
+  --ef-status-success: #22C55E;
+  --ef-status-success-fg: #ffffff;
+  --ef-status-success-bg: #052e1a;
+  --ef-status-success-border: #14532d;
+  --ef-status-warning: #F59E0B;
+  --ef-status-warning-fg: #ffffff;
+  --ef-status-warning-bg: #2b1a02;
+  --ef-status-warning-border: #78350f;
+  --ef-status-danger: #EF4444;
+  --ef-status-danger-fg: #ffffff;
+  --ef-status-danger-bg: #2b0707;
+  --ef-status-danger-border: #7f1d1d;
+  --ef-status-info: #0EA5E9;
+  --ef-status-info-fg: #ffffff;
+  --ef-status-info-bg: #07173d;
+  --ef-status-info-border: #1e3a8a;
+  --ef-status-neutral: #A3A3A3;
+  --ef-status-neutral-fg: #ffffff;
+  --ef-status-neutral-bg: #262626;
+  --ef-status-neutral-border: #3a3a3a;
+  --ef-status-muted: #737373;
+  --ef-status-muted-fg: #ffffff;
+  --ef-status-muted-bg: #262626;
+  --ef-status-muted-border: #3a3a3a;
+  --color-background: var(--ef-bg-canvas);
+  --color-foreground: var(--ef-fg-primary);
+  --color-card: var(--ef-bg-base);
+  --color-cardForeground: var(--ef-fg-primary);
+  --color-card-foreground: var(--color-cardForeground);
+  --color-popover: var(--ef-bg-subtle);
+  --color-popoverForeground: var(--ef-fg-primary);
+  --color-popover-foreground: var(--color-popoverForeground);
+  --color-primary: var(--ef-accent);
+  --color-primaryForeground: var(--ef-accent-fg);
+  --color-primary-foreground: var(--color-primaryForeground);
+  --color-secondary: var(--ef-bg-base);
+  --color-secondaryForeground: var(--ef-fg-primary);
+  --color-secondary-foreground: var(--color-secondaryForeground);
+  --color-muted: var(--ef-bg-muted);
+  --color-mutedForeground: var(--ef-fg-muted);
+  --color-muted-foreground: var(--color-mutedForeground);
+  --color-accent: var(--ef-accent-soft);
+  --color-accentForeground: var(--ef-fg-primary);
+  --color-accent-foreground: var(--color-accentForeground);
+  --color-destructive: var(--ef-status-danger);
+  --color-destructiveForeground: var(--ef-status-danger-fg);
+  --color-destructive-foreground: var(--color-destructiveForeground);
+  --color-success: var(--ef-status-success);
+  --color-successForeground: var(--ef-status-success-fg);
+  --color-warning: var(--ef-status-warning);
+  --color-warningForeground: var(--ef-status-warning-fg);
+  --color-info: var(--ef-status-info);
+  --color-infoForeground: var(--ef-status-info-fg);
+  --color-border: var(--ef-border-default);
+  --color-input: var(--ef-border-default);
+  --color-ring: var(--ef-focus-ring);
+  --color-surface: var(--ef-bg-subtle);
+  --color-surfaceRaised: var(--ef-bg-subtle);
+  --color-surfaceMuted: var(--ef-bg-muted);
+}
+
+[data-mode="light"]
+{
+  color-scheme: light;
+    --ef-bg-canvas: #FFFFFF;
+    --ef-bg-base: #F7F7F7;
+    --ef-bg-subtle: #FAFAFA;
+    --ef-bg-muted: #F0F0F0;
+    --ef-bg-inverse: #0A0A0A;
+    --ef-fg-primary: #0A0A0A;
+    --ef-fg-secondary: #4B4B4B;
+    --ef-fg-muted: #6B7280;
+    --ef-fg-subtle: #A3A3A3;
+    --ef-fg-disabled: #D4D4D4;
+    --ef-fg-onInverse: #FFFFFF;
+    --ef-fg-onAccent: #ffffff;
+  --ef-fg-on-inverse: var(--ef-fg-onInverse);
+  --ef-fg-on-accent: var(--ef-fg-onAccent);
+    --ef-border-subtle: #F0F0F0;
+    --ef-border-default: #E5E5E5;
+    --ef-border-strong: #D4D4D4;
+  --ef-accent: #2563EB;
+  --ef-accent-hover: #1d4ed8;
+  --ef-accent-active: #1e40af;
+  --ef-accent-fg: #ffffff;
+  --ef-accent-soft: rgba(37, 99, 235, 0.12);
+  --ef-accent-soft-hover: rgba(37, 99, 235, 0.18);
+  --ef-focus-ring: #2563EB;
+  --ef-focus-halo: rgba(37, 99, 235, 0.22);
+    --ef-shadow-xs: 0 1px 1px rgba(10, 10, 10, 0.04);
+    --ef-shadow-sm: 0 1px 2px rgba(10, 10, 10, 0.06);
+    --ef-shadow-md: 0 4px 12px -4px rgba(10, 10, 10, 0.10);
+    --ef-shadow-lg: 0 12px 28px -10px rgba(10, 10, 10, 0.14);
+    --ef-shadow-xl: 0 24px 48px -16px rgba(10, 10, 10, 0.18);
+    --ef-texture-canvas: none;
+    --ef-texture-surface: none;
+  --ef-status-success: #16A34A;
+  --ef-status-success-fg: #ffffff;
+  --ef-status-success-bg: #ecfdf5;
+  --ef-status-success-border: #a7f3d0;
+  --ef-status-warning: #D97706;
+  --ef-status-warning-fg: #ffffff;
+  --ef-status-warning-bg: #fffbeb;
+  --ef-status-warning-border: #fcd34d;
+  --ef-status-danger: #DC2626;
+  --ef-status-danger-fg: #ffffff;
+  --ef-status-danger-bg: #fef2f2;
+  --ef-status-danger-border: #fecaca;
+  --ef-status-info: #0EA5E9;
+  --ef-status-info-fg: #ffffff;
+  --ef-status-info-bg: #eff6ff;
+  --ef-status-info-border: #bfdbfe;
+  --ef-status-neutral: #A3A3A3;
+  --ef-status-neutral-fg: #ffffff;
+  --ef-status-neutral-bg: #f5f5f5;
+  --ef-status-neutral-border: #e5e5e5;
+  --ef-status-muted: #737373;
+  --ef-status-muted-fg: #ffffff;
+  --ef-status-muted-bg: #f5f5f5;
+  --ef-status-muted-border: #e5e5e5;
+  --color-background: var(--ef-bg-canvas);
+  --color-foreground: var(--ef-fg-primary);
+  --color-card: var(--ef-bg-base);
+  --color-cardForeground: var(--ef-fg-primary);
+  --color-card-foreground: var(--color-cardForeground);
+  --color-popover: var(--ef-bg-subtle);
+  --color-popoverForeground: var(--ef-fg-primary);
+  --color-popover-foreground: var(--color-popoverForeground);
+  --color-primary: var(--ef-accent);
+  --color-primaryForeground: var(--ef-accent-fg);
+  --color-primary-foreground: var(--color-primaryForeground);
+  --color-secondary: var(--ef-bg-base);
+  --color-secondaryForeground: var(--ef-fg-primary);
+  --color-secondary-foreground: var(--color-secondaryForeground);
+  --color-muted: var(--ef-bg-muted);
+  --color-mutedForeground: var(--ef-fg-muted);
+  --color-muted-foreground: var(--color-mutedForeground);
+  --color-accent: var(--ef-accent-soft);
+  --color-accentForeground: var(--ef-fg-primary);
+  --color-accent-foreground: var(--color-accentForeground);
+  --color-destructive: var(--ef-status-danger);
+  --color-destructiveForeground: var(--ef-status-danger-fg);
+  --color-destructive-foreground: var(--color-destructiveForeground);
+  --color-success: var(--ef-status-success);
+  --color-successForeground: var(--ef-status-success-fg);
+  --color-warning: var(--ef-status-warning);
+  --color-warningForeground: var(--ef-status-warning-fg);
+  --color-info: var(--ef-status-info);
+  --color-infoForeground: var(--ef-status-info-fg);
+  --color-border: var(--ef-border-default);
+  --color-input: var(--ef-border-default);
+  --color-ring: var(--ef-focus-ring);
+  --color-surface: var(--ef-bg-subtle);
+  --color-surfaceRaised: var(--ef-bg-subtle);
+  --color-surfaceMuted: var(--ef-bg-muted);
+}
+
+[data-mode="gray"]
+{
+  color-scheme: dark;
+    --ef-bg-canvas: #181818;
+    --ef-bg-base: #222222;
+    --ef-bg-subtle: #2A2A2A;
+    --ef-bg-muted: #333333;
+    --ef-bg-inverse: #E5E5E5;
+    --ef-fg-primary: #E5E5E5;
+    --ef-fg-secondary: #A3A3A3;
+    --ef-fg-muted: #A3A3A3;
+    --ef-fg-subtle: #737373;
+    --ef-fg-disabled: #525252;
+    --ef-fg-onInverse: #181818;
+    --ef-fg-onAccent: #ffffff;
+  --ef-fg-on-inverse: var(--ef-fg-onInverse);
+  --ef-fg-on-accent: var(--ef-fg-onAccent);
+    --ef-border-subtle: #2f2f2f;
+    --ef-border-default: #3A3A3A;
+    --ef-border-strong: #525252;
+  --ef-accent: #2563EB;
+  --ef-accent-hover: #1d4ed8;
+  --ef-accent-active: #1e40af;
+  --ef-accent-fg: #ffffff;
+  --ef-accent-soft: rgba(37, 99, 235, 0.12);
+  --ef-accent-soft-hover: rgba(37, 99, 235, 0.18);
+  --ef-focus-ring: #2563EB;
+  --ef-focus-halo: rgba(37, 99, 235, 0.22);
+    --ef-shadow-xs: 0 1px 1px rgba(0, 0, 0, 0.35);
+    --ef-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.45);
+    --ef-shadow-md: 0 6px 16px -6px rgba(0, 0, 0, 0.55);
+    --ef-shadow-lg: 0 16px 36px -12px rgba(0, 0, 0, 0.65);
+    --ef-shadow-xl: 0 28px 56px -16px rgba(0, 0, 0, 0.75);
+    --ef-texture-canvas: none;
+    --ef-texture-surface: none;
+  --ef-status-success: #22C55E;
+  --ef-status-success-fg: #ffffff;
+  --ef-status-success-bg: #052e1a;
+  --ef-status-success-border: #14532d;
+  --ef-status-warning: #F59E0B;
+  --ef-status-warning-fg: #ffffff;
+  --ef-status-warning-bg: #2b1a02;
+  --ef-status-warning-border: #78350f;
+  --ef-status-danger: #EF4444;
+  --ef-status-danger-fg: #ffffff;
+  --ef-status-danger-bg: #2b0707;
+  --ef-status-danger-border: #7f1d1d;
+  --ef-status-info: #0EA5E9;
+  --ef-status-info-fg: #ffffff;
+  --ef-status-info-bg: #07173d;
+  --ef-status-info-border: #1e3a8a;
+  --ef-status-neutral: #A3A3A3;
+  --ef-status-neutral-fg: #ffffff;
+  --ef-status-neutral-bg: #262626;
+  --ef-status-neutral-border: #3a3a3a;
+  --ef-status-muted: #737373;
+  --ef-status-muted-fg: #ffffff;
+  --ef-status-muted-bg: #262626;
+  --ef-status-muted-border: #3a3a3a;
+  --color-background: var(--ef-bg-canvas);
+  --color-foreground: var(--ef-fg-primary);
+  --color-card: var(--ef-bg-base);
+  --color-cardForeground: var(--ef-fg-primary);
+  --color-card-foreground: var(--color-cardForeground);
+  --color-popover: var(--ef-bg-subtle);
+  --color-popoverForeground: var(--ef-fg-primary);
+  --color-popover-foreground: var(--color-popoverForeground);
+  --color-primary: var(--ef-accent);
+  --color-primaryForeground: var(--ef-accent-fg);
+  --color-primary-foreground: var(--color-primaryForeground);
+  --color-secondary: var(--ef-bg-base);
+  --color-secondaryForeground: var(--ef-fg-primary);
+  --color-secondary-foreground: var(--color-secondaryForeground);
+  --color-muted: var(--ef-bg-muted);
+  --color-mutedForeground: var(--ef-fg-muted);
+  --color-muted-foreground: var(--color-mutedForeground);
+  --color-accent: var(--ef-accent-soft);
+  --color-accentForeground: var(--ef-fg-primary);
+  --color-accent-foreground: var(--color-accentForeground);
+  --color-destructive: var(--ef-status-danger);
+  --color-destructiveForeground: var(--ef-status-danger-fg);
+  --color-destructive-foreground: var(--color-destructiveForeground);
+  --color-success: var(--ef-status-success);
+  --color-successForeground: var(--ef-status-success-fg);
+  --color-warning: var(--ef-status-warning);
+  --color-warningForeground: var(--ef-status-warning-fg);
+  --color-info: var(--ef-status-info);
+  --color-infoForeground: var(--ef-status-info-fg);
+  --color-border: var(--ef-border-default);
+  --color-input: var(--ef-border-default);
+  --color-ring: var(--ef-focus-ring);
+  --color-surface: var(--ef-bg-subtle);
+  --color-surfaceRaised: var(--ef-bg-subtle);
+  --color-surfaceMuted: var(--ef-bg-muted);
+}
+
+[data-mode="gray-light"]
+{
+  color-scheme: light;
+    --ef-bg-canvas: #EDEDED;
+    --ef-bg-base: #F4F4F4;
+    --ef-bg-subtle: #FAFAFA;
+    --ef-bg-muted: #E5E5E5;
+    --ef-bg-inverse: #0A0A0A;
+    --ef-fg-primary: #0A0A0A;
+    --ef-fg-secondary: #525252;
+    --ef-fg-muted: #6B7280;
+    --ef-fg-subtle: #A3A3A3;
+    --ef-fg-disabled: #D4D4D4;
+    --ef-fg-onInverse: #FFFFFF;
+    --ef-fg-onAccent: #ffffff;
+  --ef-fg-on-inverse: var(--ef-fg-onInverse);
+  --ef-fg-on-accent: var(--ef-fg-onAccent);
+    --ef-border-subtle: #E0E0E0;
+    --ef-border-default: #D4D4D4;
+    --ef-border-strong: #A3A3A3;
+  --ef-accent: #2563EB;
+  --ef-accent-hover: #1d4ed8;
+  --ef-accent-active: #1e40af;
+  --ef-accent-fg: #ffffff;
+  --ef-accent-soft: rgba(37, 99, 235, 0.12);
+  --ef-accent-soft-hover: rgba(37, 99, 235, 0.18);
+  --ef-focus-ring: #2563EB;
+  --ef-focus-halo: rgba(37, 99, 235, 0.22);
+    --ef-shadow-xs: 0 1px 1px rgba(10, 10, 10, 0.04);
+    --ef-shadow-sm: 0 1px 2px rgba(10, 10, 10, 0.06);
+    --ef-shadow-md: 0 4px 12px -4px rgba(10, 10, 10, 0.10);
+    --ef-shadow-lg: 0 12px 28px -10px rgba(10, 10, 10, 0.14);
+    --ef-shadow-xl: 0 24px 48px -16px rgba(10, 10, 10, 0.18);
+    --ef-texture-canvas: none;
+    --ef-texture-surface: none;
+  --ef-status-success: #16A34A;
+  --ef-status-success-fg: #ffffff;
+  --ef-status-success-bg: #ecfdf5;
+  --ef-status-success-border: #a7f3d0;
+  --ef-status-warning: #D97706;
+  --ef-status-warning-fg: #ffffff;
+  --ef-status-warning-bg: #fffbeb;
+  --ef-status-warning-border: #fcd34d;
+  --ef-status-danger: #DC2626;
+  --ef-status-danger-fg: #ffffff;
+  --ef-status-danger-bg: #fef2f2;
+  --ef-status-danger-border: #fecaca;
+  --ef-status-info: #0EA5E9;
+  --ef-status-info-fg: #ffffff;
+  --ef-status-info-bg: #eff6ff;
+  --ef-status-info-border: #bfdbfe;
+  --ef-status-neutral: #A3A3A3;
+  --ef-status-neutral-fg: #ffffff;
+  --ef-status-neutral-bg: #f5f5f5;
+  --ef-status-neutral-border: #e5e5e5;
+  --ef-status-muted: #737373;
+  --ef-status-muted-fg: #ffffff;
+  --ef-status-muted-bg: #f5f5f5;
+  --ef-status-muted-border: #e5e5e5;
+  --color-background: var(--ef-bg-canvas);
+  --color-foreground: var(--ef-fg-primary);
+  --color-card: var(--ef-bg-base);
+  --color-cardForeground: var(--ef-fg-primary);
+  --color-card-foreground: var(--color-cardForeground);
+  --color-popover: var(--ef-bg-subtle);
+  --color-popoverForeground: var(--ef-fg-primary);
+  --color-popover-foreground: var(--color-popoverForeground);
+  --color-primary: var(--ef-accent);
+  --color-primaryForeground: var(--ef-accent-fg);
+  --color-primary-foreground: var(--color-primaryForeground);
+  --color-secondary: var(--ef-bg-base);
+  --color-secondaryForeground: var(--ef-fg-primary);
+  --color-secondary-foreground: var(--color-secondaryForeground);
+  --color-muted: var(--ef-bg-muted);
+  --color-mutedForeground: var(--ef-fg-muted);
+  --color-muted-foreground: var(--color-mutedForeground);
+  --color-accent: var(--ef-accent-soft);
+  --color-accentForeground: var(--ef-fg-primary);
+  --color-accent-foreground: var(--color-accentForeground);
+  --color-destructive: var(--ef-status-danger);
+  --color-destructiveForeground: var(--ef-status-danger-fg);
+  --color-destructive-foreground: var(--color-destructiveForeground);
+  --color-success: var(--ef-status-success);
+  --color-successForeground: var(--ef-status-success-fg);
+  --color-warning: var(--ef-status-warning);
+  --color-warningForeground: var(--ef-status-warning-fg);
+  --color-info: var(--ef-status-info);
+  --color-infoForeground: var(--ef-status-info-fg);
+  --color-border: var(--ef-border-default);
+  --color-input: var(--ef-border-default);
+  --color-ring: var(--ef-focus-ring);
+  --color-surface: var(--ef-bg-subtle);
+  --color-surfaceRaised: var(--ef-bg-subtle);
+  --color-surfaceMuted: var(--ef-bg-muted);
+}
+
+[data-density="dense"]
+{
+  --ef-control-h-sm: 24px;
+  --ef-control-h-md: 30px;
+  --ef-control-h-lg: 36px;
+  --ef-row-h: 32px;
+  --ef-sidebar-w: 220px;
+  --ef-topbar-h: 44px;
+  --ef-pad-x-sm: 8px;
+  --ef-pad-x-md: 10px;
+  --ef-pad-x-lg: 14px;
+}
+
+[data-tint="default"]
+{
+  --ef-tint: var(--ef-accent);
+}
+
+[data-tint="indigo"]
+{
+  --ef-tint: #4f46e5;
+}
+
+[data-tint="teal"]
+{
+  --ef-tint: #0f766e;
+}
+
+[data-tint="amber"]
+{
+  --ef-tint: #d96500;
+}
+
+[data-tint="rose"]
+{
+  --ef-tint: #be123c;
+}
+
+[data-tint="green"]
+{
+  --ef-tint: #16A34A;
+}
+
+[data-tint="violet"]
+{
+  --ef-tint: #7c3aed;
+}

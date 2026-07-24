@@ -85,6 +85,13 @@ Regenerate skills from the local source of truth:
 node scripts/sync-skills.mjs
 ```
 
+## Design Ownership
+
+The docs site owns its design runtime locally. Its dependency-free CSS tokens live
+in `src/design-system/`, follow workspace `DESIGN.md` v0.2.0, and are pinned to the
+`efektif-ui` `e7363e3` reference. No `@efektif/*` design package is required to
+build or serve the site.
+
 ## Design Rules
 
 - Keep `SKILL.md` files **small and token-light**.
